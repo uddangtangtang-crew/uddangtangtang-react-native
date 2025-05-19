@@ -15,8 +15,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>MyHits 조회수</Text>
-      <Text style={styles.subtitle}>아래는 히트 카운터입니다:</Text>
+      <Text style={styles.title}>우당탕탕 여행 궁합 누적 조회수</Text>
       <Image
         source={{
           uri: `https://myhits.vercel.app/api/hit/https%3A%2F%2Fgithub.com%2Fvmkmym?color=blue&label=hits&size=small&timestamp=${timestamp}`,
