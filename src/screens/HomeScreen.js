@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions, ImageBackground } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
 import Button from '../components/common/Button';
 import { COLORS, FONTS, SIZES } from '../constants/theme';
 
-const { width, height } = Dimensions.get('window');
+
 const MAX_WIDTH = 500;
+const { height } = Dimensions.get('window');
+
 
 const HomeScreen = ({ navigation }) => {
     const handleStartTest = () => {
@@ -16,8 +18,11 @@ const HomeScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.backgroundWrapper}>
-            <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView
+                style={styles.scrollView}
+                contentContainerStyle={styles.scrollContent}
+            >
                 <View style={styles.mobileFrame}>
                     <View style={styles.header}>
                         <Text style={styles.title}>우당탕탕 여행 궁합 테스트</Text>
@@ -34,10 +39,7 @@ const HomeScreen = ({ navigation }) => {
                         />
 
                         <View style={styles.buttonContainer}>
-                            <Button
-                                title="테스트 시작하기"
-                                onPress={handleStartTest}
-                            />
+                            <Button title="테스트 시작하기" onPress={handleStartTest} />
                             <Button
                                 title="궁합 보러가기"
                                 onPress={handleCheckCompatibility}
@@ -46,32 +48,33 @@ const HomeScreen = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
-            </SafeAreaView>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
-    backgroundWrapper: {
-        flex: 1,
-        backgroundColor: '#F6F6F6',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     safeArea: {
         flex: 1,
+        backgroundColor: COLORS.background,
+    },
+    scrollView: {
+        flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start'
     },
     mobileFrame: {
-        width: '500px',
-        maxWidth: MAX_WIDTH,
-        height: '889px',
-        backgroundColor: COLORS.background,
+        width: MAX_WIDTH,
+        minHeight: height,
+        backgroundColor: COLORS.card,
         paddingHorizontal: SIZES.large,
         paddingTop: SIZES.large,
         justifyContent: 'flex-start',
         alignItems: 'center',
+        flex: 1,
     },
     header: {
         marginBottom: SIZES.large,
@@ -81,13 +84,7 @@ const styles = StyleSheet.create({
         fontSize: SIZES.xlarge,
         color: COLORS.primary,
         ...FONTS.bold,
-        textAlign: 'center',
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
+        textAlign: 'center'
     },
     subtitle: {
         fontSize: SIZES.medium,
@@ -95,11 +92,17 @@ const styles = StyleSheet.create({
         ...FONTS.regular,
         textAlign: 'center',
         marginTop: SIZES.large,
-        marginBottom: SIZES.large,
+        marginBottom: SIZES.small,
+    },
+    content: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%'
     },
     logo: {
-        width: 500,
-        height: 500,
+        width: 300,
+        height: 300,
         marginBottom: SIZES.large,
     },
     buttonContainer: {
