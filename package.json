@@ -1,5 +1,5 @@
 {
-  "name": "myfirstapp",
+  "name": "uddangtangtang-app",
   "license": "0BSD",
   "version": "1.0.0",
   "main": "index.js",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
+    "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-navigation/native": "^7.1.9",
     "@react-navigation/stack": "^7.3.2",
     "expo": "~53.0.9",
@@ -18,12 +19,16 @@
     "react": "19.0.0",
     "react-dom": "^19.0.0",
     "react-native": "0.79.2",
+    "react-native-gesture-handler": "^2.25.0",
+    "react-native-reanimated": "^3.17.5",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "^4.10.0",
+    "react-native-vector-icons": "^10.2.0",
     "react-native-web": "^0.20.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "metro-react-native-babel-preset": "^0.77.0"
   },
   "private": true
 }

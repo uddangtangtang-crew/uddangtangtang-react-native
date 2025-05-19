@@ -9,28 +9,28 @@ export const COLORS = {
     border: '#DDDDDD',     // 테두리
     error: '#FF5252',      // 에러
     success: '#4CAF50',    // 성공
-  };
-  
-  export const FONTS = {
+};
+
+export const FONTS = {
     regular: {
-      fontFamily: 'System',
-      fontWeight: '400',
+        fontFamily: 'System',
+        fontWeight: '400',
     },
     medium: {
-      fontFamily: 'System',
-      fontWeight: '500',
+        fontFamily: 'System',
+        fontWeight: '500',
     },
     bold: {
-      fontFamily: 'System',
-      fontWeight: '700',
+        fontFamily: 'System',
+        fontWeight: '700',
     },
-  };
-  
-  export const SIZES = {
+};
+
+export const SIZES = {
     base: 8,
     small: 12,
     medium: 16,
     large: 20,
     xlarge: 24,
     xxlarge: 32,
-  };
+};

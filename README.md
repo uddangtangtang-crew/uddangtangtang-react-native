@@ -1,6 +1,7 @@
 # 우당탕탕 여행 궁합 테스트
 
 ## 프로젝트 구조
+
 ```markdown
 uddangtangtang-app/
 ├── node_modules/           # npm 패키지
