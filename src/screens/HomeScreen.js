@@ -26,17 +26,16 @@ const HomeScreen = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
                 <View style={styles.header}>
-                    {/* 로고 이미지 (아직 추가하지 않았으므로 주석 처리) */}
-                    {/* <Image 
-            source={require('../assets/images/logo.png')} 
-            style={styles.logo} 
-          /> */}
-
                     <Text style={styles.title}>우당탕탕 여행 궁합 테스트</Text>
                     <Text style={styles.subtitle}>
                         나의 여행 성향과 친구와의 여행 궁합을 알아보세요!
                     </Text>
                 </View>
+                <Image
+                    source={require('../../assets/image.png')}
+                    style={styles.logo}
+                    resizeMode="contain"
+                />
 
                 <View style={styles.buttonContainer}>
                     <Button
@@ -70,13 +69,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: SIZES.large,
     },
-    header: {
-        alignItems: 'center',
-        marginTop: height * 0.1, // 화면 높이의 10%
-    },
     logo: {
-        width: 120,
-        height: 120,
+        width: 360,
+        height: 360,
         marginBottom: SIZES.large,
     },
     title: {
