@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     scrollContent: {
         flexGrow: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start'
+        justifyContent: 'space-evenly'
     },
     mobileFrame: {
         width: MAX_WIDTH,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.card,
         paddingHorizontal: SIZES.large,
         paddingTop: SIZES.large,
-        justifyContent: 'flex-start',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         flex: 1,
     },
