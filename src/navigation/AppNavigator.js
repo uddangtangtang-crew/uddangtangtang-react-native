@@ -11,14 +11,14 @@ const AppNavigator = () => {
     console.log('AppNavigator 렌더링 중');
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
+            <Stack.Navigator initialRouteName="우당탕탕 여행 궁합">
                 <Stack.Screen 
-                name="Home" 
+                name="우당탕탕 여행 궁합" 
                 component={HomeScreen} 
                 options={{ headerShown: false }}
                 />
                 <Stack.Screen
-                    name="Onboarding"
+                    name="우당탕탕 여행 궁합 테스트"
                     component={OnboardingScreen}
                     options={{ headerShown: false }}
                 />

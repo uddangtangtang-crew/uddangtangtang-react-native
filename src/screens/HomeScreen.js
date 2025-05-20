@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
+import { Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Button from '../components/common/Button';
 import { COLORS, FONTS, SIZES } from '../constants/theme';
 
@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }) => {
 
     const handleStartTest = () => {
         console.log('테스트 시작하기 버튼이 눌렸습니다.');
-        navigation.navigate('Onboarding');
+        navigation.navigate('우당탕탕 여행 궁합 테스트');
     };
 
     const handleCheckCompatibility = () => {

@@ -1,21 +1,39 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
+    Dimensions,
     SafeAreaView,
     ScrollView,
-    View,
-    Text,
     StyleSheet,
-    Dimensions,
+    Text,
     TouchableOpacity,
+    View,
 } from 'react-native';
+import { questions } from '../constants/questions';
 import { COLORS, FONTS, SIZES } from '../constants/theme';
+import { useQuizStore } from '../store/useQuizStore';
+
 
 const MAX_WIDTH = 500;
 const { height } = Dimensions.get('window');
 
 const OnboardingScreen = () => {
-    const handleAnswer = (answer) => {
-        console.log(`선택한 답변: ${answer}`);
+    const navigation = useNavigation();
+
+    const currentIndex = useQuizStore((state) => state.currentIndex);
+    const setAnswer = useQuizStore((state) => state.setAnswer);
+    const nextQuestion = useQuizStore((state) => state.nextQuestion);
+
+    const currentQuestion = questions[currentIndex];
+
+    const handleAnswer = (choice) => {
+        setAnswer(currentQuestion.id, choice);
+
+        if (currentIndex + 1 >= questions.length) {
+            navigation.navigate('Result'); // 모든 질문이 끝나면 결과 화면으로 이동
+        } else {
+            nextQuestion();
+        }
     };
 
     return (
@@ -26,24 +44,22 @@ const OnboardingScreen = () => {
             >
                 <View style={styles.mobileFrame}>
                     <View style={styles.questionContainer}>
-                        <Text style={styles.questionText}>
-                            여행을 계획할 때 당신의 스타일은?
-                        </Text>
+                        <Text style={styles.questionText}>{currentQuestion.question}</Text>
                     </View>
 
                     <View style={styles.answerContainer}>
                         <TouchableOpacity
                             style={styles.answerCard}
-                            onPress={() => handleAnswer('미리 치밀하게 계획!')}
+                            onPress={() => handleAnswer('A')}
                         >
-                            <Text style={styles.answerText}>미리 치밀하게 계획!</Text>
+                            <Text style={styles.answerText}>{currentQuestion.options.A}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             style={styles.answerCard}
-                            onPress={() => handleAnswer('현지에서 느끼는 대로')}
+                            onPress={() => handleAnswer('B')}
                         >
-                            <Text style={styles.answerText}>현지에서 느끼는 대로</Text>
+                            <Text style={styles.answerText}>{currentQuestion.options.B}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
