@@ -6,6 +6,7 @@ export const COLORS = {
     card: '#F2D0D3',       // 카드 배경
     text: '#261F1F',       // 기본 텍스트
     textLight: '#261F1F',  // 밝은 텍스트
+    white: '#FFFFFF',     // 흰색
     border: '#DDDDDD',     // 테두리
     error: '#FF5252',      // 에러
     success: '#4CAF50',    // 성공

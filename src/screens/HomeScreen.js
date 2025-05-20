@@ -9,8 +9,11 @@ const { height } = Dimensions.get('window');
 
 
 const HomeScreen = ({ navigation }) => {
+    console.log('HomeScreen 렌더링 중');
+
     const handleStartTest = () => {
         console.log('테스트 시작하기 버튼이 눌렸습니다.');
+        navigation.navigate('Onboarding');
     };
 
     const handleCheckCompatibility = () => {
