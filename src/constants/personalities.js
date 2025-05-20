@@ -36,7 +36,7 @@ export const personalities = [
       compatibleWith: ['ABAA', 'AABA'],
     },
     {
-      code: 'BBAA',
+      code: 'BBAC',
       name: '🐚 무념무상 힐링러',
       description: '내향 + 무계획 + 조용한 쉼을 선호. 아무 계획 없이 혼자 멍 때리며 힐링을 원하는 사람입니다.',
       compatibleWith: ['ABAA', 'BBAA'],
