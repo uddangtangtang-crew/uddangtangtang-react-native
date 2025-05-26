@@ -1,18 +1,14 @@
 import React from 'react';
-import { Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Button from '../components/common/Button';
-import { COLORS, FONTS, SIZES } from '../constants/theme';
-
-
-const MAX_WIDTH = 500;
-const { height } = Dimensions.get('window');
+import { LinearGradient } from 'expo-linear-gradient';
+import { styles } from '../styles/common';
 
 
 const HomeScreen = ({ navigation }) => {
     console.log('HomeScreen 렌더링 중');
 
     const handleStartTest = () => {
-        console.log('테스트 시작하기 버튼이 눌렸습니다.');
         navigation.navigate('우당탕탕 여행 궁합 테스트');
     };
 
@@ -21,12 +17,18 @@ const HomeScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={[styles.safeArea, { backgroundColor: 'white' }]}>
             <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollContent}
             >
-                <View style={styles.mobileFrame}>
+                <LinearGradient
+                    colors={['#FFFCD8', '#FFEDA8', '#FFBF70']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                    locations={[0, 0.5, 1]}
+                    style={styles.mobileFrame}
+                >
                     <View style={styles.header}>
                         <Text style={styles.title}>우당탕탕 여행 궁합 테스트</Text>
                         <Text style={styles.subtitle}>
@@ -50,70 +52,10 @@ const HomeScreen = ({ navigation }) => {
                             />
                         </View>
                     </View>
-                </View>
+                </LinearGradient>
             </ScrollView>
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: COLORS.background,
-    },
-    scrollView: {
-        flex: 1,
-    },
-    scrollContent: {
-        flexGrow: 1,
-        alignItems: 'center',
-        justifyContent: 'space-evenly'
-    },
-    mobileFrame: {
-        width: MAX_WIDTH,
-        minHeight: height,
-        backgroundColor: COLORS.card,
-        paddingHorizontal: SIZES.large,
-        paddingTop: SIZES.large,
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        flex: 1,
-    },
-    header: {
-        marginBottom: SIZES.large,
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: SIZES.xlarge,
-        color: COLORS.primary,
-        ...FONTS.bold,
-        textAlign: 'center'
-    },
-    subtitle: {
-        fontSize: SIZES.medium,
-        color: COLORS.textLight,
-        ...FONTS.regular,
-        textAlign: 'center',
-        marginTop: SIZES.large,
-        marginBottom: SIZES.small,
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%'
-    },
-    logo: {
-        width: 300,
-        height: 300,
-        marginBottom: SIZES.large,
-    },
-    buttonContainer: {
-        width: '100%',
-        alignItems: 'center',
-        gap: SIZES.base,
-        marginTop: SIZES.large,
-    },
-});
 
 export default HomeScreen;
