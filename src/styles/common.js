@@ -34,16 +34,18 @@ export const styles = StyleSheet.create({
     title: {
         fontSize: SIZES.xlarge,
         color: COLORS.primary,
-        ...FONTS.bold,
+        fontFamily: 'NanumSquareRound',
         textAlign: 'center'
     },
     subtitle: {
-        fontSize: SIZES.medium,
-        color: COLORS.textLight,
-        ...FONTS.regular,
+        fontSize: 18,
+        fontFamily: 'NanumSquareRound',
+        fontWeight: '700',
+        lineHeight: 24,
+        letterSpacing: -0.3,
         textAlign: 'center',
-        marginTop: SIZES.large,
-        marginBottom: SIZES.small,
+        color: '#6E3209',
+        marginBottom: 24
     },
     content: {
         flex: 1,
@@ -52,9 +54,8 @@ export const styles = StyleSheet.create({
         width: '100%'
     },
     logo: {
-        width: 300,
-        height: 300,
-        marginBottom: SIZES.large,
+        width: 250,
+        height: 250,
     },
     buttonContainer: {
         width: '100%',

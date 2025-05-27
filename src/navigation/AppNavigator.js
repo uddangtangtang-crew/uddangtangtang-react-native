@@ -4,21 +4,20 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 
-
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
     console.log('AppNavigator 렌더링 중');
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="우당탕탕 여행 궁합">
+            <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen 
-                name="우당탕탕 여행 궁합" 
-                component={HomeScreen} 
-                options={{ headerShown: false }}
+                    name="Home" 
+                    component={HomeScreen} 
+                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
-                    name="우당탕탕 여행 궁합 테스트"
+                    name="Onboarding"
                     component={OnboardingScreen}
                     options={{ headerShown: false }}
                 />

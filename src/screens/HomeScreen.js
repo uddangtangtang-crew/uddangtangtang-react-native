@@ -3,7 +3,7 @@ import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Button from '../components/common/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
-
+import { TEXTS } from '../constants/texts';
 
 const HomeScreen = ({ navigation }) => {
     console.log('HomeScreen 렌더링 중');
@@ -29,24 +29,25 @@ const HomeScreen = ({ navigation }) => {
                     locations={[0, 0.5, 1]}
                     style={styles.mobileFrame}
                 >
-                    <View style={styles.header}>
-                        <Text style={styles.title}>우당탕탕 여행 궁합 테스트</Text>
-                        <Text style={styles.subtitle}>
-                            나의 여행 성향과 친구와의 여행 궁합을 알아보세요!
-                        </Text>
-                    </View>
-
-                    <View style={styles.content}>
-                        <Image
-                            source={require('../../assets/image.png')}
-                            style={styles.logo}
-                            resizeMode="contain"
-                        />
+                    <View style={[styles.content, { justifyContent: 'flex-start' }]}>
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                source={require('../../assets/logo.svg')}
+                                style={[styles.logo, { marginTop: 80, marginBottom: -80 }]}
+                                resizeMode="contain"
+                            />
+                            <Image
+                                source={require('../../assets/title.svg')}
+                                style={[styles.logo, { marginTop: -70, marginBottom: -20 }]}
+                                resizeMode="contain"
+                            />
+                            <Text style={styles.subtitle}>{TEXTS.HOME.SUBTITLE}</Text>
+                        </View>
 
                         <View style={styles.buttonContainer}>
-                            <Button title="테스트 시작하기" onPress={handleStartTest} />
+                            <Button title={TEXTS.HOME.START_TEST} onPress={handleStartTest} />
                             <Button
-                                title="궁합 보러가기"
+                                title={TEXTS.HOME.CHECK_COMPATIBILITY}
                                 onPress={handleCheckCompatibility}
                                 type="secondary"
                             />
