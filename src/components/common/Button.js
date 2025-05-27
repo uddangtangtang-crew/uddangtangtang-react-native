@@ -14,11 +14,11 @@ const Button = ({
 }) => {
     const renderSVG = () => {
         const ButtonSVG = type === 'secondary' ? SecondaryButtonSVG : PrimaryButtonSVG;
-        
+
         if (Platform.OS === 'web') {
             return (
-                <img 
-                    src={type === 'secondary' ? require('../../../assets/button2.svg') : require('../../../assets/button.svg')} 
+                <img
+                    src={type === 'secondary' ? require('../../../assets/button2.svg') : require('../../../assets/button.svg')}
                     style={styles.svg}
                     alt="button background"
                 />

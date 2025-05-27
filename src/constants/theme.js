@@ -35,3 +35,5 @@ export const SIZES = {
     xlarge: 24,
     xxlarge: 32,
 };
+
+export const MAX_WIDTH = 500; // 화면 최대 너비

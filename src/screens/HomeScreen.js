@@ -4,6 +4,7 @@ import Button from '../components/common/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
 import { TEXTS } from '../constants/texts';
+import { COLORS } from '../constants/theme';
 
 const HomeScreen = ({ navigation }) => {
     console.log('HomeScreen 렌더링 중');
@@ -17,7 +18,7 @@ const HomeScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={[styles.safeArea, { backgroundColor: 'white' }]}>
+        <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
             <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollContent}
@@ -45,7 +46,11 @@ const HomeScreen = ({ navigation }) => {
                         </View>
 
                         <View style={styles.buttonContainer}>
-                            <Button title={TEXTS.HOME.START_TEST} onPress={handleStartTest} />
+                            <Button
+                                title={TEXTS.HOME.START_TEST}
+                                onPress={handleStartTest}
+                                style={{ marginBottom: 12 }}
+                            />
                             <Button
                                 title={TEXTS.HOME.CHECK_COMPATIBILITY}
                                 onPress={handleCheckCompatibility}

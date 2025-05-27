@@ -1,9 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { COLORS, FONTS, SIZES } from '../constants/theme';
-
+import { MAX_WIDTH } from '../constants/theme';
 
 const { height } = Dimensions.get('window');
-const MAX_WIDTH = 500;
 
 export const styles = StyleSheet.create({
     safeArea: {
@@ -60,7 +59,6 @@ export const styles = StyleSheet.create({
     buttonContainer: {
         width: '100%',
         alignItems: 'center',
-        gap: SIZES.base,
         marginTop: SIZES.large,
     },
     joinedUsers: {
