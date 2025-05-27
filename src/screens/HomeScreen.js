@@ -10,7 +10,7 @@ const HomeScreen = ({ navigation }) => {
     console.log('HomeScreen 렌더링 중');
 
     const handleStartTest = () => {
-        navigation.navigate('우당탕탕 여행 궁합 테스트');
+        navigation.navigate('여행 성향 테스트 알아보기');
     };
 
     const handleCheckCompatibility = () => {
