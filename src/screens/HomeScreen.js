@@ -33,12 +33,12 @@ const HomeScreen = ({ navigation }) => {
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Image
                                 source={require('../../assets/logo.svg')}
-                                style={[styles.logo, { marginTop: 60, marginBottom: -80 }]}
+                                style={[styles.logo, { marginTop: 60, marginBottom: -60 }]}
                                 resizeMode="contain"
                             />
                             <Image
                                 source={require('../../assets/title.svg')}
-                                style={[styles.logo, { marginTop: -70, marginBottom: -20 }]}
+                                style={[styles.logo, { marginTop: -60, marginBottom: -20 }]}
                                 resizeMode="contain"
                             />
                             <Text style={styles.subtitle}>{TEXTS.HOME.SUBTITLE}</Text>
