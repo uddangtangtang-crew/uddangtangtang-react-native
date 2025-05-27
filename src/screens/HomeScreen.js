@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Image
                                 source={require('../../assets/logo.svg')}
-                                style={[styles.logo, { marginTop: 80, marginBottom: -80 }]}
+                                style={[styles.logo, { marginTop: 60, marginBottom: -80 }]}
                                 resizeMode="contain"
                             />
                             <Image
@@ -52,6 +52,7 @@ const HomeScreen = ({ navigation }) => {
                                 type="secondary"
                             />
                         </View>
+                        <Text style={styles.joinedUsers}>{TEXTS.HOME.JOINED_USERS}</Text>
                     </View>
                 </LinearGradient>
             </ScrollView>

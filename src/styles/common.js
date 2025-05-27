@@ -63,4 +63,13 @@ export const styles = StyleSheet.create({
         gap: SIZES.base,
         marginTop: SIZES.large,
     },
+    joinedUsers: {
+        fontFamily: 'NanumSquareRound',
+        fontWeight: '400',
+        fontSize: 16,
+        lineHeight: 24,
+        letterSpacing: -0.019 * 16,
+        textAlign: 'center',
+        marginTop: 34,
+    },
 });
