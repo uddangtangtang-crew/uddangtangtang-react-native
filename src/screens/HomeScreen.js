@@ -17,6 +17,8 @@ const HomeScreen = ({ navigation }) => {
         console.log('궁합 보러가기 버튼이 눌렸습니다.');
     };
 
+    const backLayerImg = require('../../assets/back-layer.svg');
+
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
             <ScrollView
@@ -59,6 +61,7 @@ const HomeScreen = ({ navigation }) => {
                         </View>
                         <Text style={styles.joinedUsers}>{TEXTS.HOME.JOINED_USERS}</Text>
                     </View>
+                    <Image source={backLayerImg} style={styles.backLayerImg} />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>

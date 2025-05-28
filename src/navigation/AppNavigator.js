@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
+import ResultScreen from '../screens/ResultScreen';
 
 const Stack = createStackNavigator();
 
@@ -10,7 +11,7 @@ const AppNavigator = () => {
     console.log('AppNavigator 렌더링 중');
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="여행 성향 테스트 알아보기">
+            <Stack.Navigator initialRouteName="결과 확인하기">
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
                     component={HomeScreen} 
@@ -21,6 +22,16 @@ const AppNavigator = () => {
                     component={OnboardingScreen}
                     options={{ headerShown: false }}
                 />
+                <Stack.Screen
+                    name="결과 확인하기"
+                    component={ResultScreen}
+                    options={{ headerShown: false }}
+                />
+                {/* <Stack.Screen
+                    name="당신의 여행 유형은?"
+                    component={}
+                    options={{ headerShown: false }}
+                /> */}
             </Stack.Navigator>
         </NavigationContainer>
     );

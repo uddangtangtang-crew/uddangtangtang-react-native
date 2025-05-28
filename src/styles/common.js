@@ -75,4 +75,18 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 34,
     },
+    backLayerWrap: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        zIndex: 0,
+    },
+    backLayerImg: {
+        width: 500,
+        height: 200,
+        resizeMode: 'cover',
+        opacity: 0.85,
+    },
 });

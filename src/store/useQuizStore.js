@@ -22,5 +22,10 @@ export const useQuizStore = create((set) => ({
       currentIndex: 0,
       answers: {},
     })),
+
+  prevQuestion: () =>
+    set((state) => ({
+      currentIndex: Math.max(0, state.currentIndex - 1)
+    })),
 }));
 

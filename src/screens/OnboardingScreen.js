@@ -14,6 +14,7 @@ import { COLORS, SIZES } from '../constants/theme';
 import { useQuizStore } from '../store/useQuizStore';
 import { styles as commonStyles } from '../styles/common';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 
 // SVG 이미지 리스트 (질문 번호별)
 const questionImages = [
@@ -46,14 +47,15 @@ const questionSvgs = [
     require('../../assets/question-12.svg'),
 ];
 
-const answerAImg = require('../../assets/answer-a.svg');
-const answerBImg = require('../../assets/answer-b.svg');
+const answerAImg = require('../../assets/luggage.svg');
+const answerBImg = require('../../assets/luggage-b.svg');
 const airplaneImg = require('../../assets/airplane.svg');
+const backLayerImg = require('../../assets/back-layer.svg');
 
 // 상단 프로그래스바
 const ProgressBar = ({ current, total }) => (
     <View style={progressStyles.container}>
-        <View style={progressStyles.dotRow}>
+        <View style={[progressStyles.dotRow, { width: TOTAL_DOT_ROW_WIDTH }]}>
             {Array.from({ length: current }).map((_, idx) => (
                 <View
                     key={idx}
@@ -73,12 +75,13 @@ const OnboardingScreen = () => {
     const currentIndex = useQuizStore((state) => state.currentIndex);
     const setAnswer = useQuizStore((state) => state.setAnswer);
     const nextQuestion = useQuizStore((state) => state.nextQuestion);
+    const prevQuestion = useQuizStore((state) => state.prevQuestion);
     const currentQuestion = questions[currentIndex];
 
     const handleAnswer = (choice) => {
         setAnswer(currentQuestion.id, choice);
         if (currentIndex + 1 >= questions.length) {
-            navigation.navigate('Result');
+            navigation.navigate('결과 확인하기');
         } else {
             nextQuestion();
         }
@@ -98,6 +101,14 @@ const OnboardingScreen = () => {
                     style={commonStyles.mobileFrame}
                 >
                     <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+                        {/* 이전 버튼 */}
+                        <View style={localStyles.topBar}>
+                            {currentIndex > 0 && (
+                                <TouchableOpacity onPress={prevQuestion} style={localStyles.backIconBtn}>
+                                    <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
+                                </TouchableOpacity>
+                            )}
+                        </View>
                         {/* 상단 프로그래스바 */}
                         <View style={localStyles.progressBarArea}>
                             <ProgressBar current={currentIndex + 1} total={questions.length} />
@@ -120,18 +131,41 @@ const OnboardingScreen = () => {
                         <View style={localStyles.answerRow}>
                             <TouchableOpacity style={localStyles.answerBtn} onPress={() => handleAnswer('A')}>
                                 <Image source={answerAImg} style={localStyles.answerImg} />
-                                <View style={localStyles.answerTextWrap}>
-                                    <Text style={localStyles.answerText}>{currentQuestion.options.A}</Text>
+                                <View style={[localStyles.answerTextWrap, { alignItems: 'center' }]}>
+                                    {currentQuestion.options.A.split('\n').map((line, idx) =>
+                                        line === ''
+                                            ? <Text key={idx}>{' '}</Text>
+                                            : (
+                                                <Text
+                                                    key={idx}
+                                                    style={idx === 0 ? localStyles.answerTextFirst : localStyles.answerTextRest}
+                                                >
+                                                    {line}
+                                                </Text>
+                                            )
+                                    )}
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity style={localStyles.answerBtn} onPress={() => handleAnswer('B')}>
                                 <Image source={answerBImg} style={localStyles.answerImg} />
-                                <View style={localStyles.answerTextWrap}>
-                                    <Text style={localStyles.answerText}>{currentQuestion.options.B}</Text>
+                                <View style={[localStyles.answerTextWrap, { alignItems: 'center' }]}>
+                                    {currentQuestion.options.B.split('\n').map((line, idx) =>
+                                        line === ''
+                                            ? <Text key={idx}>{' '}</Text>
+                                            : (
+                                                <Text
+                                                    key={idx}
+                                                    style={idx === 0 ? localStyles.answerTextFirst : localStyles.answerTextRest}
+                                                >
+                                                    {line}
+                                                </Text>
+                                            )
+                                    )}
                                 </View>
                             </TouchableOpacity>
                         </View>
                     </View>
+                    <Image source={backLayerImg} style={localStyles.backLayerImg} />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>
@@ -144,6 +178,9 @@ const DOT_HEIGHT = 8;
 const DOT_RADIUS = 40;
 const DOT_MARGIN = 8;
 const AIRPLANE_SIZE = 40;
+const TOTAL_QUESTIONS = 12;
+const TOTAL_DOT_ROW_WIDTH = (DOT_WIDTH + DOT_MARGIN) * TOTAL_QUESTIONS + AIRPLANE_SIZE;
+
 
 const progressStyles = StyleSheet.create({
     container: {
@@ -153,11 +190,12 @@ const progressStyles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 2,
         alignSelf: 'flex-start',
-        paddingLeft: 8,
     },
     dotRow: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingLeft: 4,
     },
     dot: {
         width: DOT_WIDTH,
@@ -172,7 +210,6 @@ const progressStyles = StyleSheet.create({
         width: AIRPLANE_SIZE,
         height: AIRPLANE_SIZE,
         resizeMode: 'contain',
-        marginLeft: 4,
     },
 });
 
@@ -215,36 +252,65 @@ const localStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginHorizontal: 16,
+        marginHorizontal: 64,
         marginTop: 8,
-        gap: 16,
     },
     answerBtn: {
         flex: 1,
         alignItems: 'center',
     },
     answerImg: {
-        width: 150,
-        height: 240,
+        width: 160,
+        height: 260,
         marginHorizontal: 8,
         resizeMode: 'contain',
     },
     answerTextWrap: {
         position: 'absolute',
-        top: 0,
+        top: 90,
         left: 0,
         width: '100%',
-        height: '100%',
-        justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 12,
     },
-    answerText: {
-        color: COLORS.primary,
-        fontWeight: '500',
-        fontSize: 13,
+    answerTextFirst: {
+        color: '#6E3209CC',
+        fontFamily: 'NanumSquareRound',
+        fontWeight: '900',
+        fontSize: 14,
         textAlign: 'center',
         lineHeight: 22,
+    },
+    answerTextRest: {
+        color: '#6E3209CC',
+        fontFamily: 'NanumSquareRound',
+        fontWeight: '500',
+        fontSize: 12,
+        textAlign: 'center',
+        lineHeight: 22,
+    },
+    backLayerWrap: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        zIndex: 0,
+    },
+    backLayerImg: {
+        width: 500,
+        height: 200,
+        bottom: 0,
+        resizeMode: 'cover',
+        opacity: 0.85,
+    },
+    backIconBtn: {
+        position: 'absolute',
+        top: 46,
+        left: 12,
+        zIndex: 20,
+        padding: 16,
+        backgroundColor: 'transparent',
+        borderRadius: 24,
     },
 });
 
