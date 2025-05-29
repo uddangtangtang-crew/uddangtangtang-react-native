@@ -10,12 +10,14 @@ const HomeScreen = ({ navigation }) => {
     console.log('HomeScreen 렌더링 중');
 
     const handleStartTest = () => {
-        navigation.navigate('우당탕탕 여행 궁합 테스트');
+        navigation.navigate('여행 성향 테스트 알아보기');
     };
 
     const handleCheckCompatibility = () => {
         console.log('궁합 보러가기 버튼이 눌렸습니다.');
     };
+
+    const backLayerImg = require('../../assets/back-layer.svg');
 
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
@@ -59,6 +61,7 @@ const HomeScreen = ({ navigation }) => {
                         </View>
                         <Text style={styles.joinedUsers}>{TEXTS.HOME.JOINED_USERS}</Text>
                     </View>
+                    <Image source={backLayerImg} style={styles.backLayerImg} />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>
