@@ -11,7 +11,7 @@ const AppNavigator = () => {
     console.log('AppNavigator 렌더링 중');
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="결과 확인하기">
+            <Stack.Navigator initialRouteName="우당탕탕 여행 성향">
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
                     component={HomeScreen} 
