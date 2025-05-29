@@ -89,4 +89,25 @@ export const styles = StyleSheet.create({
         resizeMode: 'cover',
         opacity: 0.85,
     },
+    // ResultScreen 관련 스타일
+    resultImage: {
+        width: 200,
+        height: 200,
+        marginBottom: 0,
+    },
+    button: {
+        marginTop: -20,
+        marginBottom: 200,
+    },
+    resultBackLayerImg: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        height: 100,
+        opacity: 0.65,
+        resizeMode: 'cover',
+        zIndex: 0,
+    },
 });

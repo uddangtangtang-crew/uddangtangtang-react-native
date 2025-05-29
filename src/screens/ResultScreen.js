@@ -1,33 +1,71 @@
-import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Image, SafeAreaView, ScrollView, Text, View, Alert } from 'react-native';
 import Button from '../components/common/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
 import { COLORS } from '../constants/theme';
 import { useQuizStore } from '../store/useQuizStore';
+import { getTravelTypeResult } from '../services/api';
+import { formatAnswersForAPI } from '../utils/answerFormatter';
+import { 
+    progressStyles, 
+    progressAreaStyles,
+    PROGRESS_CONSTANTS,
+    getCalculatedValues 
+} from '../styles/progressBar';
 
 const ResultScreen = ({ navigation }) => {
+    const [isLoading, setIsLoading] = useState(false);
+    
     const backLayerImg = require('../../assets/back-layer.svg');
     const airplaneOnlyImg = require('../../assets/airplane-only.svg');
     const airplaneImg = require('../../assets/airplane.svg');
     
-    // 퀴즈 상태 가져오기 (12/12 완료 상태)
-    const currentIndex = useQuizStore((state) => state.currentIndex);
-    const totalQuestions = 12;
+    // 퀴즈 상태 가져오기
+    const answers = useQuizStore((state) => state.answers);
+    const { TOTAL_DOT_ROW_WIDTH } = getCalculatedValues();
     
-    const handleGoCategory = () => {
-        navigation.navigate('당신의 여행 유형은?');
+    const handleGoCategory = async () => {
+        setIsLoading(true);
+        
+        try {
+            // 현재 저장된 답변 확인
+            console.log('현재 저장된 답변:', answers);
+            console.log('답변 개수:', Object.keys(answers).length);
+            
+            // 답변이 부족한 경우 처리
+            if (Object.keys(answers).length < 12) {
+                Alert.alert('오류', '모든 질문에 답변해주세요.');
+                setIsLoading(false);
+                return;
+            }
+            
+            // 답변 데이터를 API 형식으로 변환
+            const formattedAnswers = formatAnswersForAPI(answers);
+            console.log('전송할 데이터:', formattedAnswers);
+            
+            // API 호출
+            const result = await getTravelTypeResult(formattedAnswers);
+            
+            if (result.success) {
+                console.log('API 응답 성공:', result.data);
+                // 결과 화면으로 이동 (아직 미구현)
+                navigation.navigate('당신의 여행 유형은?', { 
+                    resultData: result.data 
+                });
+            } else {
+                console.error('API 오류:', result.error);
+                Alert.alert('오류', result.error || '서버에서 오류가 발생했습니다.');
+            }
+        } catch (error) {
+            console.error('예상치 못한 오류:', error);
+            Alert.alert('오류', '네트워크 연결을 확인해주세요.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    // dot 크기/간격/비행기 크기 조정 (온보딩과 동일)
-    const DOT_WIDTH = 30;
-    const DOT_HEIGHT = 8;
-    const DOT_RADIUS = 40;
-    const DOT_MARGIN = 8;
-    const AIRPLANE_SIZE = 40;
-    const TOTAL_DOT_ROW_WIDTH = (DOT_WIDTH + DOT_MARGIN) * totalQuestions + AIRPLANE_SIZE;
-
-    // 상단 프로그래스바 (온보딩과 동일)
+    // 상단 프로그래스바 컴포넌트
     const ProgressBar = ({ current, total }) => (
         <View style={progressStyles.container}>
             <View style={[progressStyles.dotRow, { width: TOTAL_DOT_ROW_WIDTH }]}>
@@ -60,108 +98,38 @@ const ResultScreen = ({ navigation }) => {
                 >
                     <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                         {/* 상단 프로그래스바 */}
-                        <View style={localStyles.progressBarArea}>
-                            <ProgressBar current={totalQuestions} total={totalQuestions} />
+                        <View style={progressAreaStyles.progressBarArea}>
+                            <ProgressBar current={PROGRESS_CONSTANTS.TOTAL_QUESTIONS} total={PROGRESS_CONSTANTS.TOTAL_QUESTIONS} />
                         </View>
                         {/* 질문 카운트(12/12) */}
-                        <View style={localStyles.counterArea}>
-                            <Text style={localStyles.progressText}>{totalQuestions}/{totalQuestions}</Text>
+                        <View style={progressAreaStyles.counterArea}>
+                            <Text style={progressAreaStyles.progressText}>{PROGRESS_CONSTANTS.TOTAL_QUESTIONS}/{PROGRESS_CONSTANTS.TOTAL_QUESTIONS}</Text>
                         </View>
 
                         <View style={[styles.content, { justifyContent: 'center', alignItems: 'center', flex: 1 }]}>
                             {/* 결과 이미지 */}
                             <Image
                                 source={airplaneOnlyImg}
-                                style={localStyles.resultImage}
+                                style={styles.resultImage}
                                 resizeMode="contain"
                             />
                             
                             {/* 버튼 */}
                             <Button
-                                title="결과 확인하기"
+                                title={isLoading ? "결과 분석 중..." : "결과 확인하기"}
                                 onPress={handleGoCategory}
-                                style={localStyles.button}
+                                style={styles.button}
+                                disabled={isLoading}
                             />
                         </View>
                     </View>
                     
                     {/* 하단 레이어 */}
-                    <Image source={backLayerImg} style={localStyles.backLayerImg} />
+                    <Image source={backLayerImg} style={styles.resultBackLayerImg} />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>
     );
-};
-
-// 프로그래스바 스타일 (온보딩과 동일)
-const progressStyles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        marginTop: 2,
-        marginBottom: 2,
-        alignSelf: 'flex-start',
-    },
-    dotRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingLeft: 4,
-    },
-    dot: {
-        width: 30,
-        height: 8,
-        borderRadius: 40,
-        marginRight: 8,
-    },
-    active: {
-        backgroundColor: '#95B55E',
-    },
-    airplane: {
-        width: 40,
-        height: 40,
-        resizeMode: 'contain',
-    },
-});
-
-const localStyles = {
-    progressBarArea: {
-        alignItems: 'flex-start',
-        width: '100%',
-        alignSelf: 'flex-start',
-        marginBottom: 8,
-    },
-    counterArea: {
-        alignItems: 'center',
-        marginTop: 8,
-        marginBottom: 28,
-    },
-    progressText: {
-        color: '#95B55E',
-        fontWeight: '600',
-        fontSize: 14,
-    },
-    resultImage: {
-        width: 200,
-        height: 200,
-        marginBottom: -20,
-    },
-    button: {
-        marginTop: 0,
-        marginBottom: 200
-    },
-    backLayerImg: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100%',
-        height: 100,
-        opacity: 0.65,
-        resizeMode: 'cover',
-        zIndex: 0,
-    },
 };
 
 export default ResultScreen;

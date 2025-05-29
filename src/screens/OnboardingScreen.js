@@ -15,6 +15,13 @@ import { useQuizStore } from '../store/useQuizStore';
 import { styles as commonStyles } from '../styles/common';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import {
+    progressStyles,
+    progressAreaStyles,
+    PROGRESS_CONSTANTS,
+    getCalculatedValues
+} from '../styles/progressBar';
+import { onboardStyles } from '../styles/onboard';
 
 // SVG 이미지 리스트 (질문 번호별)
 const questionImages = [
@@ -53,22 +60,26 @@ const airplaneImg = require('../../assets/airplane.svg');
 const backLayerImg = require('../../assets/back-layer.svg');
 
 // 상단 프로그래스바
-const ProgressBar = ({ current, total }) => (
-    <View style={progressStyles.container}>
-        <View style={[progressStyles.dotRow, { width: TOTAL_DOT_ROW_WIDTH }]}>
-            {Array.from({ length: current }).map((_, idx) => (
-                <View
-                    key={idx}
-                    style={[
-                        progressStyles.dot,
-                        progressStyles.active,
-                    ]}
-                />
-            ))}
-            <Image source={airplaneImg} style={progressStyles.airplane} />
+const ProgressBar = ({ current, total }) => {
+    const { TOTAL_DOT_ROW_WIDTH } = getCalculatedValues();
+
+    return (
+        <View style={progressStyles.container}>
+            <View style={[progressStyles.dotRow, { width: TOTAL_DOT_ROW_WIDTH }]}>
+                {Array.from({ length: current }).map((_, idx) => (
+                    <View
+                        key={idx}
+                        style={[
+                            progressStyles.dot,
+                            progressStyles.active,
+                        ]}
+                    />
+                ))}
+                <Image source={airplaneImg} style={progressStyles.airplane} />
+            </View>
         </View>
-    </View>
-);
+    );
+};
 
 const OnboardingScreen = () => {
     const navigation = useNavigation();
@@ -102,43 +113,43 @@ const OnboardingScreen = () => {
                 >
                     <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                         {/* 이전 버튼 */}
-                        <View style={localStyles.topBar}>
+                        <View style={onboardStyles.topBar}>
                             {currentIndex > 0 && (
-                                <TouchableOpacity onPress={prevQuestion} style={localStyles.backIconBtn}>
+                                <TouchableOpacity onPress={prevQuestion} style={onboardStyles.backIconBtn}>
                                     <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
                                 </TouchableOpacity>
                             )}
                         </View>
                         {/* 상단 프로그래스바 */}
-                        <View style={localStyles.progressBarArea}>
-                            <ProgressBar current={currentIndex + 1} total={questions.length} />
+                        <View style={progressAreaStyles.progressBarArea}>
+                            <ProgressBar current={currentIndex + 1} total={PROGRESS_CONSTANTS.TOTAL_QUESTIONS} />
                         </View>
                         {/* 질문 카운트(1/12) - 하단 중앙 */}
-                        <View style={localStyles.counterArea}>
-                            <Text style={localStyles.progressText}>{currentIndex + 1}/{questions.length}</Text>
+                        <View style={progressAreaStyles.counterArea}>
+                            <Text style={progressAreaStyles.progressText}>{currentIndex + 1}/{PROGRESS_CONSTANTS.TOTAL_QUESTIONS}</Text>
                         </View>
 
                         {/* 질문 SVG (Q1~Q12) */}
-                        <Image source={questionSvgs[currentIndex]} style={localStyles.qustionImage} />
+                        <Image source={questionSvgs[currentIndex]} style={onboardStyles.qustionImage} />
 
                         {/* 질문 텍스트 */}
-                        <Text style={[commonStyles.subtitle, localStyles.questionText]}>{currentQuestion.question}</Text>
+                        <Text style={[commonStyles.subtitle, onboardStyles.questionText]}>{currentQuestion.question}</Text>
 
                         {/* 질문 묘사 SVG (Q1~Q12) */}
-                        <Image source={questionImages[currentIndex]} style={localStyles.qImage} />
+                        <Image source={questionImages[currentIndex]} style={onboardStyles.qImage} />
 
                         {/* 답변 영역 */}
-                        <View style={localStyles.answerRow}>
-                            <TouchableOpacity style={localStyles.answerBtn} onPress={() => handleAnswer('A')}>
-                                <Image source={answerAImg} style={localStyles.answerImg} />
-                                <View style={[localStyles.answerTextWrap, { alignItems: 'center' }]}>
+                        <View style={onboardStyles.answerRow}>
+                            <TouchableOpacity style={onboardStyles.answerBtn} onPress={() => handleAnswer('A')}>
+                                <Image source={answerAImg} style={onboardStyles.answerImg} />
+                                <View style={[onboardStyles.answerTextWrap, { alignItems: 'center' }]}>
                                     {currentQuestion.options.A.split('\n').map((line, idx) =>
                                         line === ''
                                             ? <Text key={idx}>{' '}</Text>
                                             : (
                                                 <Text
                                                     key={idx}
-                                                    style={idx === 0 ? localStyles.answerTextFirst : localStyles.answerTextRest}
+                                                    style={idx === 0 ? onboardStyles.answerTextFirst : onboardStyles.answerTextRest}
                                                 >
                                                     {line}
                                                 </Text>
@@ -146,16 +157,16 @@ const OnboardingScreen = () => {
                                     )}
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={localStyles.answerBtn} onPress={() => handleAnswer('B')}>
-                                <Image source={answerBImg} style={localStyles.answerImg} />
-                                <View style={[localStyles.answerTextWrap, { alignItems: 'center' }]}>
+                            <TouchableOpacity style={onboardStyles.answerBtn} onPress={() => handleAnswer('B')}>
+                                <Image source={answerBImg} style={onboardStyles.answerImg} />
+                                <View style={[onboardStyles.answerTextWrap, { alignItems: 'center' }]}>
                                     {currentQuestion.options.B.split('\n').map((line, idx) =>
                                         line === ''
                                             ? <Text key={idx}>{' '}</Text>
                                             : (
                                                 <Text
                                                     key={idx}
-                                                    style={idx === 0 ? localStyles.answerTextFirst : localStyles.answerTextRest}
+                                                    style={idx === 0 ? onboardStyles.answerTextFirst : onboardStyles.answerTextRest}
                                                 >
                                                     {line}
                                                 </Text>
@@ -165,153 +176,11 @@ const OnboardingScreen = () => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Image source={backLayerImg} style={localStyles.backLayerImg} />
+                    <Image source={backLayerImg} style={onboardStyles.backLayerImg} />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>
     );
 };
-
-// dot 크기/간격/비행기 크기 조정
-const DOT_WIDTH = 30;
-const DOT_HEIGHT = 8;
-const DOT_RADIUS = 40;
-const DOT_MARGIN = 8;
-const AIRPLANE_SIZE = 40;
-const TOTAL_QUESTIONS = 12;
-const TOTAL_DOT_ROW_WIDTH = (DOT_WIDTH + DOT_MARGIN) * TOTAL_QUESTIONS + AIRPLANE_SIZE;
-
-
-const progressStyles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        marginTop: 2,
-        marginBottom: 2,
-        alignSelf: 'flex-start',
-    },
-    dotRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingLeft: 4,
-    },
-    dot: {
-        width: DOT_WIDTH,
-        height: DOT_HEIGHT,
-        borderRadius: DOT_RADIUS,
-        marginRight: DOT_MARGIN,
-    },
-    active: {
-        backgroundColor: '#95B55E',
-    },
-    airplane: {
-        width: AIRPLANE_SIZE,
-        height: AIRPLANE_SIZE,
-        resizeMode: 'contain',
-    },
-});
-
-const localStyles = StyleSheet.create({
-    progressBarArea: {
-        alignItems: 'flex-start',
-        width: '100%',
-        alignSelf: 'flex-start',
-        marginBottom: 8,
-    },
-    counterArea: {
-        alignItems: 'center',
-        marginTop: 8,
-        marginBottom: 28,
-    },
-    progressText: {
-        color: '#95B55E',
-        fontWeight: '600',
-        fontSize: 14,
-    },
-    qImage: {
-        width: 135,
-        height: 135,
-        alignSelf: 'center',
-        marginBottom: 36,
-        resizeMode: 'contain',
-    },
-    qustionImage: {
-        width: 54,
-        height: 72,
-        alignSelf: 'center',
-        marginBottom: 16,
-        resizeMode: 'contain',
-    },
-    questionText: {
-        textAlign: 'center',
-        marginBottom: 24,
-    },
-    answerRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginHorizontal: 64,
-        marginTop: 8,
-    },
-    answerBtn: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    answerImg: {
-        width: 160,
-        height: 260,
-        marginHorizontal: 8,
-        resizeMode: 'contain',
-    },
-    answerTextWrap: {
-        position: 'absolute',
-        top: 90,
-        left: 0,
-        width: '100%',
-        alignItems: 'center',
-    },
-    answerTextFirst: {
-        color: '#6E3209CC',
-        fontFamily: 'NanumSquareRound',
-        fontWeight: '900',
-        fontSize: 14,
-        textAlign: 'center',
-        lineHeight: 22,
-    },
-    answerTextRest: {
-        color: '#6E3209CC',
-        fontFamily: 'NanumSquareRound',
-        fontWeight: '500',
-        fontSize: 12,
-        textAlign: 'center',
-        lineHeight: 22,
-    },
-    backLayerWrap: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100%',
-        zIndex: 0,
-    },
-    backLayerImg: {
-        width: 500,
-        height: 200,
-        bottom: 0,
-        resizeMode: 'cover',
-        opacity: 0.85,
-    },
-    backIconBtn: {
-        position: 'absolute',
-        top: 46,
-        left: 12,
-        zIndex: 20,
-        padding: 16,
-        backgroundColor: 'transparent',
-        borderRadius: 24,
-    },
-});
 
 export default OnboardingScreen;
