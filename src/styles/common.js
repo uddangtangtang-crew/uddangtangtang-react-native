@@ -75,6 +75,14 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 34,
     },
+    typeNameText: {
+        fontFamily: 'NanumSquareRound',
+        fontWeight: '800',
+        fontSize: 20,
+        textAlign: 'center',
+        color: '#745F56',
+        marginBottom: 10,
+    },
     backLayerWrap: {
         position: 'absolute',
         left: 0,
@@ -108,6 +116,79 @@ export const styles = StyleSheet.create({
         height: 100,
         opacity: 0.65,
         resizeMode: 'cover',
+        zIndex: 0,
+    },
+    // CategoryScreen 섹션 스타일들
+    sectionTitle: {
+        fontFamily: 'NanumSquareRound',
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#6E3209',
+        marginBottom: 10,
+        textAlign: 'left',
+    },
+    reasonText: {
+        fontFamily: 'NanumSquareRound',
+        fontWeight: '400',
+        fontSize: 14,
+        lineHeight: 25.2, // 180% of 14px
+        letterSpacing: -0.28, // -2% of 14px
+        color: '#6E3209',
+        textAlign: 'left',
+    },
+    reasonLastSentence: {
+        fontFamily: 'NanumSquareRound',
+        fontWeight: '700',
+        fontSize: 14,
+        lineHeight: 25.2, // 180% of 14px
+        letterSpacing: -0.28, // -2% of 14px
+        color: '#6E3209',
+        textAlign: 'left',
+    },
+    descriptionText: {
+        fontFamily: 'NanumSquareRound',
+        fontSize: 14,
+        color: '#6E3209',
+        lineHeight: 20,
+        textAlign: 'left',
+    },
+    // CategoryScreen 버튼 스타일들
+    primaryButton: {
+        backgroundColor: '#FF6B6B',
+        paddingHorizontal: 40,
+        paddingVertical: 15,
+        borderRadius: 25,
+        marginBottom: 20,
+    },
+    shareButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 15,
+    },
+    shareButton: {
+        backgroundColor: 'white',
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        marginBottom: 40,
+        gap: 20,
+    },
+    backLayerWrap: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
         zIndex: 0,
     },
 });
