@@ -96,7 +96,6 @@ export const styles = StyleSheet.create({
     backLayerImg: {
         width: 500,
         height: 200,
-        resizeMode: 'cover',
         opacity: 0.85,
     },
     // ResultScreen 관련 스타일
@@ -117,7 +116,6 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: 100,
         opacity: 0.65,
-        resizeMode: 'cover',
         zIndex: 0,
     },
     // CategoryScreen 섹션 스타일들

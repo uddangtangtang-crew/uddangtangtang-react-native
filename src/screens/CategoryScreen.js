@@ -189,7 +189,7 @@ const CategoryScreen = ({ route }) => {
                     </View>
 
                     {/* 하단 레이어 */}
-                    <Image source={backLayerImg} style={[styles.resultBackLayerImg, { zIndex: -1 }]} />
+                    <Image source={backLayerImg} style={[styles.resultBackLayerImg, { zIndex: -1 }]} resizeMode="cover" />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>

@@ -181,7 +181,7 @@ const ResultScreen = ({ navigation }) => {
                     </View>
                     
                     {/* 하단 레이어 */}
-                    <Image source={backLayerImg} style={styles.resultBackLayerImg} />
+                    <Image source={backLayerImg} style={styles.resultBackLayerImg} resizeMode="cover" />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>

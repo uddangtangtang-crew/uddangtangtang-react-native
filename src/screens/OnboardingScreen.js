@@ -75,7 +75,7 @@ const ProgressBar = ({ current, total }) => {
                         ]}
                     />
                 ))}
-                <Image source={airplaneImg} style={progressStyles.airplane} />
+                <Image source={airplaneImg} style={progressStyles.airplane} resizeMode="contain" />
             </View>
         </View>
     );
@@ -130,18 +130,18 @@ const OnboardingScreen = () => {
                         </View>
 
                         {/* 질문 SVG (Q1~Q12) */}
-                        <Image source={questionSvgs[currentIndex]} style={onboardStyles.qustionImage} />
+                        <Image source={questionSvgs[currentIndex]} style={onboardStyles.qustionImage} resizeMode="contain" />
 
                         {/* 질문 텍스트 */}
                         <Text style={[commonStyles.subtitle, onboardStyles.questionText]}>{currentQuestion.question}</Text>
 
                         {/* 질문 묘사 SVG (Q1~Q12) */}
-                        <Image source={questionImages[currentIndex]} style={onboardStyles.qImage} />
+                        <Image source={questionImages[currentIndex]} style={onboardStyles.qImage} resizeMode="contain" />
 
                         {/* 답변 영역 */}
                         <View style={onboardStyles.answerRow}>
                             <TouchableOpacity style={onboardStyles.answerBtn} onPress={() => handleAnswer('A')}>
-                                <Image source={answerAImg} style={onboardStyles.answerImg} />
+                                <Image source={answerAImg} style={onboardStyles.answerImg} resizeMode="contain" />
                                 <View style={[onboardStyles.answerTextWrap, { alignItems: 'center' }]}>
                                     {currentQuestion.options.A.split('\n').map((line, idx) =>
                                         line === ''
@@ -158,7 +158,7 @@ const OnboardingScreen = () => {
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity style={onboardStyles.answerBtn} onPress={() => handleAnswer('B')}>
-                                <Image source={answerBImg} style={onboardStyles.answerImg} />
+                                <Image source={answerBImg} style={onboardStyles.answerImg} resizeMode="contain" />
                                 <View style={[onboardStyles.answerTextWrap, { alignItems: 'center' }]}>
                                     {currentQuestion.options.B.split('\n').map((line, idx) =>
                                         line === ''
@@ -176,7 +176,7 @@ const OnboardingScreen = () => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Image source={backLayerImg} style={commonStyles.backLayerImg} />
+                    <Image source={backLayerImg} style={commonStyles.backLayerImg} resizeMode="cover" />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>

@@ -38,7 +38,6 @@ export const progressStyles = StyleSheet.create({
     airplane: {
         width: PROGRESS_CONSTANTS.AIRPLANE_SIZE,
         height: PROGRESS_CONSTANTS.AIRPLANE_SIZE,
-        resizeMode: 'contain',
     },
 });
 
