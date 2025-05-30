@@ -1,102 +1,37 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
     SafeAreaView,
     ScrollView,
-    StyleSheet,
     Text,
     TouchableOpacity,
     View,
     Image,
 } from 'react-native';
-import { questions } from '../constants/questions';
-import { COLORS, SIZES } from '../constants/theme';
-import { useQuizStore } from '../store/useQuizStore';
+import { COLORS} from '../constants/theme';
 import { styles as commonStyles } from '../styles/common';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import {
-    progressStyles,
     progressAreaStyles,
-    PROGRESS_CONSTANTS,
-    getCalculatedValues
+    PROGRESS_CONSTANTS
 } from '../styles/progressBar';
 import { onboardStyles } from '../styles/onboard';
-
-// SVG 이미지 리스트 (질문 번호별)
-const questionImages = [
-    require('../../assets/q1.svg'),
-    require('../../assets/q2.svg'),
-    require('../../assets/q3.svg'),
-    require('../../assets/q4.svg'),
-    require('../../assets/q5.svg'),
-    require('../../assets/q6.svg'),
-    require('../../assets/q7.svg'),
-    require('../../assets/q8.svg'),
-    require('../../assets/q9.svg'),
-    require('../../assets/q10.svg'),
-    require('../../assets/q11.svg'),
-    require('../../assets/q12.svg'),
-];
-
-const questionSvgs = [
-    require('../../assets/question-1.svg'),
-    require('../../assets/question-2.svg'),
-    require('../../assets/question-3.svg'),
-    require('../../assets/question-4.svg'),
-    require('../../assets/question-5.svg'),
-    require('../../assets/question-6.svg'),
-    require('../../assets/question-7.svg'),
-    require('../../assets/question-8.svg'),
-    require('../../assets/question-9.svg'),
-    require('../../assets/question-10.svg'),
-    require('../../assets/question-11.svg'),
-    require('../../assets/question-12.svg'),
-];
+import { useOnboardingScreen } from '../hooks/useOnboardingScreen';
+import ProgressBar from '../components/common/ProgressBar';
+import BackLayer from '../components/common/BackLayer';
 
 const answerAImg = require('../../assets/luggage.svg');
 const answerBImg = require('../../assets/luggage-b.svg');
-const airplaneImg = require('../../assets/airplane.svg');
-const backLayerImg = require('../../assets/back-layer.svg');
-
-// 상단 프로그래스바
-const ProgressBar = ({ current, total }) => {
-    const { TOTAL_DOT_ROW_WIDTH } = getCalculatedValues();
-
-    return (
-        <View style={progressStyles.container}>
-            <View style={[progressStyles.dotRow, { width: TOTAL_DOT_ROW_WIDTH }]}>
-                {Array.from({ length: current }).map((_, idx) => (
-                    <View
-                        key={idx}
-                        style={[
-                            progressStyles.dot,
-                            progressStyles.active,
-                        ]}
-                    />
-                ))}
-                <Image source={airplaneImg} style={progressStyles.airplane} resizeMode="contain" />
-            </View>
-        </View>
-    );
-};
 
 const OnboardingScreen = () => {
-    const navigation = useNavigation();
-    const currentIndex = useQuizStore((state) => state.currentIndex);
-    const setAnswer = useQuizStore((state) => state.setAnswer);
-    const nextQuestion = useQuizStore((state) => state.nextQuestion);
-    const prevQuestion = useQuizStore((state) => state.prevQuestion);
-    const currentQuestion = questions[currentIndex];
-
-    const handleAnswer = (choice) => {
-        setAnswer(currentQuestion.id, choice);
-        if (currentIndex + 1 >= questions.length) {
-            navigation.navigate('결과 확인하기');
-        } else {
-            nextQuestion();
-        }
-    };
+    const {
+        currentIndex,
+        currentQuestion,
+        questionImages,
+        questionSvgs,
+        handleAnswer,
+        prevQuestion
+    } = useOnboardingScreen();
 
     return (
         <SafeAreaView style={[commonStyles.safeArea, { backgroundColor: COLORS.background }]}>
@@ -124,6 +59,7 @@ const OnboardingScreen = () => {
                         <View style={progressAreaStyles.progressBarArea}>
                             <ProgressBar current={currentIndex + 1} total={PROGRESS_CONSTANTS.TOTAL_QUESTIONS} />
                         </View>
+                        
                         {/* 질문 카운트(1/12) - 하단 중앙 */}
                         <View style={progressAreaStyles.counterArea}>
                             <Text style={progressAreaStyles.progressText}>{currentIndex + 1}/{PROGRESS_CONSTANTS.TOTAL_QUESTIONS}</Text>
@@ -176,7 +112,7 @@ const OnboardingScreen = () => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Image source={backLayerImg} style={commonStyles.backLayerImg} resizeMode="cover" />
+                    <BackLayer variant="onboard" />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>

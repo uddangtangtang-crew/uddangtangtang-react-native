@@ -118,6 +118,11 @@ export const styles = StyleSheet.create({
         opacity: 0.65,
         zIndex: 0,
     },
+    // Section 관련 공통 스타일들
+    sectionContainer: {
+        marginBottom: 20,
+        width: '100%',
+    },
     // CategoryScreen 섹션 스타일들
     sectionTitle: {
         fontFamily: 'NanumSquareRound',

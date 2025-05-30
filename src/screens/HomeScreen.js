@@ -7,8 +7,6 @@ import { TEXTS } from '../constants/texts';
 import { COLORS } from '../constants/theme';
 
 const HomeScreen = ({ navigation }) => {
-    console.log('HomeScreen 렌더링 중');
-
     const handleStartTest = () => {
         navigation.navigate('여행 성향 테스트 알아보기');
     };

@@ -1,54 +1,25 @@
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View, TouchableOpacity } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
 import { COLORS } from '../constants/theme';
 import Button from '../components/common/Button';
+import ShareButtons from '../components/common/ShareButtons';
+import SectionContainer from '../components/common/SectionContainer';
+import BackLayer from '../components/common/BackLayer';
+import { useMatchingResultScreen } from '../hooks/useMatchingResultScreen';
 
 const MatchingResultScreen = ({ route, navigation }) => {
     const { matchingResult } = route.params;
-
-    // 유형별 이미지 매핑
-    const typeImages = {
-        '가성비 장인 원숭이': require('../../assets/가성비 장인 원숭이.svg'),
-        '감성 도파민러 돼지': require('../../assets/감성 도파민러 돼지.svg'),
-        '단톡방 총무 고양이': require('../../assets/단톡방 총무 고양이.svg'),
-        '무념무상 힐링러 병아리': require('../../assets/무념무상 힐링러 병아리.svg'),
-        '자낳괴 탐험가 코끼리': require('../../assets/자낳괴 탐험가 코끼리.svg'),
-        '패키지 러버 토끼': require('../../assets/패키지 러버 토끼.svg'),
-        '계획충 쉴러 곰': require('../../assets/계획충 쉴러 곰.svg'),
-        '온도차 낭만파 강아지': require('../../assets/온도차 낭만파 강아지.svg'),
-    };
-
-    const backLayerImg = require('../../assets/back-layer.svg');
-
-    const handleGoHome = () => {
-        navigation.navigate('우당탕탕 여행 성향');
-    };
-
-    const handleShare = () => {
-        // 공유하기 로직 (나중에 구현)
-        console.log('공유하기');
-    };
-
-    const handleCopyLink = () => {
-        // 링크 복사 로직 (나중에 구현)
-        console.log('링크 복사');
-    };
-
-    // 궁합도에 따른 색상 결정
-    const getCompatibilityColor = (score) => {
-        if (score >= 80) return '#4CAF50'; // 초록색
-        if (score >= 60) return '#FF9800'; // 주황색
-        return '#F44336'; // 빨간색
-    };
-
-    // 궁합도에 따른 메시지
-    const getCompatibilityMessage = (score) => {
-        if (score >= 80) return '환상의 궁합! 🎉';
-        if (score >= 60) return '좋은 궁합이에요! 👍';
-        return '서로 다른 매력이 있어요! 💫';
-    };
+    
+    const {
+        typeImages,
+        getCompatibilityColor,
+        getCompatibilityMessage,
+        handleGoHome,
+        handleShare,
+        handleCopyLink
+    } = useMatchingResultScreen(matchingResult);
 
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
@@ -105,20 +76,14 @@ const MatchingResultScreen = ({ route, navigation }) => {
                     </View>
 
                     {/* 궁합 설명 */}
-                    <View style={resultStyles.sectionContainer}>
-                        <Text style={resultStyles.sectionTitle}>
-                            ✨ 궁합 분석
-                        </Text>
-                        <Text style={resultStyles.descriptionText}>
+                    <SectionContainer title="✨ 궁합 분석">
+                        <Text style={styles.descriptionText}>
                             {matchingResult.description}
                         </Text>
-                    </View>
+                    </SectionContainer>
 
                     {/* 장점 */}
-                    <View style={resultStyles.sectionContainer}>
-                        <Text style={resultStyles.sectionTitle}>
-                            👍 이런 점이 좋아요
-                        </Text>
+                    <SectionContainer title="👍 이런 점이 좋아요">
                         {Array.isArray(matchingResult.pros) && matchingResult.pros.length > 0 ? (
                             matchingResult.pros.map((pro, index) => (
                                 <Text key={index} style={resultStyles.listItem}>
@@ -126,17 +91,14 @@ const MatchingResultScreen = ({ route, navigation }) => {
                                 </Text>
                             ))
                         ) : (
-                            <Text style={resultStyles.descriptionText}>
+                            <Text style={styles.descriptionText}>
                                 {matchingResult.pros || "서로의 장점을 발견해보세요!"}
                             </Text>
                         )}
-                    </View>
+                    </SectionContainer>
 
                     {/* 주의점 */}
-                    <View style={resultStyles.sectionContainer}>
-                        <Text style={resultStyles.sectionTitle}>
-                            💡 이런 점을 주의해요
-                        </Text>
+                    <SectionContainer title="💡 이런 점을 주의해요">
                         {Array.isArray(matchingResult.cons) && matchingResult.cons.length > 0 ? (
                             matchingResult.cons.map((con, index) => (
                                 <Text key={index} style={resultStyles.listItem}>
@@ -144,50 +106,36 @@ const MatchingResultScreen = ({ route, navigation }) => {
                                 </Text>
                             ))
                         ) : (
-                            <Text style={resultStyles.descriptionText}>
+                            <Text style={styles.descriptionText}>
                                 {matchingResult.cons || "서로를 이해하며 여행해보세요!"}
                             </Text>
                         )}
-                    </View>
+                    </SectionContainer>
 
                     {/* 추천 여행지 */}
-                    <View style={resultStyles.sectionContainer}>
-                        <Text style={resultStyles.sectionTitle}>
-                            🏝️ 추천 여행지
-                        </Text>
-                        <Text style={resultStyles.descriptionText}>
+                    <SectionContainer title="🏝️ 추천 여행지">
+                        <Text style={styles.descriptionText}>
                             {matchingResult.recommendation}
                         </Text>
-                    </View>
+                    </SectionContainer>
 
                     {/* 버튼들 */}
                     <View style={[styles.buttonContainer, { zIndex: 10 }]}>
                         <Button
                             title="테스트 다시하기"
-                            onPress={handleGoHome}
+                            onPress={() => handleGoHome(navigation)}
                             type="primary"
                         />
 
                         {/* 공유 버튼들 */}
-                        <View style={styles.shareButtonContainer}>
-                            <TouchableOpacity
-                                onPress={handleCopyLink}
-                                style={styles.shareButton}
-                            >
-                                <Text style={{ fontSize: 20 }}>🔗</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity
-                                onPress={handleShare}
-                                style={styles.shareButton}
-                            >
-                                <Text style={{ fontSize: 20 }}>💬</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <ShareButtons 
+                            onShare={handleShare}
+                            onCopyLink={handleCopyLink}
+                        />
                     </View>
 
                     {/* 하단 레이어 */}
-                    <Image source={backLayerImg} style={[styles.resultBackLayerImg, { zIndex: -1 }]} resizeMode="cover" />
+                    <BackLayer variant="result" style={{ zIndex: -1 }} />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>
@@ -259,25 +207,6 @@ const resultStyles = {
         fontFamily: 'NanumSquareRound',
         fontSize: 48,
         fontWeight: 'bold',
-    },
-    sectionContainer: {
-        marginBottom: 20,
-        width: '100%',
-    },
-    sectionTitle: {
-        fontFamily: 'NanumSquareRound',
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#6E3209',
-        marginBottom: 10,
-        textAlign: 'left',
-    },
-    descriptionText: {
-        fontFamily: 'NanumSquareRound',
-        fontSize: 14,
-        color: '#6E3209',
-        lineHeight: 20,
-        textAlign: 'left',
     },
     listItem: {
         fontFamily: 'NanumSquareRound',

@@ -15,7 +15,7 @@ const AppNavigator = () => {
     console.log('AppNavigator 렌더링 중');
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="여행 궁합 알아보기">
+            <Stack.Navigator initialRouteName="우당탕탕 여행 성향">
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
                     component={HomeScreen} 
@@ -42,12 +42,12 @@ const AppNavigator = () => {
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen
-                    name="LoadingScreen"
+                    name="궁합 분석하는 중.."
                     component={LoadingScreen}
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen
-                    name="MatchingResultScreen"
+                    name="여행 궁합 결과는?"
                     component={MatchingResultScreen}
                     options={{ headerShown: false }}
                 />
