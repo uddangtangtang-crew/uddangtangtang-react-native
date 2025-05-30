@@ -33,9 +33,28 @@ const ResultScreen = ({ navigation }) => {
             console.log('현재 저장된 답변:', answers);
             console.log('답변 개수:', Object.keys(answers).length);
             
-            // 답변이 부족한 경우 처리
+            // 개발 테스트용: 답변이 부족해도 CategoryScreen으로 이동
             if (Object.keys(answers).length < 12) {
-                Alert.alert('오류', '모든 질문에 답변해주세요.');
+                console.log('테스트용: 답변 부족하지만 CategoryScreen으로 이동');
+                // 테스트용 Mock 데이터로 이동
+                const mockApiResponse = {
+                    isSuccess: true,
+                    code: "COMMON200",
+                    message: "성공입니다.",
+                    result: {
+                        code: "B-A-A-B",
+                        reason: "사용자는 여행 계획을 유연하게 세우며, 내향적 성향이 강하고, 소비에서는 실속을 중시하는 경향이 있습니다.",
+                        keyword: "#유연한 여행 #내향적 휴식 #실속파 #힐링과 자극 둘 다",
+                        image: null,
+                        description: "당신은 즉흥적인 감정과 직관에 따라 여행하는 타입입니다.",
+                        typeName: "자낳괴 탐험가",
+                        tripRecommand: "국내: 제주 협재 해변 – 감성 카페, 사진 명소 넘치는 뷰 성지"
+                    }
+                };
+                
+                navigation.navigate('당신의 여행 유형은?', { 
+                    resultData: mockApiResponse 
+                });
                 setIsLoading(false);
                 return;
             }
@@ -49,17 +68,54 @@ const ResultScreen = ({ navigation }) => {
             
             if (result.success) {
                 console.log('API 응답 성공:', result.data);
-                // 결과 화면으로 이동 (아직 미구현)
                 navigation.navigate('당신의 여행 유형은?', { 
                     resultData: result.data 
                 });
             } else {
                 console.error('API 오류:', result.error);
-                Alert.alert('오류', result.error || '서버에서 오류가 발생했습니다.');
+                // 테스트용: API 실패해도 CategoryScreen으로 이동
+                console.log('테스트용: API 실패했지만 CategoryScreen으로 이동');
+                const mockApiResponse = {
+                    isSuccess: true,
+                    code: "COMMON200", 
+                    message: "성공입니다.",
+                    result: {
+                        code: "B-A-A-B",
+                        reason: "API 호출이 실패했지만 테스트용 데이터로 표시됩니다.",
+                        keyword: "#테스트 #개발용 #Mock데이터",
+                        image: null,
+                        description: "이것은 테스트용 데이터입니다. API 연동 후 실제 데이터로 교체됩니다.",
+                        typeName: "테스트 탐험가",
+                        tripRecommand: "테스트용 여행지 추천입니다."
+                    }
+                };
+                
+                navigation.navigate('당신의 여행 유형은?', { 
+                    resultData: mockApiResponse 
+                });
             }
         } catch (error) {
             console.error('예상치 못한 오류:', error);
-            Alert.alert('오류', '네트워크 연결을 확인해주세요.');
+            // 테스트용: 네트워크 오류여도 CategoryScreen으로 이동
+            console.log('테스트용: 네트워크 오류했지만 CategoryScreen으로 이동');
+            const mockApiResponse = {
+                isSuccess: true,
+                code: "COMMON200",
+                message: "성공입니다.",
+                result: {
+                    code: "B-A-A-B",
+                    reason: "네트워크 오류가 발생했지만 테스트용 데이터로 표시됩니다.",
+                    keyword: "#네트워크오류 #테스트용",
+                    image: null,
+                    description: "네트워크 연결에 문제가 있어 테스트 데이터를 표시합니다.",
+                    typeName: "오류 탐험가",
+                    tripRecommand: "네트워크가 복구되면 실제 추천을 받을 수 있습니다."
+                }
+            };
+            
+            navigation.navigate('당신의 여행 유형은?', { 
+                resultData: mockApiResponse 
+            });
         } finally {
             setIsLoading(false);
         }
@@ -125,7 +181,7 @@ const ResultScreen = ({ navigation }) => {
                     </View>
                     
                     {/* 하단 레이어 */}
-                    <Image source={backLayerImg} style={styles.resultBackLayerImg} />
+                    <Image source={backLayerImg} style={styles.resultBackLayerImg} resizeMode="cover" />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>

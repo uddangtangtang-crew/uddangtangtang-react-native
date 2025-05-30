@@ -12,14 +12,12 @@ export const onboardStyles = StyleSheet.create({
         height: 135,
         alignSelf: 'center',
         marginBottom: 36,
-        resizeMode: 'contain',
     },
     qustionImage: {
         width: 54,
         height: 72,
         alignSelf: 'center',
         marginBottom: 16,
-        resizeMode: 'contain',
     },
     questionText: {
         textAlign: 'center',
@@ -40,7 +38,6 @@ export const onboardStyles = StyleSheet.create({
         width: 160,
         height: 260,
         marginHorizontal: 8,
-        resizeMode: 'contain',
     },
     answerTextWrap: {
         position: 'absolute',
@@ -64,21 +61,6 @@ export const onboardStyles = StyleSheet.create({
         fontSize: 12,
         textAlign: 'center',
         lineHeight: 22,
-    },
-    backLayerWrap: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100%',
-        zIndex: 0,
-    },
-    backLayerImg: {
-        width: 500,
-        height: 200,
-        bottom: 0,
-        resizeMode: 'cover',
-        opacity: 0.85,
     },
     backIconBtn: {
         position: 'absolute',

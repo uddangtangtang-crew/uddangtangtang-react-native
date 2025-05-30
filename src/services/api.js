@@ -3,15 +3,9 @@ import { ENV } from '../config/env';
 // API 기본 URL (환경변수에서 가져옴)
 const API_BASE_URL = ENV.API_BASE_URL;
 
-// 개발 환경에서 CORS 문제 해결을 위한 프록시 (임시)
-const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
-
 export const getTravelTypeResult = async (answers) => {
   try {
-    // 웹 환경에서는 프록시 사용, 모바일에서는 직접 호출
-    const apiUrl = ENV.IS_WEB 
-      ? `${PROXY_URL}${API_BASE_URL}/ai/type/test`
-      : `${API_BASE_URL}/ai/type/test`;
+    const apiUrl = `${API_BASE_URL}/ai/type/test`;
       
     console.log('API 호출 시작:', apiUrl);
     console.log('전송 데이터:', answers);
@@ -20,7 +14,6 @@ export const getTravelTypeResult = async (answers) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...(ENV.IS_WEB && { 'X-Requested-With': 'XMLHttpRequest' })
       },
       body: JSON.stringify(answers),
     });
@@ -32,19 +25,23 @@ export const getTravelTypeResult = async (answers) => {
     if (response.ok && data.isSuccess) {
       return {
         success: true,
-        data: data.result,
+        data: data,
       };
     } else {
+      // 서버 에러 시 원하는 형태로 응답 반환
       return {
         success: false,
-        error: data.message || '서버 오류가 발생했습니다.',
+        code: data.code || "COMMON_500",
+        message: data.message || "서버 에러, 관리자에게 문의 바랍니다.",
       };
     }
   } catch (error) {
     console.error('API 호출 오류:', error);
+    // 네트워크 에러 시에도 동일한 형태로 응답 반환
     return {
       success: false,
-      error: '네트워크 오류가 발생했습니다. 백엔드 CORS 설정을 확인해주세요.',
+      code: "NETWORK_ERROR",
+      message: error.message || "네트워크 오류가 발생했습니다.",
     };
   }
 }; 

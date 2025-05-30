@@ -5,6 +5,22 @@ import * as Font from 'expo-font';
 import AppNavigator from './navigation/AppNavigator';
 import { COLORS } from './constants/theme';
 
+// 개발 환경에서 특정 경고 필터링
+if (__DEV__) {
+  const originalWarn = console.warn;
+  console.warn = (...args) => {
+    if (
+      args[0] && 
+      typeof args[0] === 'string' && 
+      (args[0].includes('props.pointerEvents is deprecated') ||
+       args[0].includes('style.resizeMode is deprecated'))
+    ) {
+      return;
+    }
+    originalWarn(...args);
+  };
+}
+
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 

@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import ResultScreen from '../screens/ResultScreen';
+import CategoryScreen from '../screens/CategoryScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,11 +28,11 @@ const AppNavigator = () => {
                     component={ResultScreen}
                     options={{ headerShown: false }}
                 />
-                {/* <Stack.Screen
+                <Stack.Screen
                     name="당신의 여행 유형은?"
-                    component={}
+                    component={CategoryScreen}
                     options={{ headerShown: false }}
-                /> */}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
