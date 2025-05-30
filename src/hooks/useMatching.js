@@ -40,7 +40,7 @@ export const useMatching = () => {
     // 결과 보기 핸들러
     const handleShowResult = (navigation) => {
         if (myType && otherType) {
-            navigation.navigate('LoadingScreen', {
+            navigation.navigate('궁합 분석하는 중..', {
                 myType,
                 partnerType: otherType
             });

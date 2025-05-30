@@ -191,4 +191,41 @@ export const styles = StyleSheet.create({
             },
         }),
     },
+    // LoadingScreen 관련 스타일
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    lottieContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    tempLoadingAnimation: {
+        width: 200,
+        height: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    tempLoadingEmoji: {
+        fontSize: 80,
+        textAlign: 'center',
+    },
+    loadingText: {
+        fontFamily: 'NanumSquareRound',
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#6E3209',
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+    loadingSubtext: {
+        fontFamily: 'NanumSquareRound',
+        fontSize: 16,
+        color: '#6E3209',
+        textAlign: 'center',
+        lineHeight: 24,
+    },
 });
