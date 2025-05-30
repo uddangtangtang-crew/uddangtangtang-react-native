@@ -28,16 +28,20 @@ export const getTravelTypeResult = async (answers) => {
         data: data,
       };
     } else {
+      // 서버 에러 시 원하는 형태로 응답 반환
       return {
         success: false,
-        error: data.message || '서버 오류가 발생했습니다.',
+        code: data.code || "COMMON_500",
+        message: data.message || "서버 에러, 관리자에게 문의 바랍니다.",
       };
     }
   } catch (error) {
     console.error('API 호출 오류:', error);
+    // 네트워크 에러 시에도 동일한 형태로 응답 반환
     return {
       success: false,
-      error: '네트워크 오류가 발생했습니다.',
+      code: data.code || "NETWORK_ERROR",
+      message: data.message ||"네트워크 오류가 발생했습니다.",
     };
   }
 }; 
