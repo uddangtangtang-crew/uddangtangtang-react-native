@@ -6,7 +6,7 @@ import { COLORS } from '../constants/theme';
 import Button from '../components/common/Button';
 import { TEXTS } from '../constants/texts';
 
-const CategoryScreen = ({ route }) => {
+const CategoryScreen = ({ route, navigation }) => {
     const { resultData } = route.params || {};
 
     const backLayerImg = require('../../assets/back-layer.svg');

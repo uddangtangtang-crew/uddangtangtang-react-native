@@ -5,6 +5,9 @@ import HomeScreen from '../screens/HomeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import ResultScreen from '../screens/ResultScreen';
 import CategoryScreen from '../screens/CategoryScreen';
+import MatchingScreen from '../screens/MatchingScreen';
+import LoadingScreen from '../screens/LoadingScreen';
+import MatchingResultScreen from '../screens/MatchingResultScreen';
 
 const Stack = createStackNavigator();
 
@@ -12,7 +15,7 @@ const AppNavigator = () => {
     console.log('AppNavigator 렌더링 중');
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="우당탕탕 여행 성향">
+            <Stack.Navigator initialRouteName="여행 궁합 알아보기">
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
                     component={HomeScreen} 
@@ -31,6 +34,21 @@ const AppNavigator = () => {
                 <Stack.Screen
                     name="당신의 여행 유형은?"
                     component={CategoryScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="여행 궁합 알아보기"
+                    component={MatchingScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="LoadingScreen"
+                    component={LoadingScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="MatchingResultScreen"
+                    component={MatchingResultScreen}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

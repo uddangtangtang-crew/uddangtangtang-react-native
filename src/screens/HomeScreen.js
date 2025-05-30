@@ -14,7 +14,7 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const handleCheckCompatibility = () => {
-        console.log('궁합 보러가기 버튼이 눌렸습니다.');
+        navigation.navigate('여행 궁합 알아보기');
     };
 
     const backLayerImg = require('../../assets/back-layer.svg');
