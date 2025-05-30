@@ -9,6 +9,7 @@ import Button from '../components/common/Button';
 import SelectionCard from '../components/matching/SelectionCard';
 import TypeCard from '../components/matching/TypeCard';
 import { useMatching } from '../hooks/useMatching';
+import BackLayer from '../components/common/BackLayer';
 
 const MatchingScreen = ({ navigation }) => {
     const {
@@ -20,8 +21,6 @@ const MatchingScreen = ({ navigation }) => {
         handleShowResult,
         canShowResult
     } = useMatching();
-
-    const backLayerImg = require('../../assets/back-layer.svg');
 
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
@@ -76,7 +75,7 @@ const MatchingScreen = ({ navigation }) => {
                     </View>
 
                     {/* 결과 보기 버튼 */}
-                    <View style={[styles.buttonContainer, { zIndex: 10 }]}>
+                    <View style={styles.buttonContainer}>
                         <Button
                             title="결과 보기"
                             onPress={() => handleShowResult(navigation)}
@@ -86,7 +85,7 @@ const MatchingScreen = ({ navigation }) => {
                     </View>
 
                     {/* 하단 레이어 */}
-                    <Image source={backLayerImg} style={[styles.resultBackLayerImg, { zIndex: -1 }]} resizeMode="cover" />
+                    <BackLayer variant="result" />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>
