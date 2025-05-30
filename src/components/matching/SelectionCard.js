@@ -34,12 +34,16 @@ const SelectionCard = ({
                             source={TYPE_IMAGES[selectedType]}
                             style={matchingStyles.selectedTypeImage}
                             resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
                         />
                     ) : (
                         <Image
                             source={qmarkImg}
                             style={matchingStyles.qmarkImage}
                             resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
                         />
                     )}
                 </LinearGradient>

@@ -14,12 +14,16 @@ const TypeCard = ({ type, onPress }) => {
                     source={TYPE_IMAGES[type]}
                     style={matchingStyles.typeImage}
                     resizeMode="contain"
+                    fadeDuration={0}
+                    cache="force-cache"
                 />
             </TouchableOpacity>
             <Image
                 source={TYPE_NAME_IMAGES[type]}
                 style={matchingStyles.typeNameImage}
                 resizeMode="contain"
+                fadeDuration={0}
+                cache="force-cache"
             />
         </View>
     );
