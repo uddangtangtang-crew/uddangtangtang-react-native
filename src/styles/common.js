@@ -65,6 +65,8 @@ export const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         marginTop: SIZES.large,
+        marginBottom: 40,
+        gap: 20,
     },
     joinedUsers: {
         fontFamily: 'NanumSquareRound',
@@ -177,18 +179,5 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
-    },
-    buttonContainer: {
-        alignItems: 'center',
-        marginBottom: 40,
-        gap: 20,
-    },
-    backLayerWrap: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100%',
-        zIndex: 0,
     },
 });

@@ -176,7 +176,7 @@ const OnboardingScreen = () => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Image source={backLayerImg} style={onboardStyles.backLayerImg} />
+                    <Image source={backLayerImg} style={commonStyles.backLayerImg} />
                 </LinearGradient>
             </ScrollView>
         </SafeAreaView>
