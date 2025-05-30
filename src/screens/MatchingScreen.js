@@ -22,6 +22,9 @@ const MatchingScreen = ({ navigation }) => {
         canShowResult
     } = useMatching();
 
+    const matchingHeaderImg = require('../../assets/궁합 테스트.svg');
+    const heartImg = require('../../assets/heartImg.svg');
+
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
             <ScrollView
@@ -37,7 +40,27 @@ const MatchingScreen = ({ navigation }) => {
                 >
                     {/* 헤더 */}
                     <View style={matchingStyles.header}>
-                        <Text style={matchingStyles.headerTitle}>💕 궁합 테스트 💕</Text>
+                        <Image
+                            source={heartImg}
+                            style={matchingStyles.headerHeartIcon}
+                            resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
+                        />
+                        <Image
+                            source={matchingHeaderImg}
+                            style={matchingStyles.headerImage}
+                            resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
+                        />
+                        <Image
+                            source={heartImg}
+                            style={matchingStyles.headerHeartIcon}
+                            resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
+                        />
                     </View>
 
                     {/* 선택된 유형 표시 카드들 */}
@@ -50,7 +73,13 @@ const MatchingScreen = ({ navigation }) => {
                             activeCard={activeCard}
                             onPress={handleSelectionCardPress}
                         />
-                        <Text style={matchingStyles.heartIcon}>❤️</Text>
+                        <Image
+                            source={heartImg}
+                            style={matchingStyles.heartIcon}
+                            resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
+                        />
                         <SelectionCard
                             selectedType={otherType}
                             title="상대방 유형"

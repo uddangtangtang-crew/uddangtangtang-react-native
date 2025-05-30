@@ -2,15 +2,20 @@ import { StyleSheet } from 'react-native';
 
 export const matchingStyles = StyleSheet.create({
     header: {
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         marginTop: 20,
         marginBottom: 30,
+        gap: 15,
     },
-    headerTitle: {
-        fontFamily: 'NanumSquareRound',
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#6E3209',
+    headerImage: {
+        width: 150,
+        height: 35,
+    },
+    headerHeartIcon: {
+        width: 20,
+        height: 20,
     },
     selectionContainer: {
         flexDirection: 'row',
@@ -46,7 +51,8 @@ export const matchingStyles = StyleSheet.create({
         height: 40,
     },
     heartIcon: {
-        fontSize: 24,
+        width: 26,
+        height: 26,
         top: -22,
     },
     typesContainer: {
