@@ -40,8 +40,8 @@ export const getTravelTypeResult = async (answers) => {
     // 네트워크 에러 시에도 동일한 형태로 응답 반환
     return {
       success: false,
-      code: data.code || "NETWORK_ERROR",
-      message: data.message ||"네트워크 오류가 발생했습니다.",
+      code: "NETWORK_ERROR",
+      message: error.message || "네트워크 오류가 발생했습니다.",
     };
   }
 }; 
