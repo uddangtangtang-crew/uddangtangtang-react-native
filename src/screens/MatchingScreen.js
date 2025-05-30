@@ -8,6 +8,7 @@ import Button from '../components/common/Button';
 const MatchingScreen = ({ navigation }) => {
     const [myType, setMyType] = useState(null);
     const [otherType, setOtherType] = useState(null);
+    const [activeCard, setActiveCard] = useState(null); // 'my' | 'other' | null
 
     // 8개 유형 데이터
     const types = [
@@ -48,11 +49,34 @@ const MatchingScreen = ({ navigation }) => {
     const qmarkImg = require('../../assets/qmark.svg');
     const backLayerImg = require('../../assets/back-layer.svg');
 
-    const handleTypeSelect = (type, isMyType) => {
-        if (isMyType) {
+    // 선택 카드 클릭 핸들러
+    const handleSelectionCardPress = (cardType) => {
+        setActiveCard(cardType);
+    };
+
+    // 유형 선택 핸들러
+    const handleTypeSelect = (type) => {
+        if (activeCard === 'my') {
             setMyType(type);
-        } else {
+            // 내 유형을 선택한 후 상대방 유형이 없으면 자동으로 상대방 카드 활성화
+            if (!otherType) {
+                setActiveCard('other');
+            } else {
+                setActiveCard(null);
+            }
+        } else if (activeCard === 'other') {
             setOtherType(type);
+            setActiveCard(null);
+        } else {
+            // 활성화된 카드가 없을 때의 기본 동작
+            if (!myType) {
+                setMyType(type);
+                if (!otherType) {
+                    setActiveCard('other');
+                }
+            } else if (!otherType) {
+                setOtherType(type);
+            }
         }
     };
 
@@ -66,29 +90,42 @@ const MatchingScreen = ({ navigation }) => {
         }
     };
 
-    const renderSelectionCard = (selectedType, title, gradientColors) => (
+    const renderSelectionCard = (selectedType, title, gradientColors, cardType) => (
         <View style={matchingStyles.selectionCardContainer}>
-            <LinearGradient
-                colors={gradientColors}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0, y: 1 }}
-                style={matchingStyles.selectionCard}
+            <TouchableOpacity
+                style={[
+                    matchingStyles.selectionCard,
+                    activeCard === cardType && matchingStyles.activeSelectionCard
+                ]}
+                onPress={() => handleSelectionCardPress(cardType)}
             >
-                {selectedType ? (
-                    <Image
-                        source={typeImages[selectedType]}
-                        style={matchingStyles.selectedTypeImage}
-                        resizeMode="contain"
-                    />
-                ) : (
-                    <Image
-                        source={qmarkImg}
-                        style={matchingStyles.qmarkImage}
-                        resizeMode="contain"
-                    />
-                )}
-            </LinearGradient>
-            <Text style={matchingStyles.selectionTitle}>{title}</Text>
+                <LinearGradient
+                    colors={gradientColors}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                    style={matchingStyles.selectionCardGradient}
+                >
+                    {selectedType ? (
+                        <Image
+                            source={typeImages[selectedType]}
+                            style={matchingStyles.selectedTypeImage}
+                            resizeMode="contain"
+                        />
+                    ) : (
+                        <Image
+                            source={qmarkImg}
+                            style={matchingStyles.qmarkImage}
+                            resizeMode="contain"
+                        />
+                    )}
+                </LinearGradient>
+            </TouchableOpacity>
+            <Text style={[
+                matchingStyles.selectionTitle,
+                activeCard === cardType && matchingStyles.activeSelectionTitle
+            ]}>
+                {title}
+            </Text>
         </View>
     );
 
@@ -115,13 +152,15 @@ const MatchingScreen = ({ navigation }) => {
                         {renderSelectionCard(
                             myType,
                             '내 유형',
-                            ['#FFE39D', '#FFD979']
+                            ['#FFE39D', '#FFD979'],
+                            'my'
                         )}
                         <Text style={matchingStyles.heartIcon}>❤️</Text>
                         {renderSelectionCard(
                             otherType,
                             '상대방 유형',
-                            ['#F0F9E2', '#C0DF8C']
+                            ['#F0F9E2', '#C0DF8C'],
+                            'other'
                         )}
                     </View>
 
@@ -133,15 +172,7 @@ const MatchingScreen = ({ navigation }) => {
                                     <TouchableOpacity
                                         style={matchingStyles.typeCard}
                                         onPress={() => {
-                                            // 내 유형이 선택되지 않았으면 내 유형으로, 아니면 상대방 유형으로
-                                            if (!myType) {
-                                                handleTypeSelect(type, true);
-                                            } else if (!otherType) {
-                                                handleTypeSelect(type, false);
-                                            } else {
-                                                // 둘 다 선택되어 있으면 내 유형을 변경
-                                                handleTypeSelect(type, true);
-                                            }
+                                            handleTypeSelect(type);
                                         }}
                                     >
                                         <Image
@@ -212,15 +243,8 @@ const matchingStyles = {
     selectionCard: {
         width: 140,
         height: 140,
-        backgroundColor: 'white', // 이미지보다 약간 더 크게 보이게.
         borderRadius: 15,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        overflow: 'hidden',
     },
     selectedTypeImage: {
         width: 140,
@@ -263,6 +287,26 @@ const matchingStyles = {
     typeNameImage: {
         width: 140,
         height: 20,
+    },
+    selectionCardGradient: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    activeSelectionCard: {
+        borderWidth: 3,
+        borderColor: '#CC6548',
+        shadowColor: '#CC6548',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    activeSelectionTitle: {
+        fontWeight: 'bold',
+        color: '#CC6548',
     },
 };
 
