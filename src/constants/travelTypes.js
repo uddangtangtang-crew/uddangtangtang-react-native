@@ -1,30 +1,37 @@
-// export const TRAVEL_TYPES = {
-//     PLANNER: {
-//       id: "PLANNER",
-//       name: "계획형 여행자",
-//       description: "꼼꼼한 계획을 세우고 그대로 실행하는 것을 좋아합니다. 여행 전 정보 수집에 많은 시간을 투자하며 효율적인 여행을 선호합니다.",
-//       characteristics: [
-//         "여행 전 철저한 계획 수립",
-//         "시간 엄수와 일정 관리에 능함",
-//         "안전과 확실성을 중요시함",
-//         "예산 관리에 탁월함"
-//       ],
-//       imageUrl: require('../assets/images/types/planner.png')
-//     },
-//     ADVENTURER: {
-//       id: "ADVENTURER",
-//       name: "모험형 여행자",
-//       description: "즉흥적인 결정을 즐기고 계획에 얽매이지 않는 자유로운 여행을 좋아합니다. 새로운 경험과 예상치 못한 발견에 흥미를 느낍니다.",
-//       characteristics: [
-//         "즉흥적인 의사결정",
-//         "새로운 경험을 적극적으로 추구",
-//         "유연한 일정 조정",
-//         "현지인과의 교류를 즐김"
-//       ],
-//       imageUrl: require('../assets/images/types/adventurer.png')
-//     },
-//     // 다른 여행 유형들도 유사하게 정의
-//   };
-  
-//   export const allTypes = Object.values(TRAVEL_TYPES);
+// 여행 유형 관련 상수들
+
+export const TRAVEL_TYPES = [
+    '가성비 장인 원숭이',
+    '감성 도파민러 돼지',
+    '단톡방 총무 고양이',
+    '무념무상 힐링러 병아리',
+    '자낳괴 탐험가 코끼리',
+    '패키지 러버 토끼',
+    '계획충 쉴러 곰',
+    '온도차 낭만파 강아지'
+];
+
+// 유형별 이미지 매핑
+export const TYPE_IMAGES = {
+    '가성비 장인 원숭이': require('../../assets/가성비 장인 원숭이.svg'),
+    '감성 도파민러 돼지': require('../../assets/감성 도파민러 돼지.svg'),
+    '단톡방 총무 고양이': require('../../assets/단톡방 총무 고양이.svg'),
+    '무념무상 힐링러 병아리': require('../../assets/무념무상 힐링러 병아리.svg'),
+    '자낳괴 탐험가 코끼리': require('../../assets/자낳괴 탐험가 코끼리.svg'),
+    '패키지 러버 토끼': require('../../assets/패키지 러버 토끼.svg'),
+    '계획충 쉴러 곰': require('../../assets/계획충 쉴러 곰.svg'),
+    '온도차 낭만파 강아지': require('../../assets/온도차 낭만파 강아지.svg'),
+};
+
+// 유형별 이름 이미지 매핑
+export const TYPE_NAME_IMAGES = {
+    '가성비 장인 원숭이': require('../../assets/typeName-가성비장인원숭이.svg'),
+    '감성 도파민러 돼지': require('../../assets/typeName-감성도파민러돼지.svg'),
+    '단톡방 총무 고양이': require('../../assets/typeName-단톡방총무고양이.svg'),
+    '무념무상 힐링러 병아리': require('../../assets/typeName-무념무상힐링러병아리.svg'),
+    '자낳괴 탐험가 코끼리': require('../../assets/typeName-자낳괴탐험가코끼리.svg'),
+    '패키지 러버 토끼': require('../../assets/typeName-패키지러버토끼.svg'),
+    '계획충 쉴러 곰': require('../../assets/typeName-계획충쉴러곰.svg'),
+    '온도차 낭만파 강아지': require('../../assets/typeName-온도차낭만파강아지.svg'),
+};
   
