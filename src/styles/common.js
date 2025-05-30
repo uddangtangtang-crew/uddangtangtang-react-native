@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS, FONTS, SIZES } from '../constants/theme';
 import { MAX_WIDTH } from '../constants/theme';
 
@@ -174,10 +174,18 @@ export const styles = StyleSheet.create({
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        // 플랫폼별 shadow 스타일
+        ...Platform.select({
+            web: {
+                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+            },
+            default: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.1,
+                shadowRadius: 4,
+                elevation: 3,
+            },
+        }),
     },
 });
