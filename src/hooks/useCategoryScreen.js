@@ -5,7 +5,7 @@ import { splitReason } from '../utils/textUtils';
 // CategoryScreen의 상태와 로직을 관리하는 커스텀 훅
 export const useCategoryScreen = (resultData) => {
     // API 응답에서 result 객체 추출, 없으면 기본값 사용
-    const result = resultData?.result || MOCK_CATEGORY_RESULT;
+    const result = resultData?.result || MOCK_CATEGORY_RESULT.result;
 
     const { mainText, lastSentence } = splitReason(result.reason);
 
