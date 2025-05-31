@@ -6,7 +6,7 @@ export const matchingStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
-        marginBottom: 30,
+        marginBottom: 60,
         gap: 15,
     },
     headerImage: {

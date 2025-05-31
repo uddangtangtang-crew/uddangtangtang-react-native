@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
+import { matchingStyles } from '../styles/matchingStyles';
 import { COLORS } from '../constants/theme';
 import Button from '../components/common/Button';
 import ShareButtons from '../components/common/ShareButtons';
@@ -10,16 +11,20 @@ import BackLayer from '../components/common/BackLayer';
 import { useMatchingResultScreen } from '../hooks/useMatchingResultScreen';
 
 const MatchingResultScreen = ({ route, navigation }) => {
-    const { matchingResult } = route.params;
+    const { apiResponse, myType: routeMyType, partnerType: routePartnerType } = route.params || {};
     
     const {
+        apiResult,
+        myType,
+        partnerType,
         typeImages,
-        getCompatibilityColor,
-        getCompatibilityMessage,
         handleGoHome,
         handleShare,
         handleCopyLink
-    } = useMatchingResultScreen(matchingResult);
+    } = useMatchingResultScreen(apiResponse, routeMyType, routePartnerType);
+    
+    const matchingHeaderImg = require('../../assets/궁합 테스트.svg');
+    const heartImg = require('../../assets/heartImg.svg');
 
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
@@ -34,89 +39,116 @@ const MatchingResultScreen = ({ route, navigation }) => {
                     locations={[0, 0.5, 1]}
                     style={[styles.mobileFrame, { paddingHorizontal: 20 }]}
                 >
-                    {/* 헤더 */}
-                    <View style={resultStyles.header}>
-                        <Text style={resultStyles.headerTitle}>💕 여행 궁합 결과 💕</Text>
+                    {/* 헤더 - MatchingScreen과 동일 */}
+                    <View style={matchingStyles.header}>
+                        <Image
+                            source={heartImg}
+                            style={matchingStyles.headerHeartIcon}
+                            resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
+                        />
+                        <Image
+                            source={matchingHeaderImg}
+                            style={matchingStyles.headerImage}
+                            resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
+                        />
+                        <Image
+                            source={heartImg}
+                            style={matchingStyles.headerHeartIcon}
+                            resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
+                        />
                     </View>
 
-                    {/* 선택된 유형들 */}
-                    <View style={resultStyles.typesContainer}>
-                        <View style={resultStyles.typeItem}>
-                            <Image
-                                source={typeImages[matchingResult.myType]}
-                                style={resultStyles.typeImage}
-                                resizeMode="contain"
-                            />
-                            <Text style={resultStyles.typeName}>{matchingResult.myType}</Text>
+                    {/* 선택된 유형들 - MatchingScreen과 동일한 카드 스타일 */}
+                    <View style={matchingStyles.selectionContainer}>
+                        <View style={matchingStyles.selectionCardContainer}>
+                            <View style={matchingStyles.selectionCard}>
+                                <LinearGradient
+                                    colors={['#FFE39D', '#FFD979']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 0, y: 1 }}
+                                    style={matchingStyles.selectionCardGradient}
+                                >
+                                    <Image
+                                        source={typeImages[myType]}
+                                        style={matchingStyles.selectedTypeImage}
+                                        resizeMode="contain"
+                                        fadeDuration={0}
+                                        cache="force-cache"
+                                    />
+                                </LinearGradient>
+                            </View>
+                            <Text style={matchingStyles.selectionTitle}>{myType}</Text>
                         </View>
-                        <Text style={resultStyles.heartIcon}>❤️</Text>
-                        <View style={resultStyles.typeItem}>
-                            <Image
-                                source={typeImages[matchingResult.partnerType]}
-                                style={resultStyles.typeImage}
-                                resizeMode="contain"
-                            />
-                            <Text style={resultStyles.typeName}>{matchingResult.partnerType}</Text>
-                        </View>
-                    </View>
-
-                    {/* 궁합도 */}
-                    <View style={resultStyles.compatibilityContainer}>
-                        <Text style={resultStyles.compatibilityTitle}>
-                            {getCompatibilityMessage(matchingResult.compatibility)}
-                        </Text>
-                        <View style={resultStyles.scoreContainer}>
-                            <Text style={[
-                                resultStyles.compatibilityScore,
-                                { color: getCompatibilityColor(matchingResult.compatibility) }
-                            ]}>
-                                {matchingResult.compatibility}%
-                            </Text>
+                        
+                        <Image
+                            source={heartImg}
+                            style={matchingStyles.heartIcon}
+                            resizeMode="contain"
+                            fadeDuration={0}
+                            cache="force-cache"
+                        />
+                        
+                        <View style={matchingStyles.selectionCardContainer}>
+                            <View style={matchingStyles.selectionCard}>
+                                <LinearGradient
+                                    colors={['#F0F9E2', '#C0DF8C']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 0, y: 1 }}
+                                    style={matchingStyles.selectionCardGradient}
+                                >
+                                    <Image
+                                        source={typeImages[partnerType]}
+                                        style={matchingStyles.selectedTypeImage}
+                                        resizeMode="contain"
+                                        fadeDuration={0}
+                                        cache="force-cache"
+                                    />
+                                </LinearGradient>
+                            </View>
+                            <Text style={matchingStyles.selectionTitle}>{partnerType}</Text>
                         </View>
                     </View>
 
                     {/* 궁합 설명 */}
-                    <SectionContainer title="✨ 궁합 분석">
+                    <SectionContainer title="✨ 궁합 결과">
                         <Text style={styles.descriptionText}>
-                            {matchingResult.description}
+                            {apiResult.result}
                         </Text>
                     </SectionContainer>
 
                     {/* 장점 */}
-                    <SectionContainer title="👍 이런 점이 좋아요">
-                        {Array.isArray(matchingResult.pros) && matchingResult.pros.length > 0 ? (
-                            matchingResult.pros.map((pro, index) => (
-                                <Text key={index} style={resultStyles.listItem}>
-                                    • {pro}
-                                </Text>
-                            ))
-                        ) : (
-                            <Text style={styles.descriptionText}>
-                                {matchingResult.pros || "서로의 장점을 발견해보세요!"}
-                            </Text>
-                        )}
+                    <SectionContainer title="👍 함께하는 여행 팁">
+                        <Text style={styles.descriptionText}>
+                            {apiResult.tips || "서로의 장점을 발견해보세요!"}
+                        </Text>
                     </SectionContainer>
 
                     {/* 주의점 */}
-                    <SectionContainer title="💡 이런 점을 주의해요">
-                        {Array.isArray(matchingResult.cons) && matchingResult.cons.length > 0 ? (
-                            matchingResult.cons.map((con, index) => (
-                                <Text key={index} style={resultStyles.listItem}>
-                                    • {con}
-                                </Text>
-                            ))
-                        ) : (
-                            <Text style={styles.descriptionText}>
-                                {matchingResult.cons || "서로를 이해하며 여행해보세요!"}
-                            </Text>
-                        )}
+                    <SectionContainer title="💡 갈등 & 조화 포인트">
+                        <Text style={styles.descriptionText}>
+                            {apiResult.conflictPoints || "서로를 이해하며 여행해보세요!"}
+                        </Text>
                     </SectionContainer>
 
                     {/* 추천 여행지 */}
                     <SectionContainer title="🏝️ 추천 여행지">
-                        <Text style={styles.descriptionText}>
-                            {matchingResult.recommendation}
-                        </Text>
+                        {Array.isArray(apiResult.recommendations) && apiResult.recommendations.length > 0 ? (
+                            apiResult.recommendations.map((recommendation, index) => (
+                                <Text key={index} style={styles.descriptionText}>
+                                    • {recommendation}
+                                </Text>
+                            ))
+                        ) : (
+                            <Text style={styles.descriptionText}>
+                                추천 여행지를 찾고 있습니다...
+                            </Text>
+                        )}
                     </SectionContainer>
 
                     {/* 버튼들 */}
@@ -140,82 +172,6 @@ const MatchingResultScreen = ({ route, navigation }) => {
             </ScrollView>
         </SafeAreaView>
     );
-};
-
-const resultStyles = {
-    header: {
-        alignItems: 'center',
-        marginTop: 20,
-        marginBottom: 30,
-    },
-    headerTitle: {
-        fontFamily: 'NanumSquareRound',
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#6E3209',
-    },
-    typesContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        marginBottom: 30,
-        paddingHorizontal: 20,
-    },
-    typeItem: {
-        alignItems: 'center',
-    },
-    typeImage: {
-        width: 80,
-        height: 80,
-        marginBottom: 10,
-    },
-    typeName: {
-        fontFamily: 'NanumSquareRound',
-        fontSize: 12,
-        fontWeight: 'bold',
-        color: '#6E3209',
-        textAlign: 'center',
-    },
-    heartIcon: {
-        fontSize: 30,
-        marginHorizontal: 10,
-    },
-    compatibilityContainer: {
-        alignItems: 'center',
-        marginBottom: 30,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 20,
-        marginHorizontal: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-    },
-    compatibilityTitle: {
-        fontFamily: 'NanumSquareRound',
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#6E3209',
-        marginBottom: 10,
-    },
-    scoreContainer: {
-        alignItems: 'center',
-    },
-    compatibilityScore: {
-        fontFamily: 'NanumSquareRound',
-        fontSize: 48,
-        fontWeight: 'bold',
-    },
-    listItem: {
-        fontFamily: 'NanumSquareRound',
-        fontSize: 14,
-        color: '#6E3209',
-        lineHeight: 20,
-        textAlign: 'left',
-        marginBottom: 5,
-    },
 };
 
 export default MatchingResultScreen; 

@@ -52,7 +52,7 @@ const SelectionCard = ({
                 matchingStyles.selectionTitle,
                 activeCard === cardType && matchingStyles.activeSelectionTitle
             ]}>
-                {title}
+                {selectedType || title}
             </Text>
         </View>
     );
