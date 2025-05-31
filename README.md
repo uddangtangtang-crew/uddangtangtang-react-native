@@ -1,56 +1,149 @@
-# 우당탕탕 여행 궁합 테스트
+# 우당탕탕 여행 궁합 테스트 ✈️
 
-## 프로젝트 구조
+> 여행 성향 기반 심리 테스트로 나만의 여행 스타일을 발견하고, 완벽한 여행 동행자와의 궁합을 확인해보세요!
 
-```markdown
+## 📱 앱 소개
+
+**우당탕탕 여행 궁합 테스트**는 사용자의 여행 성향을 분석하여 8가지 유형 중 하나로 분류하고, 다른 사람과의 여행 궁합을 알아볼 수 있는 모바일 앱입니다. 
+
+### 🎯 주요 기능
+- **여행 성향 테스트**: 12개의 질문을 통해 개인의 여행 스타일 분석
+- **8가지 여행 유형**: 각자만의 고유한 여행 성향으로 분류
+  - 🛟 계획충 쉴러 곰
+  - 🎯 자낳괴 탐험가 코끼리  
+  - 🧑‍✈️ 단톡방 총무 고양이
+  - 📦 패키지 러버 토끼
+  - 💸 가성비 장인 원숭이
+  - 🧃 감성 도파민러 돼지
+  - 🐚 무념무상 힐링러 병아리
+  - 🧃 온도차 낭만파 **강아지**
+- **여행 궁합 테스트**: 두 사람의 여행 스타일 호환성 분석
+- **맞춤 여행지 추천**: 개인 성향에 맞는 여행지 및 여행 팁 제공
+- **결과 공유**: 테스트 결과를 친구들과 쉽게 공유
+
+### 🌟 특징
+- **직관적인 UI/UX**: 귀여운 동물 캐릭터와 감성적인 디자인
+- **크로스 플랫폼**: iOS, Android, Web에서 모두 사용 가능
+- **실시간 API**: 백엔드 서버와 연동하여 정확한 분석 결과 제공
+- **반응형 디자인**: 다양한 화면 크기에 최적화
+
+## 🛠 기술 스택
+
+### Frontend
+- **React Native**: `0.72.10` - 크로스 플랫폼 모바일 앱 개발
+- **Expo**: `^49.0.7` - 개발 및 배포 플랫폼
+- **React Navigation**: `^7.1.9` - 화면 네비게이션
+- **Zustand**: `^5.0.4` - 가벼운 상태 관리
+- **React Native Reanimated**: `~3.3.0` - 고성능 애니메이션
+
+### UI/UX
+- **Expo Linear Gradient**: 그라데이션 배경
+- **React Native SVG**: 벡터 그래픽 지원
+- **Lottie React Native**: 고품질 애니메이션
+- **React Native Vector Icons**: 아이콘 라이브러리
+
+### 개발 도구
+- **Metro**: React Native 번들러
+- **Babel**: JavaScript 컴파일러
+- **Jest**: 단위 테스트 프레임워크
+
+### 배포
+- **Vercel**: 웹 버전 배포
+- **Expo Build**: 모바일 앱 빌드
+
+## 🏗 아키텍처
+
+### 프로젝트 구조
+
+```
 uddangtangtang-app/
-├── node_modules/           # npm 패키지
 ├── src/                    # 소스 코드
-│   ├── assets/             # 이미지, 폰트 등 자산
-│   │   ├── images/         # 테스트 관련 이미지
-│   │   │   ├── types/      # 여행 유형별 이미지
-│   │   │   └── questions/  # 질문 관련 이미지
-│   │   └── fonts/          # 폰트 파일
 │   ├── components/         # 재사용 가능한 컴포넌트
-│   │   ├── common/         # 공통 컴포넌트
-│   │   │   ├── Button.js   # 공통 버튼 컴포넌트
-│   │   │   ├── Card.js     # 카드 형태 컴포넌트
-│   │   │   ├── TypeBadge.js # 여행 유형 뱃지
-│   │   │   └── LoadingSpinner.js # 로딩 표시
+│   │   ├── common/         # 공통 컴포넌트 (Button, Card, LoadingSpinner 등)
+│   │   ├── matching/       # 궁합 테스트 관련 컴포넌트
 │   │   └── specific/       # 특정 기능 컴포넌트
-│   │       ├── QuestionCard.js  # 질문 카드 컴포넌트
-│   │       ├── TypeDescription.js # 여행 유형 설명
-│   │       ├── AnswerOption.js    # 답변 옵션 버튼
-│   │       └── CompatibilityResult.js # 궁합 결과 표시
-│   ├── navigation/         # 네비게이션 설정
-│   │   └── AppNavigator.js # 앱 네비게이션 설정
 │   ├── screens/            # 화면 컴포넌트
 │   │   ├── HomeScreen.js   # 홈 화면
-│   │   ├── TestScreen.js   # 테스트 진행 화면
-│   │   ├── ResultScreen.js # 결과 화면
-│   │   └── CompatibilityScreen.js # 궁합 화면
+│   │   ├── OnboardingScreen.js # 온보딩 화면
+│   │   ├── ResultScreen.js # 테스트 진행 화면
+│   │   ├── CategoryScreen.js # 결과 화면 (개인 유형)
+│   │   ├── MatchingScreen.js # 궁합 테스트 화면
+│   │   ├── LoadingScreen.js # 로딩 화면
+│   │   └── MatchingResultScreen.js # 궁합 결과 화면
+│   ├── navigation/         # 네비게이션 설정
+│   │   └── AppNavigator.js # React Navigation 설정
+│   ├── hooks/              # 커스텀 훅
+│   │   ├── useMatching.js  # 궁합 테스트 로직
+│   │   ├── useResultScreen.js # 결과 화면 로직
+│   │   └── useResponsive.js # 반응형 디자인
+│   ├── constants/          # 상수 정의
+│   │   ├── questions.js    # 테스트 질문 데이터
+│   │   ├── personalities.js # 8가지 여행 유형 정의
+│   │   ├── travelTypes.js  # 여행 유형 목록
+│   │   ├── images.js       # 이미지 경로 상수
+│   │   ├── theme.js        # 테마 및 스타일 상수
+│   │   └── mockData.js     # 개발용 Mock 데이터
 │   ├── services/           # API 및 외부 서비스
-│   │   └── analytics.js    # 사용자 분석 서비스 (선택적)
-│   ├── store/              # Zustand 상태 관리
-│   │   ├── testStore.js    # 테스트 관련 상태 관리
-│   │   └── compatStore.js  # 궁합 관련 상태 관리
+│   │   └── api.js          # 백엔드 API 통신
 │   ├── utils/              # 유틸리티 함수
 │   │   ├── typeCalculator.js # 유형 계산 로직
-│   │   └── storage.js      # 로컬 스토리지 헬퍼
-│   ├── constants/          # 상수 정의
-│   │   ├── questions.js    # 질문 데이터
-│   │   ├── travelTypes.js  # 여행 유형 정의
-│   │   ├── compatibility.js # 궁합 결과 정의
-│   │   └── theme.js        # 테마 및 스타일 상수
-│   ├── hooks/              # 커스텀 훅
-│   │   ├── useResponsive.js # 반응형 디자인 훅
-│   │   └── useProgress.js  # 테스트 진행 상태 훅
+│   │   ├── compatibilityUtils.js # 궁합 계산 유틸
+│   │   └── textUtils.js    # 텍스트 처리 유틸
+│   ├── styles/             # 스타일 정의
+│   │   ├── common.js       # 공통 스타일
+│   │   └── matchingStyles.js # 궁합 화면 스타일
 │   └── App.js              # 앱 루트 컴포넌트
-├── .gitignore
-├── app.json                # 앱 설정
+├── assets/                 # 정적 자산
+│   ├── images/             # 이미지 파일
+│   ├── icons/              # 아이콘 파일
+│   └── fonts/              # 폰트 파일
+├── public/                 # 웹용 정적 파일
+├── app.config.js           # Expo 앱 설정
+├── package.json            # 프로젝트 의존성
 ├── babel.config.js         # Babel 설정
-├── index.js                # 진입점
 ├── metro.config.js         # Metro 번들러 설정
-├── package.json            # 프로젝트 정보 및 의존성
-└── README.md
+└── vercel.json             # Vercel 배포 설정
 ```
+
+### 주요 아키텍처 패턴
+
+#### 1. **Component-Based Architecture**
+- 재사용 가능한 컴포넌트 구조
+- Common 컴포넌트와 Specific 컴포넌트 분리
+- Props를 통한 데이터 전달
+
+#### 2. **Custom Hooks Pattern**
+- 비즈니스 로직을 커스텀 훅으로 분리
+- 컴포넌트의 재사용성과 테스트 용이성 향상
+- 상태 관리 로직의 캡슐화
+
+#### 3. **Constants-Driven Development**
+- 모든 상수값을 별도 파일로 관리
+- 하드코딩 방지 및 유지보수성 향상
+- 테마, 색상, 텍스트 등 중앙 집중 관리
+
+#### 4. **Service Layer Pattern**
+- API 통신 로직을 서비스 레이어로 분리
+- Mock 데이터를 통한 개발 단계별 지원
+- 에러 핸들링 및 재시도 로직 포함
+
+
+## 🔄 개발 플로우
+
+### 1. 테스트 플로우
+```
+홈 화면 → 온보딩 → 질문 응답 → 로딩 → 개인 결과 → 궁합 테스트 → 궁합 결과
+```
+
+### 2. 상태 관리
+- **Zustand**를 사용한 가벼운 전역 상태 관리
+- 각 화면별 로컬 상태와 커스텀 훅 활용
+- API 응답 데이터의 효율적인 캐싱
+
+### 3. API 통신
+- RESTful API 기반 백엔드 통신
+- 개발 중에는 Mock 데이터 지원
+- 에러 발생 시 Fallback 로직
+
+
+*"여행은 떠나기 전부터 시작된다" - 우당탕탕 여행 궁합 테스트와 함께 완벽한 여행 동행자를 찾아보세요! ✈️*
