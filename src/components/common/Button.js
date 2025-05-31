@@ -1,6 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View, Platform } from 'react-native';
 import { COLORS, FONTS, SIZES } from '../../constants/theme';
+import PrimaryButtonSVG from '../../../assets/button.svg';
+import SecondaryButtonSVG from '../../../assets/button2.svg';
 
 const Button = ({
     title,
@@ -8,23 +10,43 @@ const Button = ({
     style,
     textStyle,
     disabled = false,
-    type = 'primary'  // primary 또는 secondary
+    type = 'primary'
 }) => {
+    const renderSVG = () => {
+        const ButtonSVG = type === 'secondary' ? SecondaryButtonSVG : PrimaryButtonSVG;
+
+        if (Platform.OS === 'web') {
+            return (
+                <img
+                    src={type === 'secondary' ? require('../../../assets/button2.svg') : require('../../../assets/button.svg')}
+                    style={styles.svg}
+                    alt="button background"
+                />
+            );
+        }
+        return (
+            <ButtonSVG
+                width={208}
+                height={57}
+                style={styles.svg}
+            />
+        );
+    };
+
     return (
         <TouchableOpacity
             style={[
                 styles.button,
-                type === 'secondary' ? styles.secondaryButton : styles.primaryButton,
                 disabled && styles.disabledButton,
                 style
             ]}
             onPress={onPress}
             disabled={disabled}
         >
+            {renderSVG()}
             <Text
                 style={[
                     styles.buttonText,
-                    type === 'secondary' ? styles.secondaryButtonText : styles.primaryButtonText,
                     disabled && styles.disabledButtonText,
                     textStyle
                 ]}
@@ -37,42 +59,32 @@ const Button = ({
 
 const styles = StyleSheet.create({
     button: {
-        paddingVertical: SIZES.medium,
-        paddingHorizontal: SIZES.large,
-        borderRadius: SIZES.base * 2,
+        width: 208,
+        height: 57,
+        borderRadius: 27,
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: SIZES.base,
-        minWidth: 200,
+        overflow: 'hidden',
     },
-    primaryButton: {
-        backgroundColor: COLORS.primary,
-        shadowColor: COLORS.primary,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        elevation: 3,
-    },
-    secondaryButton: {
-        backgroundColor: 'transparent',
-        borderWidth: 1,
-        borderColor: COLORS.primary,
+    svg: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
     },
     disabledButton: {
-        backgroundColor: COLORS.border,
-        shadowOpacity: 0,
-        elevation: 0,
-        borderColor: COLORS.border,
+        opacity: 0.5,
     },
     buttonText: {
-        fontSize: SIZES.medium,
-        ...FONTS.medium,
-    },
-    primaryButtonText: {
+        fontFamily: 'NanumSquareRound',
+        fontWeight: '1000',
+        fontSize: 20,
+        lineHeight: 30,
+        letterSpacing: -0.38,
+        textAlign: 'center',
+        zIndex: 1,
         color: 'white',
-    },
-    secondaryButtonText: {
-        color: COLORS.primary,
     },
     disabledButtonText: {
         color: COLORS.textLight,
