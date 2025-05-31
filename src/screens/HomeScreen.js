@@ -7,14 +7,12 @@ import { TEXTS } from '../constants/texts';
 import { COLORS } from '../constants/theme';
 
 const HomeScreen = ({ navigation }) => {
-    console.log('HomeScreen 렌더링 중');
-
     const handleStartTest = () => {
         navigation.navigate('여행 성향 테스트 알아보기');
     };
 
     const handleCheckCompatibility = () => {
-        console.log('궁합 보러가기 버튼이 눌렸습니다.');
+        navigation.navigate('여행 궁합 알아보기');
     };
 
     const backLayerImg = require('../../assets/back-layer.svg');

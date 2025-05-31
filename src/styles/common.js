@@ -118,6 +118,11 @@ export const styles = StyleSheet.create({
         opacity: 0.65,
         zIndex: 0,
     },
+    // Section 관련 공통 스타일들
+    sectionContainer: {
+        marginBottom: 20,
+        width: '100%',
+    },
     // CategoryScreen 섹션 스타일들
     sectionTitle: {
         fontFamily: 'NanumSquareRound',
@@ -173,17 +178,56 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // 플랫폼별 shadow 스타일
-        ...Platform.select({
-            web: {
-                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-            },
-            default: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
-                elevation: 3,
-            },
+        ...(Platform.OS === 'web' ? {
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+        } : {
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 3,
         }),
+    },
+    // LoadingScreen 관련 스타일
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    lottieContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    tempLoadingAnimation: {
+        width: 200,
+        height: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    lottieAnimation: {
+        width: 200,
+        height: 200,
+        marginBottom: 20,
+    },
+    tempLoadingEmoji: {
+        fontSize: 80,
+        textAlign: 'center',
+    },
+    loadingText: {
+        fontFamily: 'NanumSquareRound',
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#6E3209',
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+    loadingSubtext: {
+        fontFamily: 'NanumSquareRound',
+        fontSize: 16,
+        color: '#6E3209',
+        textAlign: 'center',
+        lineHeight: 24,
     },
 });
