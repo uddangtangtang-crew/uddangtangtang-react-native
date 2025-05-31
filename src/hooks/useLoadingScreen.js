@@ -43,10 +43,11 @@ export const useLoadingScreen = (myType, partnerType, navigation) => {
             }
         };
 
-        // 최소 2초는 로딩 화면을 보여주기 위해 타이머 사용
+        // 최소 3초는 로딩 화면을 보여주기 위해 타이머 사용
         const timer = setTimeout(() => {
+            console.log('로딩 완료, 결과 화면으로 이동');
             fetchCompatibilityResult();
-        }, 2000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [myType, partnerType, navigation]);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { styles } from '../styles/common';
 import { COLORS } from '../constants/theme';
 import BackLayer from '../components/common/BackLayer';
@@ -23,16 +24,18 @@ const LoadingScreen = ({ route, navigation }) => {
                 {/* 로딩 영역 */}
                 <View style={styles.loadingContainer}>
                     <View style={styles.lottieContainer}>
-                        {/* 임시 로딩 표시 - 나중에 로티로 교체 */}
-                        <View style={styles.tempLoadingAnimation}>
-                            <Text style={styles.tempLoadingEmoji}>✈️</Text>
-                        </View>
+                        {/* 로티 애니메이션 */}
+                        <div style={{ width: 200, height: 200, marginBottom: 20 }}>
+                            <DotLottieReact
+                                src="/assets/airplane_loading.lottie"
+                                loop
+                                autoplay
+                                style={{ width: '100%', height: '100%' }}
+                            />
+                        </div>
                         
                         {/* 로딩 텍스트 */}
-                        <Text style={styles.loadingText}>궁합을 분석하고 있어요...</Text>
-                        <Text style={styles.loadingSubtext}>
-                            {`${myType}과 ${partnerType}의\n완벽한 여행 궁합을 찾고 있어요! ✈️`}
-                        </Text>
+                        <Text style={styles.loadingText}>결과 분석 중...</Text>
                     </View>
                 </View>
 
