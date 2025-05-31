@@ -1,8 +1,22 @@
 import { TYPE_IMAGES } from '../constants/images';
-import { getCompatibilityColor, getCompatibilityMessage } from '../utils/compatibilityUtils';
+import { createMockCompatibilityApiResponse } from '../constants/mockData';
 
 // MatchingResultScreen의 상태와 로직을 관리하는 커스텀 훅
-export const useMatchingResultScreen = (matchingResult) => {
+export const useMatchingResultScreen = (apiResponse, myType, partnerType) => {
+    // API 응답이 없으면 기본 Mock API 응답 사용
+    let currentApiResponse = apiResponse;
+    let currentMyType = myType;
+    let currentPartnerType = partnerType;
+    
+    if (!apiResponse) {
+        currentApiResponse = createMockCompatibilityApiResponse('가성비 장인 원숭이', '자낳괴 탐험가 코끼리');
+        currentMyType = '가성비 장인 원숭이';
+        currentPartnerType = '자낳괴 탐험가 코끼리';
+    }
+
+    // API 응답 그대로 반환
+    const apiResult = currentApiResponse.result;
+
     // 네비게이션 핸들러들
     const handleGoHome = (navigation) => {
         navigation.navigate('우당탕탕 여행 성향');
@@ -17,9 +31,10 @@ export const useMatchingResultScreen = (matchingResult) => {
     };
 
     return {
+        apiResult,
+        myType: currentMyType,
+        partnerType: currentPartnerType,
         typeImages: TYPE_IMAGES,
-        getCompatibilityColor,
-        getCompatibilityMessage,
         handleGoHome,
         handleShare,
         handleCopyLink
