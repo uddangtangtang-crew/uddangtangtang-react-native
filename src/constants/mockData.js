@@ -24,7 +24,7 @@ export const MOCK_RESULT_RESPONSE = {
         reason: "사용자는 여행 계획을 유연하게 세우며, 내향적 성향이 강하고, 소비에서는 실속을 중시하는 경향이 있습니다.",
         image: null,
         description: "당신은 즉흥적인 감정과 직관에 따라 여행하는 타입입니다.",
-        typeName: "자낳괴 탐험가",
+        typeName: "자낳괴 탐험가 코끼리",
         tripRecommand: "국내: 제주 협재 해변 – 감성 카페, 사진 명소 넘치는 뷰 성지"
     }
 };
