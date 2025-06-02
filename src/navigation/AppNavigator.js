@@ -9,6 +9,7 @@ import MatchingScreen from '../screens/MatchingScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 import MatchingResultScreen from '../screens/MatchingResultScreen';
 import SharedResultScreen from '../screens/SharedResultScreen';
+import SharedCompatibilityResultScreen from '../screens/SharedCompatibilityResultScreen';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,8 @@ const AppNavigator = () => {
         config: {
             screens: {
                 '우당탕탕 여행 성향': '',
-                '공유된 결과': 'result/:shareId'
+                '여행 성향 결과': 'result/:shareId',
+                '여행 궁합 결과': 'compatibility-result/:shareId'
             }
         }
     };
@@ -67,8 +69,13 @@ const AppNavigator = () => {
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen
-                    name="공유된 결과"
+                    name="여행 성향 결과"
                     component={SharedResultScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="여행 궁합 결과"
+                    component={SharedCompatibilityResultScreen}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

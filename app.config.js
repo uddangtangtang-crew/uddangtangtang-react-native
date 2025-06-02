@@ -34,7 +34,8 @@ export default {
       config: {
         screens: {
           "우당탕탕 여행 성향": "",
-          "공유된 결과": "result/:shareId"
+          "공유된 결과": "result/:shareId",
+          "공유된 궁합 결과": "compatibility-result/:shareId"
         }
       }
     },

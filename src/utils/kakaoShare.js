@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { getAppDomain, KAKAO_TEMPLATES, KAKAO_APP_KEY, KAKAO_CUSTOM_TEMPLATE } from '../constants/kakao';
+import { getAppDomain, KAKAO_APP_KEY, KAKAO_CUSTOM_TEMPLATE } from '../constants/kakao';
 
 // 모바일용 라이브러리 (조건부 import)
 let KakaoShareLink = null;
@@ -213,57 +213,47 @@ export const sharePersonalResult = async (result, webUrl) => {
  */
 export const shareCompatibilityResult = async ({ myType, partnerType, apiResult }, webUrl) => {
     try {
+        console.log('🎯 shareCompatibilityResult 함수 시작');
+        console.log('📥 받은 데이터:', { myType, partnerType, apiResult });
+        
         const domain = webUrl || getAppDomain();
         const shareId = apiResult.shareId || Date.now().toString();
         
+        console.log('✅ 최종 사용할 shareId:', shareId);
+        console.log('🌐 도메인:', domain);
+        
         // 공유 링크 생성하기
         const shareLink = getShareLink(shareId);
+        console.log('🔗 생성된 shareLink:', shareLink);
         
-        const shareOptions = {
-            templateObject: {
-                objectType: 'feed',
-                content: {
-                    title: '우당탕탕 여행 궁합 테스트',
-                    description: `${myType} X ${partnerType} 궁합 결과`,
-                    imageUrl: `${domain}/compatibility-image.png`,
-                    link: {
-                        webUrl: shareLink,
-                        mobileWebUrl: shareLink,
-                    },
-                },
-                buttons: [
-                    {
-                        title: '우리 궁합 보기',
-                        link: {
-                            webUrl: shareLink,
-                            mobileWebUrl: shareLink,
-                        },
-                    },
-                    {
-                        title: '나도 테스트하기',
-                        link: {
-                            webUrl: domain,
-                            mobileWebUrl: domain,
-                        },
-                    },
-                ],
-                // 웹훅 설정
-                serverCallbackArgs: {
-                    shareId: shareId,
-                    shareType: 'compatibility',
-                    myType: myType,
-                    partnerType: partnerType,
-                    userId: 'user_' + Date.now(),
-                    timestamp: new Date().toISOString()
-                },
-            },
+        // 커스텀 템플릿 사용
+        const templateArgs = {
+            myType: myType,
+            otherType: partnerType,
+            domain: domain,
+            shareId: shareId,
+            path: `/compatibility-result/${shareId}`,
+            fullUrl: shareLink,
+            testLink: domain,
+            // 웹훅 관련 데이터
+            shareType: 'compatibility',
+            userId: 'user_' + Date.now(),
+            timestamp: new Date().toISOString()
         };
+        
+        console.log('📋 템플릿에 전달할 데이터:');
+        console.log('  👤 myType:', myType);
+        console.log('  👥 otherType:', partnerType);
+        console.log('  🌐 domain:', domain);
+        console.log('  🆔 shareId:', shareId);
+        console.log('  🔗 shareLink:', shareLink);
+        console.log('  📄 전체 templateArgs:', templateArgs);
 
         // 플랫폼별 공유 실행
         if (Platform.OS === 'web') {
-            return await shareOnWeb(shareOptions);
+            return await shareOnWebWithCustomTemplate(KAKAO_CUSTOM_TEMPLATE.COMPATIBILITY_RESULT.id, templateArgs);
         } else {
-            return await shareOnMobile(shareOptions);
+            return await shareOnMobileWithCustomTemplate(KAKAO_CUSTOM_TEMPLATE.COMPATIBILITY_RESULT.id, templateArgs);
         }
     } catch (error) {
         console.error('궁합 결과 공유 실패:', error);

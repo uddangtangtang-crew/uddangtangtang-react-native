@@ -8,6 +8,10 @@ export const KAKAO_CUSTOM_TEMPLATE = {
     TRAVEL_COMPATIBILITY: {
         id: 121224,
         title: '우당탕탕 여행 궁합'
+    },
+    COMPATIBILITY_RESULT: {
+        id: 121241,
+        title: '우당탕탕 여행 궁합'
     }
 };
 
@@ -21,33 +25,3 @@ export const APP_DOMAIN = {
 export const getAppDomain = () => {
     return __DEV__ ? APP_DOMAIN.development : APP_DOMAIN.production;
 };
-
-// 카카오톡 공유 메시지 템플릿
-export const KAKAO_TEMPLATES = {
-    personal: {
-        title: '🎯 나의 여행 성향 결과',
-        buttons: [
-            {
-                title: '나도 테스트하기',
-                type: 'test'
-            },
-            {
-                title: '궁합 보러가기',
-                type: 'matching'
-            }
-        ]
-    },
-    compatibility: {
-        title: '💕 우리의 여행 궁합 결과',
-        buttons: [
-            {
-                title: '우리 궁합 보기',
-                type: 'result'
-            },
-            {
-                title: '나도 테스트하기',
-                type: 'test'
-            }
-        ]
-    }
-}; 
