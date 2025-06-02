@@ -8,13 +8,28 @@ import CategoryScreen from '../screens/CategoryScreen';
 import MatchingScreen from '../screens/MatchingScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 import MatchingResultScreen from '../screens/MatchingResultScreen';
+import SharedResultScreen from '../screens/SharedResultScreen';
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
     console.log('AppNavigator 렌더링 중');
+    
+    const linking = {
+        prefixes: [
+            'https://uddangtangtang-app.vercel.app',
+            'http://localhost:19006'
+        ],
+        config: {
+            screens: {
+                '우당탕탕 여행 성향': '',
+                '공유된 결과': 'result/:shareId'
+            }
+        }
+    };
+    
     return (
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
             <Stack.Navigator initialRouteName="우당탕탕 여행 성향">
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
@@ -49,6 +64,11 @@ const AppNavigator = () => {
                 <Stack.Screen
                     name="여행 궁합 결과는?"
                     component={MatchingResultScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="공유된 결과"
+                    component={SharedResultScreen}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

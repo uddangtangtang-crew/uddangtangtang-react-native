@@ -154,16 +154,8 @@ const getShareLink = (shareId) => {
  */
 export const sharePersonalResult = async (result, webUrl) => {
     try {
-        console.log('🎯 sharePersonalResult 함수 시작');
-        console.log('📥 받은 result 객체:', result);
-        console.log('🔍 result.shareId 값:', result.shareId);
-        console.log('📊 result 타입:', typeof result);
-        
         const domain = webUrl || getAppDomain();
         const shareId = result.shareId || Date.now().toString();
-        
-        console.log('✅ 최종 사용할 shareId:', shareId);
-        console.log('🌐 도메인:', domain);
         
         // 이미지 URL 처리 (Base64 데이터는 제외)
         let imageUrl = `${domain}/default-image.png`; // 기본 이미지
@@ -184,17 +176,25 @@ export const sharePersonalResult = async (result, webUrl) => {
         
         // 커스텀 템플릿 사용
         const templateArgs = {
-            typeName: result.typeName,
-            shareLink: shareLink,
-            testLink: domain,
+            type_name: result.typeName,
+            domain: domain,
+            share_id: shareId,
+            path: `/result/${shareId}`,
+            full_url: shareLink,
+            test_link: domain,
             // 웹훅 관련 데이터
-            shareId: shareId,
-            shareType: 'personal',
-            userId: 'user_' + Date.now(),
+            share_type: 'personal',
+            user_id: 'user_' + Date.now(),
             timestamp: new Date().toISOString()
         };
         
-        console.log('📋 템플릿에 전달할 데이터:', templateArgs);
+        console.log('📋 템플릿에 전달할 데이터:');
+        console.log('  🌐 domain:', templateArgs.domain);
+        console.log('  🆔 shareId:', shareId);
+        console.log('  📁 path:', `/result/${shareId}`);
+        console.log('  🎯 shareLink (전체 URL):', shareLink);
+        console.log('  🏠 testLink (홈 페이지):', domain);
+        console.log('  📄 전체 templateArgs:', templateArgs);
 
         // 플랫폼별 공유 실행
         if (Platform.OS === 'web') {
