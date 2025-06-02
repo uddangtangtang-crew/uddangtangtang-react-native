@@ -1,6 +1,7 @@
 import { TYPE_NAME_IMAGES } from '../constants/images';
 import { MOCK_CATEGORY_RESULT } from '../constants/mockData';
 import { splitReason } from '../utils/textUtils';
+import { sharePersonalResult, getShareStats } from '../utils/kakaoShare';
 
 // CategoryScreen의 상태와 로직을 관리하는 커스텀 훅
 export const useCategoryScreen = (resultData) => {
@@ -17,12 +18,29 @@ export const useCategoryScreen = (resultData) => {
         navigation.navigate('여행 궁합 알아보기');
     };
 
-    const handleShare = () => {
-        console.log('공유하기');
+    const handleShare = async () => {
+        try {
+            console.log('🔗 카카오톡 공유하기 시작...');
+            console.log('📋 전달할 result 객체:', result);
+            console.log('🆔 result에서 추출한 shareId:', result.shareId);
+            console.log('📄 result 전체 내용:', JSON.stringify(result, null, 2));
+            
+            // 카카오톡 공유하기 호출
+            const shareResponse = await sharePersonalResult(result);
+            console.log('✅ 카카오톡 공유하기 완료!', shareResponse);
+
+            
+        } catch (error) {
+            console.error('❌ 카카오톡 공유하기 에러:', error);
+            
+            // 에러 발생 시 대체 방안 (예: 링크 복사)
+            alert('카카오톡 공유에 실패했습니다. 링크를 복사해주세요.');
+        }
     };
 
     const handleCopyLink = () => {
         console.log('링크 복사');
+        // TODO: 실제 링크 복사 로직 구현
     };
 
     return {

@@ -23,7 +23,8 @@ export default {
       edgeToEdgeEnabled: true
     },
     web: {
-      favicon: "./assets/favicon.png"
+      favicon: "./assets/favicon.png",
+      bundler: "webpack"
     },
     extra: {
       apiBaseUrl: process.env.EXPO_PUBLIC_API_BASE_URL || "http://3.37.122.13:8080"
