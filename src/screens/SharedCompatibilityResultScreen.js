@@ -19,7 +19,7 @@ const SharedCompatibilityResultScreen = () => {
             console.log('🔗 공유된 궁합 결과 로딩, shareId:', shareId);
             
             const baseUrl = process.env.EXPO_PUBLIC_API_BASE_URL || "http://3.37.122.13:8080";
-            const response = await fetch(`${baseUrl}/ai/type/share/${shareId}`, {
+            const response = await fetch(`${baseUrl}/ai/type/compatibility/share/${shareId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

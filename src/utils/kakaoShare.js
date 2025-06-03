@@ -139,11 +139,17 @@ const shareOnMobileWithCustomTemplate = async (templateId, templateArgs) => {
 /**
  * 공유 링크 생성하기
  */
-const getShareLink = (shareId) => {
-    console.log('🔗 공유 링크 생성, shareId:', shareId);
+const getShareLink = (shareId, shareType = 'personal') => {
+    console.log('🔗 공유 링크 생성, shareId:', shareId, 'shareType:', shareType);
     
     const domain = getAppDomain();
-    const shareUrl = `${domain}/result/${shareId}`;
+    let shareUrl;
+    
+    if (shareType === 'compatibility') {
+        shareUrl = `${domain}/compatibility-result/${shareId}`;
+    } else {
+        shareUrl = `${domain}/result/${shareId}`;
+    }
     
     console.log('✅ 생성된 공유 링크:', shareUrl);
     return shareUrl;
@@ -170,8 +176,8 @@ export const sharePersonalResult = async (result, webUrl) => {
         }
         console.log('🖼️ 최종 사용할 imageUrl:', imageUrl);
         
-        // 공유 링크 생성하기
-        const shareLink = getShareLink(shareId);
+        // 공유 링크 생성하기 (개인 결과)
+        const shareLink = getShareLink(shareId, 'personal');
         console.log('🔗 생성된 shareLink:', shareLink);
         
         // 커스텀 템플릿 사용
@@ -217,13 +223,16 @@ export const shareCompatibilityResult = async ({ myType, partnerType, apiResult 
         console.log('📥 받은 데이터:', { myType, partnerType, apiResult });
         
         const domain = webUrl || getAppDomain();
-        const shareId = apiResult.shareId || Date.now().toString();
+        
+        // API 응답 구조에 따른 shareId 추출
+        // apiResult는 전체 API 응답이므로 result.shareId에서 가져옴
+        const shareId = apiResult.result?.shareId || apiResult.shareId || Date.now().toString();
         
         console.log('✅ 최종 사용할 shareId:', shareId);
         console.log('🌐 도메인:', domain);
         
-        // 공유 링크 생성하기
-        const shareLink = getShareLink(shareId);
+        // 공유 링크 생성하기 (궁합 결과)
+        const shareLink = getShareLink(shareId, 'compatibility');
         console.log('🔗 생성된 shareLink:', shareLink);
         
         // 커스텀 템플릿 사용
