@@ -156,6 +156,102 @@ const getShareLink = (shareId, shareType = 'personal') => {
 };
 
 /**
+ * URL 클립보드 복사 (플랫폼별 처리)
+ */
+const copyToClipboard = async (url) => {
+    try {
+        if (Platform.OS === 'web') {
+            // 웹에서는 navigator.clipboard 사용
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(url);
+                return true;
+            } else {
+                // 폴백: 임시 textarea 사용
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                return true;
+            }
+        } else {
+            // 모바일에서는 일단 콘솔 로그로 URL 표시 (나중에 라이브러리 추가 가능)
+            console.log('📋 복사할 URL:', url);
+            return false; // 모바일은 아직 복사 기능 없음
+        }
+    } catch (error) {
+        console.error('URL 복사 실패:', error);
+        return false;
+    }
+};
+
+/**
+ * 개인 결과 URL 복사하기
+ */
+export const copyPersonalResultUrl = async (result) => {
+    try {
+        const shareId = result.shareId || Date.now().toString();
+        const shareUrl = getShareLink(shareId, 'personal');
+        
+        console.log('🔗 개인 결과 URL 복사:', shareUrl);
+        
+        const success = await copyToClipboard(shareUrl);
+        
+        if (success) {
+            if (Platform.OS === 'web') {
+                alert('링크가 클립보드에 복사되었습니다!');
+            }
+        } else {
+            if (Platform.OS === 'web') {
+                alert('클립보드 복사에 실패했습니다.');
+            } else {
+                alert(`링크: ${shareUrl}\n\n링크가 표시되었습니다. 수동으로 복사해주세요.`);
+            }
+        }
+        
+        return shareUrl;
+    } catch (error) {
+        console.error('개인 결과 URL 복사 실패:', error);
+        alert('URL 복사에 실패했습니다.');
+        return null;
+    }
+};
+
+/**
+ * 궁합 결과 URL 복사하기
+ */
+export const copyCompatibilityResultUrl = async ({ apiResult }) => {
+    try {
+        // API 응답 구조에 따른 shareId 추출
+        const shareId = apiResult.result?.shareId || apiResult.shareId || Date.now().toString();
+        const shareUrl = getShareLink(shareId, 'compatibility');
+        
+        console.log('🔗 궁합 결과 URL 복사:', shareUrl);
+        
+        const success = await copyToClipboard(shareUrl);
+        
+        if (success) {
+            if (Platform.OS === 'web') {
+                alert('링크가 클립보드에 복사되었습니다!');
+            }
+        } else {
+            if (Platform.OS === 'web') {
+                alert('클립보드 복사에 실패했습니다.');
+            } else {
+                alert(`링크: ${shareUrl}\n\n링크가 표시되었습니다. 수동으로 복사해주세요.`);
+            }
+        }
+        
+        return shareUrl;
+    } catch (error) {
+        console.error('궁합 결과 URL 복사 실패:', error);
+        alert('URL 복사에 실패했습니다.');
+        return null;
+    }
+};
+
+/**
  * 카카오톡 개인 여행 성향 결과 공유하기
  */
 export const sharePersonalResult = async (result, webUrl) => {

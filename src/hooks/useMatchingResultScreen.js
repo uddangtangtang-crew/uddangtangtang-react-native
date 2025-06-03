@@ -1,6 +1,6 @@
 import { TYPE_IMAGES } from '../constants/images';
 import { createMockCompatibilityApiResponse } from '../constants/mockData';
-import { shareCompatibilityResult } from '../utils/kakaoShare';
+import { shareCompatibilityResult, copyCompatibilityResultUrl } from '../utils/kakaoShare';
 
 // MatchingResultScreen의 상태와 로직을 관리하는 커스텀 훅
 export const useMatchingResultScreen = (apiResponse, myType, partnerType) => {
@@ -43,9 +43,22 @@ export const useMatchingResultScreen = (apiResponse, myType, partnerType) => {
         }
     };
 
-    const handleCopyLink = () => {
-        console.log('링크 복사');
-        // TODO: 실제 링크 복사 로직 구현
+    const handleCopyLink = async () => {
+        try {
+            console.log('🔗 궁합 링크 복사하기 시작...');
+            
+            // 궁합 결과 URL 복사하기 호출
+            const copiedUrl = await copyCompatibilityResultUrl({
+                apiResult: currentApiResponse
+            });
+            
+            if (copiedUrl) {
+                console.log('✅ 궁합 링크 복사하기 완료:', copiedUrl);
+            }
+        } catch (error) {
+            console.error('❌ 궁합 링크 복사하기 에러:', error);
+            alert('링크 복사에 실패했습니다.');
+        }
     };
 
     return {

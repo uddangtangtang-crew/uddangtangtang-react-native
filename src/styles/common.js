@@ -171,22 +171,16 @@ export const styles = StyleSheet.create({
         gap: 15,
     },
     shareButton: {
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
         width: 50,
         height: 50,
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        // 플랫폼별 shadow 스타일
-        ...(Platform.OS === 'web' ? {
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-        } : {
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            elevation: 3,
-        }),
+    },
+    shareButtonIcon: {
+        width: 50,
+        height: 50,
     },
     // LoadingScreen 관련 스타일
     loadingContainer: {

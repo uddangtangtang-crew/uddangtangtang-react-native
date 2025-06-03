@@ -1,7 +1,7 @@
 import { TYPE_NAME_IMAGES } from '../constants/images';
 import { MOCK_CATEGORY_RESULT } from '../constants/mockData';
 import { splitReason } from '../utils/textUtils';
-import { sharePersonalResult, getShareStats } from '../utils/kakaoShare';
+import { sharePersonalResult, getShareStats, copyPersonalResultUrl } from '../utils/kakaoShare';
 
 // CategoryScreen의 상태와 로직을 관리하는 커스텀 훅
 export const useCategoryScreen = (resultData) => {
@@ -38,9 +38,20 @@ export const useCategoryScreen = (resultData) => {
         }
     };
 
-    const handleCopyLink = () => {
-        console.log('링크 복사');
-        // TODO: 실제 링크 복사 로직 구현
+    const handleCopyLink = async () => {
+        try {
+            console.log('🔗 링크 복사하기 시작...');
+            
+            // 개인 결과 URL 복사하기 호출
+            const copiedUrl = await copyPersonalResultUrl(result);
+            
+            if (copiedUrl) {
+                console.log('✅ 링크 복사하기 완료:', copiedUrl);
+            }
+        } catch (error) {
+            console.error('❌ 링크 복사하기 에러:', error);
+            alert('링크 복사에 실패했습니다.');
+        }
     };
 
     return {
