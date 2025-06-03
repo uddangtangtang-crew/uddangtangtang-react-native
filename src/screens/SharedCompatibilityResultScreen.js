@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import MatchingResultScreen from './MatchingResultScreen';
+import { ENV } from '../config/env';
 
 const SharedCompatibilityResultScreen = () => {
     const route = useRoute();
@@ -18,8 +19,7 @@ const SharedCompatibilityResultScreen = () => {
         try {
             console.log('🔗 공유된 궁합 결과 로딩, shareId:', shareId);
             
-            const baseUrl = process.env.EXPO_PUBLIC_API_BASE_URL || "http://3.37.122.13:8080";
-            const response = await fetch(`${baseUrl}/ai/type/compatibility/share/${shareId}`, {
+            const response = await fetch(`${ENV.API_BASE_URL}/ai/type/compatibility/share/${shareId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
