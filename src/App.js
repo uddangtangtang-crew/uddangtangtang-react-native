@@ -3,6 +3,7 @@ import { StatusBar, View, ActivityIndicator } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Font from 'expo-font';
 import AppNavigator from './navigation/AppNavigator';
+import KakaoSDK from './components/web/KakaoSDK';
 import { COLORS } from './constants/theme';
 
 // 개발 환경에서 특정 경고 필터링
@@ -51,6 +52,7 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <StatusBar barStyle="dark-content" />
+      <KakaoSDK />
       <AppNavigator />
     </SafeAreaProvider>
   );

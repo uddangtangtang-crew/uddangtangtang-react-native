@@ -5,15 +5,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
 import { TEXTS } from '../constants/texts';
 import { COLORS } from '../constants/theme';
+import { useHomeScreen } from '../hooks/useHomeScreen';
 
 const HomeScreen = ({ navigation }) => {
-    const handleStartTest = () => {
-        navigation.navigate('여행 성향 테스트 알아보기');
-    };
-
-    const handleCheckCompatibility = () => {
-        navigation.navigate('여행 궁합 알아보기');
-    };
+    const {
+        handleStartTest,
+        handleCheckCompatibility,
+        getJoinedUsersText
+    } = useHomeScreen();
 
     const backLayerImg = require('../../assets/back-layer.svg');
 
@@ -48,16 +47,16 @@ const HomeScreen = ({ navigation }) => {
                         <View style={styles.buttonContainer}>
                             <Button
                                 title={TEXTS.HOME.START_TEST}
-                                onPress={handleStartTest}
+                                onPress={() => handleStartTest(navigation)}
                                 style={{ marginBottom: 12 }}
                             />
                             <Button
                                 title={TEXTS.HOME.CHECK_COMPATIBILITY}
-                                onPress={handleCheckCompatibility}
+                                onPress={() => handleCheckCompatibility(navigation)}
                                 type="secondary"
                             />
                         </View>
-                        <Text style={styles.joinedUsers}>{TEXTS.HOME.JOINED_USERS}</Text>
+                        <Text style={styles.joinedUsers}>{getJoinedUsersText()}</Text>
                     </View>
                     <Image source={backLayerImg} style={styles.backLayerImg} />
                 </LinearGradient>
