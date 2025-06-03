@@ -10,7 +10,8 @@ export const MOCK_CATEGORY_RESULT = {
         image: null,
         description: "당신은 즉흥적인 감정과 직관에 따라 여행하는 타입입니다. 여행 계획보다는 느낌을 따르고, 가는 길에 눈에 띄는 감성적인 장소나 예쁜 소품에 이끌리듯 멈춰섭니다. 사람들과 어울리기보다는 혼자 또는 소수의 동행과 조용히 감정을 곱씹는 시간이 소중하죠.",
         typeName: "가성비 장인 원숭이",
-        tripRecommand: "국내: 제주 협재 해변 – 감성 카페, 사진 명소 넘치는 뷰 성지\n강릉 안목해변 – 바다와 감성 카페가 모인 필수 코스\n파주 감성촌 – 사진 찍기 좋고 아기자기한 감성 넘침"
+        tripRecommand: "국내: 제주 협재 해변 – 감성 카페, 사진 명소 넘치는 뷰 성지\n강릉 안목해변 – 바다와 감성 카페가 모인 필수 코스\n파주 감성촌 – 사진 찍기 좋고 아기자기한 감성 넘침",
+        shareId: "share_1703849284_abc123def"
     }
 };
 
@@ -25,7 +26,8 @@ export const MOCK_RESULT_RESPONSE = {
         image: null,
         description: "당신은 즉흥적인 감정과 직관에 따라 여행하는 타입입니다.",
         typeName: "자낳괴 탐험가 코끼리",
-        tripRecommand: "국내: 제주 협재 해변 – 감성 카페, 사진 명소 넘치는 뷰 성지"
+        tripRecommand: "국내: 제주 협재 해변 – 감성 카페, 사진 명소 넘치는 뷰 성지",
+        shareId: "share_1703849285_xyz789abc"
     }
 };
 
@@ -42,6 +44,7 @@ export const createMockCompatibilityApiResponse = (myType, partnerType) => ({
             "제주도 자유여행을 추천해요! 기본 숙소와 렌터카만 예약하고 나머지는 현지에서 즉흥적으로 정해보세요.",
             "오전에는 계획된 일정으로, 오후에는 즉흥적인 탐험으로 균형을 맞춰보세요.",
             "서로의 여행 스타일을 존중하고 이해하려는 마음가짐이 중요해요."
-        ]
+        ],
+        shareId: "share_1703849286_compatibility_456"
     }
 });

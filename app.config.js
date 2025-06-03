@@ -23,7 +23,21 @@ export default {
       edgeToEdgeEnabled: true
     },
     web: {
-      favicon: "./assets/favicon.png"
+      favicon: "./assets/favicon.png",
+      bundler: "webpack"
+    },
+    linking: {
+      prefixes: [
+        "https://uddangtangtang-app.vercel.app",
+        "http://localhost:19006"
+      ],
+      config: {
+        screens: {
+          "우당탕탕 여행 성향": "",
+          "여행 성향 결과": "result/:shareId",
+          "여행 궁합 결과": "compatibility-result/:shareId"
+        }
+      }
     },
     extra: {
       apiBaseUrl: process.env.EXPO_PUBLIC_API_BASE_URL || "http://3.37.122.13:8080"

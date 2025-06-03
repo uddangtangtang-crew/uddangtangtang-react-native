@@ -1,5 +1,6 @@
 import { TYPE_IMAGES } from '../constants/images';
 import { createMockCompatibilityApiResponse } from '../constants/mockData';
+import { shareCompatibilityResult, copyCompatibilityResultUrl } from '../utils/kakaoShare';
 
 // MatchingResultScreen의 상태와 로직을 관리하는 커스텀 훅
 export const useMatchingResultScreen = (apiResponse, myType, partnerType) => {
@@ -22,12 +23,42 @@ export const useMatchingResultScreen = (apiResponse, myType, partnerType) => {
         navigation.navigate('우당탕탕 여행 성향');
     };
 
-    const handleShare = () => {
-        console.log('공유하기');
+    const handleShare = async () => {
+        try {
+            console.log('카카오톡 궁합 공유하기 시작...');
+            
+            // 카카오톡 궁합 결과 공유하기 호출
+            await shareCompatibilityResult({
+                myType: currentMyType,
+                partnerType: currentPartnerType,
+                apiResult: currentApiResponse
+            });
+            
+            console.log('카카오톡 궁합 공유하기 완료!');
+        } catch (error) {
+            console.error('카카오톡 궁합 공유하기 에러:', error);
+            
+            // 에러 발생 시 대체 방안
+            alert('카카오톡 공유에 실패했습니다. 링크를 복사해주세요.');
+        }
     };
 
-    const handleCopyLink = () => {
-        console.log('링크 복사');
+    const handleCopyLink = async () => {
+        try {
+            console.log('🔗 궁합 링크 복사하기 시작...');
+            
+            // 궁합 결과 URL 복사하기 호출
+            const copiedUrl = await copyCompatibilityResultUrl({
+                apiResult: currentApiResponse
+            });
+            
+            if (copiedUrl) {
+                console.log('✅ 궁합 링크 복사하기 완료:', copiedUrl);
+            }
+        } catch (error) {
+            console.error('❌ 궁합 링크 복사하기 에러:', error);
+            alert('링크 복사에 실패했습니다.');
+        }
     };
 
     return {
