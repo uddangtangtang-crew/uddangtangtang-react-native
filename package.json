@@ -42,5 +42,8 @@
     "@react-native-community/cli": "^18.0.0",
     "metro-react-native-babel-preset": "^0.77.0"
   },
-  "private": true
+  "private": true,
+  "overrides": {
+    "semver": "^7.7.2"
+  }
 }
