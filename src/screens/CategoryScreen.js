@@ -106,17 +106,18 @@ const CategoryScreen = ({ route, navigation }) => {
                             🍁 추천 여행지
                         </Text>
 
-                        {/* 키워드 */}
-                        {result.keyword && (
-                            <Text style={[styles.descriptionText, { fontWeight: '600', marginBottom: 10 }]}>
-                                {result.keyword}
+                        {/* 여행지 추천 리스트 */}
+                        {Array.isArray(result.tourSpotList) && result.tourSpotList.length > 0 ? (
+                            result.tourSpotList.map((spot, idx) => (
+                                <Text key={idx} style={styles.descriptionText}>
+                                    • {spot.name} - {spot.description}
+                                </Text>
+                            ))
+                        ) : (
+                            <Text style={styles.descriptionText}>
+                                추천 여행지를 찾고 있습니다...
                             </Text>
                         )}
-
-                        {/* 여행지 추천 */}
-                        <Text style={styles.descriptionText}>
-                            {result.tripRecommand}
-                        </Text>
                     </View>
 
                     {/* 버튼들 */}

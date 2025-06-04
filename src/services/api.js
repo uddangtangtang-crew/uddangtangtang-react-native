@@ -25,7 +25,7 @@ export const getTravelTypeResult = async (answers) => {
     if (response.ok && data.isSuccess) {
       return {
         success: true,
-        data: data,
+        data: data.result,
       };
     } else {
       // 서버 에러 시 원하는 형태로 응답 반환

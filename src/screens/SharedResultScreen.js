@@ -34,7 +34,7 @@ const SharedResultScreen = () => {
             console.log('📄 서버에서 받은 공유 결과:', data);
 
             if (data.isSuccess && data.result) {
-                setResultData(data);
+                setResultData({ result: data.result });
             } else {
                 throw new Error('잘못된 공유 링크입니다.');
             }
