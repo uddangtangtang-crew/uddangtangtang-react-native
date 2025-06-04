@@ -103,10 +103,10 @@ export const styles = StyleSheet.create({
         width: 200,
         height: 200,
         marginBottom: 0,
+        marginTop: 60,
     },
     button: {
-        marginTop: -20,
-        marginBottom: 200,
+        marginBottom: 90,
     },
     resultBackLayerImg: {
         position: 'absolute',

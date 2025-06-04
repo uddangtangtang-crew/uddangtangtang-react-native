@@ -62,6 +62,15 @@ export const onboardStyles = StyleSheet.create({
         textAlign: 'center',
         lineHeight: 22,
     },
+    backIconBtnMobile: {
+        position: 'absolute',
+        top: 40,
+        left: 26,
+        zIndex: 20,
+        padding: 20,
+        backgroundColor: 'transparent',
+        borderRadius: 24,
+    },
     backIconBtn: {
         position: 'absolute',
         top: 46,
