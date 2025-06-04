@@ -119,10 +119,10 @@ const CategoryScreen = ({ route, navigation }) => {
                         </Text>
 
                         {/* 여행지 추천 리스트 */}
-                        {Array.isArray(result.tourSpotList) && result.tourSpotList.length > 0 ? (
-                            result.tourSpotList.map((spot, idx) => (
+                        {Array.isArray(result.recommendations) && result.recommendations.length > 0 ? (
+                            result.recommendations.map((recommendation, idx) => (
                                 <Text key={idx} style={styles.descriptionText}>
-                                    • {spot.name} - {spot.description}
+                                    • {recommendation}
                                 </Text>
                             ))
                         ) : (
