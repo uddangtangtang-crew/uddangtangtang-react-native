@@ -1,25 +1,25 @@
 // 유형별 이미지 매핑
 export const TYPE_IMAGES = {
-    '가성비 장인 원숭이': require('../../assets/가성비 장인 원숭이.svg'),
-    '감성 도파민러 돼지': require('../../assets/감성 도파민러 돼지.svg'),
-    '단톡방 총무 고양이': require('../../assets/단톡방 총무 고양이.svg'),
-    '무념무상 힐링러 병아리': require('../../assets/무념무상 힐링러 병아리.svg'),
-    '자낳괴 탐험가 코끼리': require('../../assets/자낳괴 탐험가 코끼리.svg'),
-    '패키지 러버 토끼': require('../../assets/패키지 러버 토끼.svg'),
-    '계획충 쉴러 곰': require('../../assets/계획충 쉴러 곰.svg'),
-    '온도차 낭만파 강아지': require('../../assets/온도차 낭만파 강아지.svg'),
+    '가성비 장인 원숭이': require('../../assets/가성비 장인 원숭이.png'),
+    '감성 도파민러 돼지': require('../../assets/감성 도파민러 돼지.png'),
+    '단톡방 총무 고양이': require('../../assets/단톡방 총무 고양이.png'),
+    '무념무상 힐링러 병아리': require('../../assets/무념무상 힐링러 병아리.png'),
+    '자낳괴 탐험가 코끼리': require('../../assets/자낳괴 탐험가 코끼리.png'),
+    '패키지 러버 토끼': require('../../assets/패키지 러버 토끼.png'),
+    '계획충 쉴러 곰': require('../../assets/계획충 쉴러 곰.png'),
+    '온도차 낭만파 강아지': require('../../assets/온도차 낭만파 강아지.png'),
 };
 
 // 유형명 이미지 매핑
 export const TYPE_NAME_IMAGES = {
-    '단톡방 총무 고양이': require('../../assets/typeName-단톡방총무고양이.svg'),
-    '패키지 러버 토끼': require('../../assets/typeName-패키지러버토끼.svg'),
-    '계획충 쉴러 곰': require('../../assets/typeName-계획충쉴러곰.svg'),
-    '감성 도파민러 돼지': require('../../assets/typeName-감성도파민러돼지.svg'),
-    '자낳괴 탐험가 코끼리': require('../../assets/typeName-자낳괴탐험가코끼리.svg'),
-    '온도차 낭만파 강아지': require('../../assets/typeName-온도차낭만파강아지.svg'),
-    '가성비 장인 원숭이': require('../../assets/typeName-가성비장인원숭이.svg'),
-    '무념무상 힐링러 병아리': require('../../assets/typeName-무념무상힐링러병아리.svg'),
+    '단톡방 총무 고양이': require('../../assets/typeName-단톡방총무고양이.png'),
+    '패키지 러버 토끼': require('../../assets/typeName-패키지러버토끼.png'),
+    '계획충 쉴러 곰': require('../../assets/typeName-계획충쉴러곰.png'),
+    '감성 도파민러 돼지': require('../../assets/typeName-감성도파민러돼지.png'),
+    '자낳괴 탐험가 코끼리': require('../../assets/typeName-자낳괴탐험가코끼리.png'),
+    '온도차 낭만파 강아지': require('../../assets/typeName-온도차낭만파강아지.png'),
+    '가성비 장인 원숭이': require('../../assets/typeName-가성비장인원숭이.png'),
+    '무념무상 힐링러 병아리': require('../../assets/typeName-무념무상힐링러병아리.png'),
 };
 
 // 질문 이미지들 (질문 번호별)
