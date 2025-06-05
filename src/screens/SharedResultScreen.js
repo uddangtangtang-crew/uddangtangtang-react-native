@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Alert, useWindowDimensions } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import CategoryScreen from './CategoryScreen';
 import { ENV } from '../config/env';
@@ -10,6 +10,12 @@ const SharedResultScreen = () => {
     const [resultData, setResultData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // 반응형 width/height 적용
+    const { width, height } = useWindowDimensions();
+    const frameWidth = Math.min(width, 500);
+    const frameHeight = Math.min(height, 900);
+    const textPadding = 16;
 
     useEffect(() => {
         fetchSharedResult();
@@ -34,7 +40,7 @@ const SharedResultScreen = () => {
             console.log('📄 서버에서 받은 공유 결과:', data);
 
             if (data.isSuccess && data.result) {
-                setResultData(data);
+                setResultData({ result: data.result });
             } else {
                 throw new Error('잘못된 공유 링크입니다.');
             }
@@ -49,7 +55,7 @@ const SharedResultScreen = () => {
 
     if (loading) {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, { width: frameWidth, minHeight: frameHeight, paddingHorizontal: textPadding }]}> 
                 <ActivityIndicator size="large" color="#4A90E2" />
                 <Text style={styles.loadingText}>공유된 결과를 불러오는 중...</Text>
             </View>
@@ -58,7 +64,7 @@ const SharedResultScreen = () => {
 
     if (error) {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, { width: frameWidth, minHeight: frameHeight, paddingHorizontal: textPadding }]}> 
                 <Text style={styles.errorText}>❌ 오류: {error}</Text>
             </View>
         );

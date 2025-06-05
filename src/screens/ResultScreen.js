@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import Button from '../components/common/Button';
 import BackLayer from '../components/common/BackLayer';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,7 +14,10 @@ import ProgressBar from '../components/common/ProgressBar';
 
 const ResultScreen = ({ navigation }) => {
     const { isLoading, handleGoCategory } = useResultScreen();
-    
+    const { width, height } = useWindowDimensions();
+    const frameWidth = Math.min(width, 500);
+    const frameHeight = Math.min(height, 900);
+
     const airplaneOnlyImg = require('../../assets/airplane-only.svg');
 
     return (
@@ -28,7 +31,7 @@ const ResultScreen = ({ navigation }) => {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     locations={[0, 0.5, 1]}
-                    style={styles.mobileFrame}
+                    style={[styles.mobileFrame, { width: frameWidth, minHeight: frameHeight }]}
                 >
                     <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                         {/* 상단 프로그래스바 */}
