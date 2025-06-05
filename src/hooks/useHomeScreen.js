@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getTestCount } from '../services/api';
+import { useQuizStore } from '../store/useQuizStore';
 
 // HomeScreen의 상태와 로직을 관리하는 커스텀 훅
 export const useHomeScreen = () => {
@@ -32,6 +33,7 @@ export const useHomeScreen = () => {
 
     // 네비게이션 핸들러들
     const handleStartTest = (navigation) => {
+        useQuizStore.getState().resetQuiz(); // 퀴즈 상태 초기화
         navigation.navigate('여행 성향 테스트 알아보기');
     };
 

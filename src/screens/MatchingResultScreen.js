@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
 import { matchingStyles } from '../styles/matchingStyles';
@@ -26,6 +26,12 @@ const MatchingResultScreen = ({ route, navigation }) => {
     const matchingHeaderImg = require('../../assets/궁합 테스트.svg');
     const heartImg = require('../../assets/heartImg.svg');
 
+    // 반응형 width/height 적용
+    const { width, height } = useWindowDimensions();
+    const frameWidth = Math.min(width, 500);
+    const frameHeight = Math.min(height, 900);
+    const textPadding = 16;
+
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
             <ScrollView
@@ -37,7 +43,7 @@ const MatchingResultScreen = ({ route, navigation }) => {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     locations={[0, 0.5, 1]}
-                    style={[styles.mobileFrame, { paddingHorizontal: 20 }]}
+                    style={[styles.mobileFrame, { width: frameWidth, minHeight: frameHeight, paddingHorizontal: 20 }]}
                 >
                     {/* 헤더 - MatchingScreen과 동일 */}
                     <View style={matchingStyles.header}>
@@ -116,28 +122,37 @@ const MatchingResultScreen = ({ route, navigation }) => {
                     </View>
 
                     {/* 궁합 설명 */}
-                    <SectionContainer title="✨ 궁합 결과">
+                    <View style={{ alignItems: 'flex-start', marginBottom: 20, width: frameWidth, paddingHorizontal: textPadding }}>
+                        <Text style={styles.sectionTitle}>
+                            ✨ 궁합 결과
+                        </Text>
                         <Text style={styles.descriptionText}>
                             {apiResult.result}
                         </Text>
-                    </SectionContainer>
+                    </View>
 
-                    {/* 장점 */}
-                    <SectionContainer title="👍 함께하는 여행 팁">
+                    <View style={{ alignItems: 'flex-start', marginBottom: 20, width: frameWidth, paddingHorizontal: textPadding }}>
+                        <Text style={styles.sectionTitle}>
+                            👍 함께하는 여행 팁
+                        </Text>
                         <Text style={styles.descriptionText}>
                             {apiResult.tips || "서로의 장점을 발견해보세요!"}
                         </Text>
-                    </SectionContainer>
+                    </View>
 
-                    {/* 주의점 */}
-                    <SectionContainer title="💡 갈등 & 조화 포인트">
+                    <View style={{ alignItems: 'flex-start', marginBottom: 20, width: frameWidth, paddingHorizontal: textPadding }}>
+                        <Text style={styles.sectionTitle}>
+                            💡 갈등 & 조화 포인트
+                        </Text>
                         <Text style={styles.descriptionText}>
                             {apiResult.conflictPoints || "서로를 이해하며 여행해보세요!"}
                         </Text>
-                    </SectionContainer>
+                    </View>
 
-                    {/* 추천 여행지 */}
-                    <SectionContainer title="🏝️ 추천 여행지">
+                    <View style={{ alignItems: 'flex-start', marginBottom: 30, width: frameWidth, paddingHorizontal: textPadding }}>
+                        <Text style={styles.sectionTitle}>
+                            🏝️ 추천 여행지
+                        </Text>
                         {Array.isArray(apiResult.recommendations) && apiResult.recommendations.length > 0 ? (
                             apiResult.recommendations.map((recommendation, index) => (
                                 <Text key={index} style={styles.descriptionText}>
@@ -149,7 +164,7 @@ const MatchingResultScreen = ({ route, navigation }) => {
                                 추천 여행지를 찾고 있습니다...
                             </Text>
                         )}
-                    </SectionContainer>
+                    </View>
 
                     {/* 버튼들 */}
                     <View style={[styles.buttonContainer, { zIndex: 10 }]}>

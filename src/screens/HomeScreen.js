@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import Button from '../components/common/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
@@ -14,6 +14,9 @@ const HomeScreen = ({ navigation }) => {
         getJoinedUsersText
     } = useHomeScreen();
 
+    const { width, height } = useWindowDimensions();
+    const frameWidth = Math.min(width, 500);
+    const frameHeight = Math.min(height, 900);
     const backLayerImg = require('../../assets/back-layer.svg');
 
     return (
@@ -27,7 +30,7 @@ const HomeScreen = ({ navigation }) => {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     locations={[0, 0.5, 1]}
-                    style={styles.mobileFrame}
+                    style={[styles.mobileFrame, { width: frameWidth, minHeight: frameHeight }]}
                 >
                     <View style={[styles.content, { justifyContent: 'flex-start' }]}>
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>

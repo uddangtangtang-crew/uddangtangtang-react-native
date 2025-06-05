@@ -6,6 +6,8 @@ import {
     TouchableOpacity,
     View,
     Image,
+    useWindowDimensions,
+    Platform,
 } from 'react-native';
 import { COLORS} from '../constants/theme';
 import { styles as commonStyles } from '../styles/common';
@@ -23,6 +25,13 @@ import BackLayer from '../components/common/BackLayer';
 const answerAImg = require('../../assets/luggage.svg');
 const answerBImg = require('../../assets/luggage-b.svg');
 
+// 모바일 웹 감지 함수
+function isMobileWeb() {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent;
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+}
+
 const OnboardingScreen = () => {
     const {
         currentIndex,
@@ -32,6 +41,10 @@ const OnboardingScreen = () => {
         handleAnswer,
         prevQuestion
     } = useOnboardingScreen();
+
+    const { width, height } = useWindowDimensions();
+    const frameWidth = Math.min(width, 500);
+    const frameHeight = Math.min(height, 900);
 
     return (
         <SafeAreaView style={[commonStyles.safeArea, { backgroundColor: COLORS.background }]}>
@@ -44,13 +57,20 @@ const OnboardingScreen = () => {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     locations={[0, 0.5, 1]}
-                    style={commonStyles.mobileFrame}
+                    style={[commonStyles.mobileFrame, { width: frameWidth, minHeight: frameHeight }]}
                 >
                     <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                         {/* 이전 버튼 */}
                         <View style={onboardStyles.topBar}>
                             {currentIndex > 0 && (
-                                <TouchableOpacity onPress={prevQuestion} style={onboardStyles.backIconBtn}>
+                                <TouchableOpacity 
+                                    onPress={prevQuestion} 
+                                    style={
+                                      Platform.OS === 'web'
+                                        ? (isMobileWeb() ? onboardStyles.backIconBtnMobile : onboardStyles.backIconBtn)
+                                        : onboardStyles.backIconBtnMobile
+                                    }
+                                >
                                     <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
                                 </TouchableOpacity>
                             )}

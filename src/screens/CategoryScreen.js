@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
 import { COLORS } from '../constants/theme';
@@ -25,6 +25,15 @@ const CategoryScreen = ({ route, navigation }) => {
 
     const categoryHeaderImg = require('../../assets/category-header.svg');
 
+    // 반응형 width/height
+    const { width, height } = useWindowDimensions();
+    const frameWidth = Math.min(width, 500);
+    const frameHeight = Math.min(height, 900);
+    const imageSize = frameWidth * 0.6;
+    const typeNameImgWidth = imageSize;
+    const typeNameImgHeight = 30;
+    const textPadding = 16;
+
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
             <ScrollView
@@ -36,7 +45,7 @@ const CategoryScreen = ({ route, navigation }) => {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     locations={[0, 0.5, 1]}
-                    style={[styles.mobileFrame, { paddingHorizontal: 20 }]}
+                    style={[styles.mobileFrame, { width: frameWidth, minHeight: frameHeight, paddingHorizontal: 20 }]}
                 >
                     {/* 헤더 */}
                     <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 30 }}>
@@ -54,8 +63,10 @@ const CategoryScreen = ({ route, navigation }) => {
                     <Image
                         source={result.image ? { uri: result.image } : defaultImage}
                         style={{
-                            width: 241,
-                            height: 241,
+                            width: imageSize,
+                            height: imageSize,
+                            borderRadius: 20,
+                            marginBottom: 12,
                         }}
                         resizeMode="contain"
                     />
@@ -65,20 +76,21 @@ const CategoryScreen = ({ route, navigation }) => {
                         <Image
                             source={typeNameImages[result.typeName]}
                             style={{
-                                width: 153,
-                                height: 30,
+                                width: typeNameImgWidth,
+                                height: typeNameImgHeight,
                                 marginBottom: 10,
+                                alignSelf: 'center',
                             }}
                             resizeMode="contain"
                         />
                     ) : (
-                        <Text style={styles.typeNameText}>
+                        <Text style={[styles.typeNameText, { textAlign: 'center' }]}> 
                             {result.typeName}
                         </Text>
                     )}
 
                     {/* 분류된 이유 */}
-                    <View style={{ alignItems: 'flex-start', marginBottom: 20, width: '100%' }}>
+                    <View style={{ alignItems: 'flex-start', marginBottom: 20, width: frameWidth, paddingHorizontal: textPadding }}>
                         <Text style={styles.sectionTitle}>
                             ✨ {result.typeName}으로 분류된 이유
                         </Text>
@@ -91,7 +103,7 @@ const CategoryScreen = ({ route, navigation }) => {
                     </View>
 
                     {/* 여행 유형 설명 */}
-                    <View style={{ alignItems: 'flex-start', marginBottom: 20, width: '100%' }}>
+                    <View style={{ alignItems: 'flex-start', marginBottom: 20, width: frameWidth, paddingHorizontal: textPadding }}>
                         <Text style={styles.sectionTitle}>
                             🧳 여행 유형 설명
                         </Text>
@@ -101,22 +113,23 @@ const CategoryScreen = ({ route, navigation }) => {
                     </View>
 
                     {/* 추천 여행지 */}
-                    <View style={{ alignItems: 'flex-start', marginBottom: 30, width: '100%' }}>
+                    <View style={{ alignItems: 'flex-start', marginBottom: 30, width: frameWidth, paddingHorizontal: textPadding }}>
                         <Text style={styles.sectionTitle}>
                             🍁 추천 여행지
                         </Text>
 
-                        {/* 키워드 */}
-                        {result.keyword && (
-                            <Text style={[styles.descriptionText, { fontWeight: '600', marginBottom: 10 }]}>
-                                {result.keyword}
+                        {/* 여행지 추천 리스트 */}
+                        {Array.isArray(result.recommendations) && result.recommendations.length > 0 ? (
+                            result.recommendations.map((recommendation, idx) => (
+                                <Text key={idx} style={styles.descriptionText}>
+                                    • {recommendation}
+                                </Text>
+                            ))
+                        ) : (
+                            <Text style={styles.descriptionText}>
+                                추천 여행지를 찾고 있습니다...
                             </Text>
                         )}
-
-                        {/* 여행지 추천 */}
-                        <Text style={styles.descriptionText}>
-                            {result.tripRecommand}
-                        </Text>
                     </View>
 
                     {/* 버튼들 */}

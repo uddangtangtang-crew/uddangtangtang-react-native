@@ -39,7 +39,7 @@ export const useResultScreen = () => {
             if (result.success) {
                 console.log('API 응답 성공:', result.data);
                 navigation.navigate('당신의 여행 유형은?', { 
-                    resultData: result.data 
+                    resultData: { result: result.data } 
                 });
             } else {
                 console.error('API 오류:', result.error);
