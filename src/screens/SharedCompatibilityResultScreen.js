@@ -71,7 +71,7 @@ const SharedCompatibilityResultScreen = () => {
     }
 
     // 실제 궁합 결과 화면 렌더링 (MatchingResultScreen 재사용)
-    return <MatchingResultScreen route={{ params: { apiResult: resultData.result } }} />;
+    return <MatchingResultScreen route={{ params: { apiResponse: resultData } }} />;
 };
 
 const styles = StyleSheet.create({
