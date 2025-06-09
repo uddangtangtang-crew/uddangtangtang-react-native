@@ -81,7 +81,7 @@ const MatchingResultScreen = ({ route, navigation }) => {
                                     style={matchingStyles.selectionCardGradient}
                                 >
                                     <Image
-                                        source={typeImages[myType]}
+                                        source={typeImages[myType] || { uri: apiResponse?.result?.myTypeImage }}
                                         style={matchingStyles.selectedTypeImage}
                                         resizeMode="contain"
                                         fadeDuration={0}
@@ -109,7 +109,7 @@ const MatchingResultScreen = ({ route, navigation }) => {
                                     style={matchingStyles.selectionCardGradient}
                                 >
                                     <Image
-                                        source={typeImages[partnerType]}
+                                        source={typeImages[partnerType] || { uri: apiResponse?.result?.otherTypeImage }}
                                         style={matchingStyles.selectedTypeImage}
                                         resizeMode="contain"
                                         fadeDuration={0}
