@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator, Alert, useWindowDimensions }
 import { useRoute } from '@react-navigation/native';
 import MatchingResultScreen from './MatchingResultScreen';
 import { ENV } from '../config/env';
+import { logAnalyticsEvent } from '../config/firebase';
 
 const SharedCompatibilityResultScreen = () => {
     const route = useRoute();
@@ -24,6 +25,8 @@ const SharedCompatibilityResultScreen = () => {
     const fetchSharedCompatibilityResult = async () => {
         try {
             console.log('🔗 공유된 궁합 결과 로딩, shareId:', shareId);
+            logAnalyticsEvent('shared_compatibility_view', { shareId });
+            
             console.log('🌐 API URL:', `${ENV.API_BASE_URL}/ai/type/compatibility/share/${shareId}`);
             
             const response = await fetch(`${ENV.API_BASE_URL}/ai/type/compatibility/share/${shareId}`, {
@@ -52,11 +55,16 @@ const SharedCompatibilityResultScreen = () => {
 
             if (data.isSuccess && data.result) {
                 setResultData(data);
+                logAnalyticsEvent('shared_compatibility_success', { shareId });
             } else {
                 throw new Error('잘못된 공유 링크입니다.');
             }
         } catch (error) {
             console.error('❌ 공유된 궁합 결과 로딩 실패:', error);
+            logAnalyticsEvent('shared_compatibility_error', { 
+                shareId,
+                errorMessage: error.message 
+            });
             setError(error.message);
             Alert.alert('오류', '공유된 궁합 결과를 불러올 수 없습니다.');
         } finally {
