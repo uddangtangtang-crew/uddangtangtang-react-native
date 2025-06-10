@@ -151,6 +151,9 @@ const getShareLink = (shareId, shareType = 'personal') => {
         shareUrl = `${domain}/result/${shareId}`;
     }
     
+    // 중복된 슬래시 제거
+    shareUrl = shareUrl.replace(/([^:]\/)\/+/g, '$1');
+    
     console.log('✅ 생성된 공유 링크:', shareUrl);
     return shareUrl;
 };

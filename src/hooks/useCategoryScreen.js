@@ -12,7 +12,9 @@ export const useCategoryScreen = (resultData) => {
 
     // 네비게이션 핸들러들
     const handleCheckCompatibility = (navigation) => {
-        navigation.navigate('여행 궁합 알아보기');
+        navigation.navigate('여행 궁합 알아보기', {
+            myType: result.typeName
+        });
     };
 
     const handleShare = async () => {
