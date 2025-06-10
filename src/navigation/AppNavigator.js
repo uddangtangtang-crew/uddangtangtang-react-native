@@ -10,6 +10,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 import MatchingResultScreen from '../screens/MatchingResultScreen';
 import SharedResultScreen from '../screens/SharedResultScreen';
 import SharedCompatibilityResultScreen from '../screens/SharedCompatibilityResultScreen';
+import PhotoStoryScreen from '../screens/PhotoStoryScreen';
 
 const Stack = createStackNavigator();
 
@@ -23,16 +24,18 @@ const AppNavigator = () => {
         ],
         config: {
             screens: {
-                '우당탕탕 여행 성향': '',
+                '궁합네컷': '',
+                '우당탕탕 여행 성향': 'home',
                 '여행 성향 결과': 'result/:shareId',
-                '여행 궁합 결과': 'compatibility-result/:shareId'
+                '여행 궁합 결과': 'compatibility-result/:shareId',
+                'photo-story': 'photo-story'
             }
         }
     };
     
     return (
         <NavigationContainer linking={linking}>
-            <Stack.Navigator initialRouteName="우당탕탕 여행 성향">
+            <Stack.Navigator initialRouteName="궁합네컷">
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
                     component={HomeScreen} 
@@ -76,6 +79,11 @@ const AppNavigator = () => {
                 <Stack.Screen
                     name="여행 궁합 결과"
                     component={SharedCompatibilityResultScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="궁합네컷"
+                    component={PhotoStoryScreen}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>
