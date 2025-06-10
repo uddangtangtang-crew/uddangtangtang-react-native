@@ -24,18 +24,18 @@ const AppNavigator = () => {
         ],
         config: {
             screens: {
-                '궁합네컷': '',
+                '여행 궁합 알아보기': '',
                 '우당탕탕 여행 성향': 'home',
                 '여행 성향 결과': 'result/:shareId',
                 '여행 궁합 결과': 'compatibility-result/:shareId',
-                'photo-story': 'photo-story'
+                '궁합네컷': 'photo-story'
             }
         }
     };
     
     return (
         <NavigationContainer linking={linking}>
-            <Stack.Navigator initialRouteName="궁합네컷">
+            <Stack.Navigator initialRouteName="여행 궁합 알아보기">
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
                     component={HomeScreen} 
