@@ -24,7 +24,7 @@ const AppNavigator = () => {
         ],
         config: {
             screens: {
-                '여행 궁합 알아보기': '',
+                '우당탕탕 여행 성향': '',
                 '우당탕탕 여행 성향': 'home',
                 '여행 성향 결과': 'result/:shareId',
                 '여행 궁합 결과': 'compatibility-result/:shareId',
@@ -35,7 +35,7 @@ const AppNavigator = () => {
     
     return (
         <NavigationContainer linking={linking}>
-            <Stack.Navigator initialRouteName="여행 궁합 알아보기">
+            <Stack.Navigator initialRouteName="우당탕탕 여행 성향">
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
                     component={HomeScreen} 

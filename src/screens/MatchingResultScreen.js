@@ -6,7 +6,6 @@ import { matchingStyles } from '../styles/matchingStyles';
 import { COLORS } from '../constants/theme';
 import Button from '../components/common/Button';
 import ShareButtons from '../components/common/ShareButtons';
-import SectionContainer from '../components/common/SectionContainer';
 import BackLayer from '../components/common/BackLayer';
 import { useMatchingResultScreen } from '../hooks/useMatchingResultScreen';
 
@@ -73,21 +72,14 @@ const MatchingResultScreen = ({ route, navigation }) => {
                     {/* 선택된 유형들 - MatchingScreen과 동일한 카드 스타일 */}
                     <View style={matchingStyles.selectionContainer}>
                         <View style={matchingStyles.selectionCardContainer}>
-                            <View style={matchingStyles.selectionCard}>
-                                <LinearGradient
-                                    colors={['#FFE39D', '#FFD979']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 0, y: 1 }}
-                                    style={matchingStyles.selectionCardGradient}
-                                >
-                                    <Image
-                                        source={typeImages[myType] || { uri: apiResponse?.result?.myTypeImage }}
-                                        style={matchingStyles.selectedTypeImage}
-                                        resizeMode="contain"
-                                        fadeDuration={0}
-                                        cache="force-cache"
-                                    />
-                                </LinearGradient>
+                            <View style={[matchingStyles.selectionCard, { backgroundColor: '#fff', borderWidth: 0, shadowOpacity: 0, elevation: 0 }]}> 
+                                <Image
+                                    source={typeImages[myType] || { uri: apiResponse?.result?.myTypeImage }}
+                                    style={matchingStyles.selectedTypeImage}
+                                    resizeMode="contain"
+                                    fadeDuration={0}
+                                    cache="force-cache"
+                                />
                             </View>
                             <Text style={matchingStyles.selectionTitle}>{myType}</Text>
                         </View>
@@ -101,21 +93,14 @@ const MatchingResultScreen = ({ route, navigation }) => {
                         />
                         
                         <View style={matchingStyles.selectionCardContainer}>
-                            <View style={matchingStyles.selectionCard}>
-                                <LinearGradient
-                                    colors={['#F0F9E2', '#C0DF8C']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 0, y: 1 }}
-                                    style={matchingStyles.selectionCardGradient}
-                                >
-                                    <Image
-                                        source={typeImages[partnerType] || { uri: apiResponse?.result?.otherTypeImage }}
-                                        style={matchingStyles.selectedTypeImage}
-                                        resizeMode="contain"
-                                        fadeDuration={0}
-                                        cache="force-cache"
-                                    />
-                                </LinearGradient>
+                            <View style={[matchingStyles.selectionCard, { backgroundColor: '#fff', borderWidth: 0, shadowOpacity: 0, elevation: 0 }]}> 
+                                <Image
+                                    source={typeImages[partnerType] || { uri: apiResponse?.result?.otherTypeImage }}
+                                    style={matchingStyles.selectedTypeImage}
+                                    resizeMode="contain"
+                                    fadeDuration={0}
+                                    cache="force-cache"
+                                />
                             </View>
                             <Text style={matchingStyles.selectionTitle}>{partnerType}</Text>
                         </View>
@@ -174,7 +159,7 @@ const MatchingResultScreen = ({ route, navigation }) => {
                             type="primary"
                         />
                         
-                        <Button
+                        {/* <Button
                             title="궁합네컷 찍으러가기"
                             onPress={() => navigation.navigate('궁합네컷', {
                                 myType,
@@ -182,7 +167,7 @@ const MatchingResultScreen = ({ route, navigation }) => {
                                 apiResult
                             })}
                             type="primary"
-                        />
+                        /> */}
 
                         {/* 공유 버튼들 */}
                         <ShareButtons 
