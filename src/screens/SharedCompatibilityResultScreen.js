@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Alert, useWindowDimensions } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import MatchingResultScreen from './MatchingResultScreen';
 import { ENV } from '../config/env';
 import { logAnalyticsEvent } from '../config/firebase';
 
 const SharedCompatibilityResultScreen = () => {
     const route = useRoute();
+    const navigation = useNavigation();
     const { shareId } = route.params;
     const [resultData, setResultData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -94,7 +95,7 @@ const SharedCompatibilityResultScreen = () => {
     }
 
     // 실제 궁합 결과 화면 렌더링 (MatchingResultScreen 재사용)
-    return <MatchingResultScreen route={{ params: { apiResponse: resultData } }} />;
+    return <MatchingResultScreen route={{ params: { apiResponse: resultData } }} navigation={navigation} />;
 };
 
 const styles = StyleSheet.create({
