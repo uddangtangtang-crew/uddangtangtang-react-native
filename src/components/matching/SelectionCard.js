@@ -19,25 +19,31 @@ const SelectionCard = ({
             <TouchableOpacity
                 style={[
                     matchingStyles.selectionCard,
-                    activeCard === cardType && matchingStyles.activeSelectionCard
+                    activeCard === cardType && matchingStyles.activeSelectionCard,
+                    selectedType && {
+                        backgroundColor: '#fff',
+                        borderWidth: 0,
+                        shadowOpacity: 0,
+                        elevation: 0,
+                    },
                 ]}
                 onPress={() => onPress(cardType)}
             >
-                <LinearGradient
-                    colors={gradientColors}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}
-                    style={matchingStyles.selectionCardGradient}
-                >
-                    {selectedType ? (
-                        <Image
-                            source={TYPE_IMAGES[selectedType]}
-                            style={matchingStyles.selectedTypeImage}
-                            resizeMode="contain"
-                            fadeDuration={0}
-                            cache="force-cache"
-                        />
-                    ) : (
+                {selectedType ? (
+                    <Image
+                        source={TYPE_IMAGES[selectedType]}
+                        style={matchingStyles.selectedTypeImage}
+                        resizeMode="contain"
+                        fadeDuration={0}
+                        cache="force-cache"
+                    />
+                ) : (
+                    <LinearGradient
+                        colors={gradientColors}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 0, y: 1 }}
+                        style={matchingStyles.selectionCardGradient}
+                    >
                         <Image
                             source={qmarkImg}
                             style={matchingStyles.qmarkImage}
@@ -45,8 +51,8 @@ const SelectionCard = ({
                             fadeDuration={0}
                             cache="force-cache"
                         />
-                    )}
-                </LinearGradient>
+                    </LinearGradient>
+                )}
             </TouchableOpacity>
             <Text style={[
                 matchingStyles.selectionTitle,
