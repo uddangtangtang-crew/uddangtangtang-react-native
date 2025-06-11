@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, View, ActivityIndicator } from 'react-native';
+import { StatusBar, View, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Font from 'expo-font';
 import AppNavigator from './navigation/AppNavigator';
 import KakaoSDK from './components/web/KakaoSDK';
 import { COLORS } from './constants/theme';
+import { Analytics } from '@vercel/analytics/react';
 
 // 개발 환경에서 특정 경고 필터링
 if (__DEV__) {
@@ -54,6 +55,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" />
       <KakaoSDK />
       <AppNavigator />
+      {Platform.OS === 'web' && <Analytics />}
     </SafeAreaProvider>
   );
 };
