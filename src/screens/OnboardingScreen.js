@@ -71,7 +71,7 @@ const OnboardingScreen = () => {
                                         : onboardStyles.backIconBtnMobile
                                     }
                                 >
-                                    <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
+                                    <Ionicons name="chevron-back" size={36} color={COLORS.primary} />
                                 </TouchableOpacity>
                             )}
                         </View>
