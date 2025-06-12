@@ -7,10 +7,10 @@ import Button from '../components/common/Button';
 import BackLayer from '../components/common/BackLayer';
 
 const SAMPLE_IMAGES = [
-    'https://images.unsplash.com/photo-1631582053308-40f482e7ace5?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1630207831419-3532bcb828d7?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1671639903944-dc3a999000b9?q=80&w=1874&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1611604548018-d56bbd85d681?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 1.png'),
+    require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 2.png'),
+    require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 3.png'),
+    require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 4.png'),
 ];
 
 const PhotoStoryScreen = ({ route, navigation }) => {
@@ -71,7 +71,7 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                                 >
                                     {images[idx] && (
                                         <Image
-                                            source={{ uri: images[idx] }}
+                                            source={images[idx]}
                                             style={{ width: '100%', height: '100%', borderRadius: 0 }}
                                             resizeMode="cover"
                                         />
