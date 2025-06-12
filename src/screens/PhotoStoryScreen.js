@@ -6,6 +6,7 @@ import { COLORS } from '../constants/theme';
 import Button from '../components/common/Button';
 import BackLayer from '../components/common/BackLayer';
 
+
 const SAMPLE_IMAGES = [
     require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 1.png'),
     require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 2.png'),
@@ -16,9 +17,8 @@ const SAMPLE_IMAGES = [
 const PhotoStoryScreen = ({ route, navigation }) => {
     const { width } = useWindowDimensions();
     const frameWidth = Math.min(width - 40, 280); // 여백 고려
-    const slotHeight = frameWidth * 9 / 16; // 16:9 비율
     const frameBorder = 12;
-    const slotMargin = 0;
+    const slotHeight = frameWidth * 9 / 16; // 16:9 비율
     const images = SAMPLE_IMAGES; // 실제로는 API나 route.params에서 받아올 수 있음
 
     return (
@@ -47,7 +47,14 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                             resizeMode="contain"
                         /> */}
                         {/* 프레임 상단 여백 */}
-                        <View style={[frameStyles.top, { width: frameWidth, height: 32, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }]}> 
+                        <View style={[frameStyles.top, { 
+                            width: frameWidth, 
+                            height: 32, 
+                            backgroundColor: '#fff', 
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            flexDirection: 'row' 
+                        }]}> 
                             <Image
                                 source={require('../../assets/heart-story.png')}
                                 style={{ width: 30, height: 30 }}
@@ -55,7 +62,13 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                             />
                         </View>
                         {/* 인생네컷 프레임 */}
-                        <View style={[frameStyles.frame, { width: frameWidth, borderWidth: frameBorder, position: 'relative', zIndex: 10 }]}> 
+                        <View style={[frameStyles.frame, { 
+                            width: frameWidth, 
+                            borderWidth: frameBorder, 
+                            borderColor: '#fff',
+                            position: 'relative', 
+                            zIndex: 10 
+                        }]}> 
                             {[0, 1, 2, 3].map((idx) => (
                                 <View
                                     key={idx}
@@ -64,8 +77,9 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                                         {
                                             width: frameWidth,
                                             height: slotHeight,
-                                            borderBottomWidth: idx < 3 ? frameBorder : 0,
-                                            marginBottom: slotMargin,
+                                            borderBottomWidth: idx < 3 ? frameBorder : frameBorder,
+                                            borderColor: '#fff',
+                                            marginBottom: 0,
                                         },
                                     ]}
                                 >
@@ -121,10 +135,10 @@ const frameStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         overflow: 'hidden',
         shadowColor: '#000',
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 0.08,
-        shadowRadius: 4,
-        elevation: 2,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 8,
         position: 'relative',
     },
     top: {
