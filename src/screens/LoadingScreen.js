@@ -21,16 +21,16 @@ const LoadingScreen = ({ route, navigation }) => {
     useLoadingScreen(myType, partnerType, navigation);
 
     return (
-        <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background, alignItems: 'center', justifyContent: 'center' }]}>
+        <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
             <LinearGradient
                 colors={['#FFFCD8', '#FFEDA8', '#FFBF70']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0, y: 1 }}
                 locations={[0, 0.5, 1]}
-                style={[styles.mobileFrame, { alignItems: 'center', justifyContent: 'center' }]}
+                style={[styles.mobileFrame, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}
             >
                 {/* 로딩 영역 */}
-                <View style={styles.loadingContainer}>
+                <View style={[styles.loadingContainer, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}>
                     {Platform.OS === 'web' ? (
                         <div
                             style={{
