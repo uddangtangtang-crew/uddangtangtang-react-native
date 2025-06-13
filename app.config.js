@@ -25,7 +25,22 @@ export default {
     },
     web: {
       favicon: "./assets/favicon.png",
-      bundler: "webpack"
+      bundler: "webpack",
+      config: {
+        head: {
+          script: [
+            {
+              src: "https://www.googletagmanager.com/gtm.js?id=GTM-WZK7QDCP",
+              async: true
+            }
+          ],
+          noscript: [
+            {
+              innerHTML: '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WZK7QDCP" height="0" width="0" style="display:none;visibility:hidden"></iframe>'
+            }
+          ]
+        }
+      }
     },
     linking: {
       prefixes: [
