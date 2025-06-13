@@ -8,10 +8,10 @@ import BackLayer from '../components/common/BackLayer';
 
 
 const SAMPLE_IMAGES = [
-    require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 1.png'),
-    require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 2.png'),
-    require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 3.png'),
-    require('../../assets/4cut/감성 도파민러 돼지 – 패키지 러버 토끼 - 4.png'),
+    require('../../assets/4cut/pig_rabbit_1.png'),
+    require('../../assets/4cut/pig_rabbit_2.png'),
+    require('../../assets/4cut/pig_rabbit_3.png'),
+    require('../../assets/4cut/pig_rabbit_4.png'),
 ];
 
 const PhotoStoryScreen = ({ route, navigation }) => {
