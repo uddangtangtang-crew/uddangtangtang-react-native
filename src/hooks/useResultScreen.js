@@ -5,8 +5,12 @@ import { formatAnswersForAPI } from '../utils/answerFormatter';
 import { MOCK_RESULT_RESPONSE } from '../constants/mockData';
 
 // ResultScreen의 상태와 로직을 관리하는 커스텀 훅
-export const useResultScreen = () => {
+export const useResultScreen = (route, navigation) => {
     const answers = useQuizStore((state) => state.answers);
+
+    useEffect(() => {
+        handleGoCategory(navigation);
+    }, []);
 
     const handleGoCategory = async (navigation) => {
         try {
