@@ -8,10 +8,10 @@ export const onboardStyles = StyleSheet.create({
         height: 0,
     },
     qImage: {
-        width: 135,
-        height: 135,
+        width: 120,
+        height: 120,
         alignSelf: 'center',
-        marginBottom: 36,
+        marginBottom: 16,
     },
     qustionImage: {
         width: 54,
@@ -21,7 +21,7 @@ export const onboardStyles = StyleSheet.create({
     },
     questionText: {
         textAlign: 'center',
-        marginBottom: 24,
+        marginBottom: 14,
     },
     answerRow: {
         flexDirection: 'row',
@@ -35,8 +35,8 @@ export const onboardStyles = StyleSheet.create({
         alignItems: 'center',
     },
     answerImg: {
-        width: 160,
-        height: 260,
+        width: 170,
+        height: 280,
         marginHorizontal: 8,
     },
     answerTextWrap: {

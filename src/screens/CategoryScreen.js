@@ -29,7 +29,7 @@ const CategoryScreen = ({ route, navigation }) => {
     const { width, height } = useWindowDimensions();
     const frameWidth = Math.min(width, 500);
     const frameHeight = Math.min(height, 900);
-    const imageSize = frameWidth * 0.6;
+    const imageSize = frameWidth * 0.5;
     const typeNameImgWidth = imageSize;
     const typeNameImgHeight = 30;
     const textPadding = 16;
@@ -78,7 +78,7 @@ const CategoryScreen = ({ route, navigation }) => {
                             style={{
                                 width: typeNameImgWidth,
                                 height: typeNameImgHeight,
-                                marginBottom: 10,
+                                marginBottom: 20,
                                 alignSelf: 'center',
                             }}
                             resizeMode="contain"
@@ -92,13 +92,10 @@ const CategoryScreen = ({ route, navigation }) => {
                     {/* 분류된 이유 */}
                     <View style={{ alignItems: 'flex-start', marginBottom: 20, width: frameWidth, paddingHorizontal: textPadding }}>
                         <Text style={styles.sectionTitle}>
-                            ✨ {result.typeName}으로 분류된 이유
+                            ☺️ {result.typeName}으로 분류된 이유
                         </Text>
                         <Text style={styles.reasonText}>
-                            {mainText}
-                        </Text>
-                        <Text style={styles.reasonLastSentence}>
-                            {lastSentence}
+                            {result.reason}
                         </Text>
                     </View>
 
@@ -107,7 +104,7 @@ const CategoryScreen = ({ route, navigation }) => {
                         <Text style={styles.sectionTitle}>
                             🧳 여행 유형 설명
                         </Text>
-                        <Text style={styles.descriptionText}>
+                        <Text style={styles.reasonText}>
                             {result.description}
                         </Text>
                     </View>

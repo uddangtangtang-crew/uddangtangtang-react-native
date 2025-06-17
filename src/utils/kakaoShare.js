@@ -151,6 +151,9 @@ const getShareLink = (shareId, shareType = 'personal') => {
         shareUrl = `${domain}/result/${shareId}`;
     }
     
+    // 중복된 슬래시 제거
+    shareUrl = shareUrl.replace(/([^:]\/)\/+/g, '$1');
+    
     console.log('✅ 생성된 공유 링크:', shareUrl);
     return shareUrl;
 };
@@ -191,8 +194,9 @@ const copyToClipboard = async (url) => {
  */
 export const copyPersonalResultUrl = async (result) => {
     try {
+        const domain = getAppDomain();
         const shareId = result.shareId || Date.now().toString();
-        const shareUrl = getShareLink(shareId, 'personal');
+        const shareUrl = `${domain}/result/${shareId}`;
         
         console.log('🔗 개인 결과 URL 복사:', shareUrl);
         
@@ -223,9 +227,9 @@ export const copyPersonalResultUrl = async (result) => {
  */
 export const copyCompatibilityResultUrl = async ({ apiResult }) => {
     try {
-        // API 응답 구조에 따른 shareId 추출
+        const domain = getAppDomain();
         const shareId = apiResult.result?.shareId || apiResult.shareId || Date.now().toString();
-        const shareUrl = getShareLink(shareId, 'compatibility');
+        const shareUrl = `${domain}/compatibility-result/${shareId}`;
         
         console.log('🔗 궁합 결과 URL 복사:', shareUrl);
         

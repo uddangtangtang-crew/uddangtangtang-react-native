@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Alert, useWindowDimensions } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import CategoryScreen from './CategoryScreen';
 import { ENV } from '../config/env';
 
 const SharedResultScreen = () => {
     const route = useRoute();
+    const navigation = useNavigation();
     const { shareId } = route.params;
     const [resultData, setResultData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -71,7 +72,7 @@ const SharedResultScreen = () => {
     }
 
     // 실제 결과 화면 렌더링 (CategoryScreen 재사용)
-    return <CategoryScreen route={{ params: { resultData } }} />;
+    return <CategoryScreen route={{ params: { resultData } }} navigation={navigation} />;
 };
 
 const styles = StyleSheet.create({

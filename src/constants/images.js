@@ -24,18 +24,18 @@ export const TYPE_NAME_IMAGES = {
 
 // 질문 이미지들 (질문 번호별)
 export const QUESTION_IMAGES = [
-    require('../../assets/q1.svg'),
-    require('../../assets/q2.svg'),
-    require('../../assets/q3.svg'),
-    require('../../assets/q4.svg'),
-    require('../../assets/q5.svg'),
-    require('../../assets/q6.svg'),
-    require('../../assets/q7.svg'),
-    require('../../assets/q8.svg'),
-    require('../../assets/q9.svg'),
-    require('../../assets/q10.svg'),
-    require('../../assets/q11.svg'),
-    require('../../assets/q12.svg'),
+    require('../../assets/q3.svg'),  // Q3
+    require('../../assets/q1.svg'),  // Q1
+    require('../../assets/q5.svg'),  // Q5
+    require('../../assets/q9.svg'),  // Q9
+    require('../../assets/q4.svg'),  // Q4
+    require('../../assets/q12.svg'), // Q12
+    require('../../assets/q2.svg'),  // Q2
+    require('../../assets/q10.svg'), // Q10
+    require('../../assets/q11.svg'), // Q11
+    require('../../assets/q7.svg'),  // Q7
+    require('../../assets/q6.svg'),  // Q6
+    require('../../assets/q8.svg'),  // Q8
 ];
 
 // 질문 SVG들

@@ -46,6 +46,7 @@ export const styles = StyleSheet.create({
         fontFamily: 'NanumSquareRound',
         fontWeight: '700',
         lineHeight: 24,
+        minHeight: 48,
         letterSpacing: -0.3,
         textAlign: 'center',
         color: '#6E3209',

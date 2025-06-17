@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, View, ActivityIndicator } from 'react-native';
+import { StatusBar, View, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Font from 'expo-font';
 import AppNavigator from './navigation/AppNavigator';
 import KakaoSDK from './components/web/KakaoSDK';
 import { COLORS } from './constants/theme';
+import { Analytics } from '@vercel/analytics/react';
+
+// GTM 스크립트 추가
+const GTM_SCRIPT = `
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-N63FQQ6F');
+`;
 
 // 개발 환경에서 특정 경고 필터링
 if (__DEV__) {
@@ -26,6 +36,24 @@ const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
+    // GTM 스크립트 추가
+    if (Platform.OS === 'web') {
+      const script = document.createElement('script');
+      script.innerHTML = GTM_SCRIPT;
+      document.head.appendChild(script);
+
+      // noscript 태그 추가
+      const noscript = document.createElement('noscript');
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.googletagmanager.com/ns.html?id=GTM-N63FQQ6F';
+      iframe.height = '0';
+      iframe.width = '0';
+      iframe.style.display = 'none';
+      iframe.style.visibility = 'hidden';
+      noscript.appendChild(iframe);
+      document.body.insertBefore(noscript, document.body.firstChild);
+    }
+
     async function loadFonts() {
       try {
         await Font.loadAsync({
@@ -54,6 +82,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" />
       <KakaoSDK />
       <AppNavigator />
+      {Platform.OS === 'web' && <Analytics />}
     </SafeAreaProvider>
   );
 };
