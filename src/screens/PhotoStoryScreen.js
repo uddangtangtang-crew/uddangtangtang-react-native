@@ -5,21 +5,38 @@ import { styles } from '../styles/common';
 import { COLORS } from '../constants/theme';
 import Button from '../components/common/Button';
 import BackLayer from '../components/common/BackLayer';
-
-
-const SAMPLE_IMAGES = [
-    require('../../assets/4cut/pig_rabbit_1.png'),
-    require('../../assets/4cut/pig_rabbit_2.png'),
-    require('../../assets/4cut/pig_rabbit_3.png'),
-    require('../../assets/4cut/pig_rabbit_4.png'),
-];
+import { TYPE_CODES } from '../constants/travelTypes';
 
 const PhotoStoryScreen = ({ route, navigation }) => {
+    const { myType, partnerType } = route.params || {};
     const { width } = useWindowDimensions();
     const frameWidth = Math.min(width - 40, 280); // 여백 고려
     const frameBorder = 12;
     const slotHeight = frameWidth * 9 / 16; // 16:9 비율
-    const images = SAMPLE_IMAGES; // 실제로는 API나 route.params에서 받아올 수 있음
+
+    // 한글 유형명을 영문 코드로 변환
+    const myTypeCode = TYPE_CODES[myType] || 'monkey';
+    const partnerTypeCode = TYPE_CODES[partnerType] || 'monkey';
+
+    // 유형에 따른 이미지 배열 생성
+    const images = Array.from({ length: 4 }, (_, i) => {
+        const index = i + 1;
+        const firstOrder = `${myTypeCode}_${partnerTypeCode}_${index}`;
+        const secondOrder = `${partnerTypeCode}_${myTypeCode}_${index}`;
+        
+        try {
+            // 첫 번째 순서로 시도
+            return require(`../../assets/4cut/${firstOrder}.png`);
+        } catch (e) {
+            try {
+                // 두 번째 순서로 시도
+                return require(`../../assets/4cut/${secondOrder}.png`);
+            } catch (e) {
+                // 둘 다 실패하면 기본 이미지 사용
+                return require('../../assets/airplane-only.svg');
+            }
+        }
+    });
 
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}> 
@@ -32,20 +49,6 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                     style={[styles.mobileFrame, { minHeight: 600, paddingHorizontal: 20 }]}
                 >
                     <View style={{ alignItems: 'center', marginVertical: 25, position: 'relative', width: frameWidth, height: frameWidth * 4 * 9 / 16 + 100 }}>
-                        {/* 비행기 이미지 (항상 프레임 위에 보임) */}
-                        {/* <Image
-                            source={require('../../assets/logo.png')}
-                            style={{
-                                position: 'absolute',
-                                left: 6,
-                                bottom: 2,
-                                width: 116,
-                                height: 116,
-                                zIndex: 20,
-                                pointerEvents: 'none',
-                            }}
-                            resizeMode="contain"
-                        /> */}
                         {/* 프레임 상단 여백 */}
                         <View style={[frameStyles.top, { 
                             width: frameWidth, 
@@ -69,7 +72,7 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                             position: 'relative', 
                             zIndex: 10 
                         }]}> 
-                            {[0, 1, 2, 3].map((idx) => (
+                            {images.map((image, idx) => (
                                 <View
                                     key={idx}
                                     style={[
@@ -83,9 +86,9 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                                         },
                                     ]}
                                 >
-                                    {images[idx] && (
+                                    {image && (
                                         <Image
-                                            source={images[idx]}
+                                            source={image}
                                             style={{ width: '100%', height: '100%', borderRadius: 0 }}
                                             resizeMode="cover"
                                         />
@@ -101,10 +104,18 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                                         backgroundColor: '#fff',
                                         justifyContent: 'center',
                                         alignItems: 'center',
+                                        position: 'relative',
                                     },
                                 ]}
                             >
-                                <Text style={styles.joinedUsers}>
+                                <Text style={[styles.joinedUsers, { 
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: [{ translateX: -40 }, { translateY: -45 }],
+                                    textAlign: 'center',
+                                    width: 80,
+                                }]}>
                                     궁합네컷
                                 </Text>
                             </View>
