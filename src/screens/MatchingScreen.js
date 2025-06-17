@@ -11,7 +11,7 @@ import TypeCard from '../components/matching/TypeCard';
 import { useMatching } from '../hooks/useMatching';
 import BackLayer from '../components/common/BackLayer';
 
-const MatchingScreen = ({ navigation }) => {
+const MatchingScreen = ({ route, navigation }) => {
     const {
         myType,
         otherType,
@@ -20,7 +20,7 @@ const MatchingScreen = ({ navigation }) => {
         handleTypeSelect,
         handleShowResult,
         canShowResult
-    } = useMatching();
+    } = useMatching(route);
 
     const matchingHeaderImg = require('../../assets/궁합 테스트.svg');
     const heartImg = require('../../assets/heartImg.svg');
