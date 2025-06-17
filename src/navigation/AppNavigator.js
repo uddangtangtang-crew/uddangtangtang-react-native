@@ -32,59 +32,64 @@ const AppNavigator = () => {
             }
         }
     };
+
+    // 화면 전환 애니메이션 설정
+    const screenOptions = {
+        headerShown: false,
+        cardStyle: { backgroundColor: 'transparent' },
+        cardOverlayEnabled: false,
+        cardStyleInterpolator: ({ current: { progress } }) => ({
+            cardStyle: {
+                opacity: progress,
+            },
+        }),
+    };
     
     return (
         <NavigationContainer linking={linking}>
-            <Stack.Navigator initialRouteName="우당탕탕 여행 성향">
+            <Stack.Navigator 
+                initialRouteName="우당탕탕 여행 성향"
+                screenOptions={screenOptions}
+            >
                 <Stack.Screen 
                     name="우당탕탕 여행 성향" 
-                    component={HomeScreen} 
-                    options={{ headerShown: false }}
+                    component={HomeScreen}
                 />
                 <Stack.Screen
                     name="여행 성향 테스트 알아보기"
                     component={OnboardingScreen}
-                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="결과 확인하기"
                     component={ResultScreen}
-                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="당신의 여행 유형은?"
                     component={CategoryScreen}
-                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="여행 궁합 알아보기"
                     component={MatchingScreen}
-                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="궁합 분석하는 중.."
                     component={LoadingScreen}
-                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="여행 궁합 결과는?"
                     component={MatchingResultScreen}
-                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="여행 성향 결과"
                     component={SharedResultScreen}
-                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="여행 궁합 결과"
                     component={SharedCompatibilityResultScreen}
-                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="궁합네컷"
                     component={PhotoStoryScreen}
-                    options={{ headerShown: false }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

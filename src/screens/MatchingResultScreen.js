@@ -159,15 +159,14 @@ const MatchingResultScreen = ({ route, navigation }) => {
                             type="primary"
                         />
                         
-                        {/* <Button
+                        <Button
                             title="궁합네컷 찍으러가기"
                             onPress={() => navigation.navigate('궁합네컷', {
                                 myType,
-                                partnerType,
-                                apiResult
+                                partnerType
                             })}
                             type="primary"
-                        /> */}
+                        />
 
                         {/* 공유 버튼들 */}
                         <ShareButtons 

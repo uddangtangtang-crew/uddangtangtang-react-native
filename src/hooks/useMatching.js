@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useRoute } from '@react-navigation/native';
 
 // 매칭 화면의 상태와 로직을 관리하는 커스텀 훅
-export const useMatching = () => {
-    const route = useRoute();
-    const initialMyType = route.params?.myType || null;
+export const useMatching = (route) => {
+    const initialMyType = route?.params?.myType || null;
     
     const [myType, setMyType] = useState(initialMyType);
     const [otherType, setOtherType] = useState(null);
