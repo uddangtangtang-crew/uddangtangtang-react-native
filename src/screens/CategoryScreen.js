@@ -9,7 +9,7 @@ import BackLayer from '../components/common/BackLayer';
 import { TEXTS } from '../constants/texts';
 import { useCategoryScreen } from '../hooks/useCategoryScreen';
 
-const CategoryScreen = ({ route, navigation }) => {
+const CategoryScreen = ({ route, navigation, onTakeTestAndCheckCompatibility }) => {
     const { resultData } = route.params || {};
     
     const {
@@ -33,6 +33,9 @@ const CategoryScreen = ({ route, navigation }) => {
     const typeNameImgWidth = imageSize;
     const typeNameImgHeight = 30;
     const textPadding = 16;
+
+    // 공유 결과에서 온 경우인지 확인 (onTakeTestAndCheckCompatibility prop이 있으면 공유 결과에서 온 것)
+    const isFromSharedResult = !!onTakeTestAndCheckCompatibility;
 
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
@@ -131,6 +134,16 @@ const CategoryScreen = ({ route, navigation }) => {
 
                     {/* 버튼들 */}
                     <View style={styles.buttonContainer}>
+                        {/* 공유 결과에서 온 경우에만 "나도 테스트하고 궁합 보기" 버튼 표시 */}
+                        {isFromSharedResult && (
+                            <Button
+                                title="나도 테스트하기 👍"
+                                onPress={onTakeTestAndCheckCompatibility}
+                                type="primary"
+                                style={{ width: 320 }}
+                            />
+                        )}
+                        
                         <Button
                             title={TEXTS.HOME.CHECK_COMPATIBILITY}
                             onPress={() => handleCheckCompatibility(navigation)}
