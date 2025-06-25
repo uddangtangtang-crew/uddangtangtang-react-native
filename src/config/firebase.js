@@ -41,8 +41,6 @@ const firebaseConfig = {
     measurementId: FIREBASE_MEASUREMENT_ID
 };
 
-console.log('Firebase Config:', firebaseConfig); // 설정값 확인용 로그
-
 // 파이어베이스 초기화
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
