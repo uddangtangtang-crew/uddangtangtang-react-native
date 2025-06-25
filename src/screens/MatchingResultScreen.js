@@ -31,6 +31,68 @@ const MatchingResultScreen = ({ route, navigation }) => {
     const frameHeight = Math.min(height, 900);
     const textPadding = 16;
 
+    // 추천 일정 렌더링 함수
+    const renderRecommendationSchedule = () => {
+        if (!apiResult.recommendation) {
+            return (
+                <Text style={styles.descriptionText}>
+                    추천 일정을 준비 중입니다...
+                </Text>
+            );
+        }
+
+        const days = ['day1', 'day2', 'day3'];
+        
+        return days.map((day, dayIndex) => {
+            const dayData = apiResult.recommendation[day];
+            if (!dayData) return null;
+
+            return (
+                <View key={day} style={{ marginBottom: 20, backgroundColor: 'rgba(255, 255, 255, 0.7)', borderRadius: 12, padding: 16 }}>
+                    <Text style={[styles.sectionTitle, { fontSize: 16, marginBottom: 12 }]}>
+                        📅 {dayIndex + 1}일차
+                    </Text>
+                    
+                    <View style={{ marginBottom: 8 }}>
+                        <Text style={[styles.descriptionText, { fontWeight: 'bold', color: '#FF6B35' }]}>
+                            🌅 아침
+                        </Text>
+                        <Text style={styles.descriptionText}>
+                            {dayData.morning}
+                        </Text>
+                    </View>
+                    
+                    <View style={{ marginBottom: 8 }}>
+                        <Text style={[styles.descriptionText, { fontWeight: 'bold', color: '#4A90E2' }]}>
+                            ☀️ 오후
+                        </Text>
+                        <Text style={styles.descriptionText}>
+                            {dayData.afternoon}
+                        </Text>
+                    </View>
+                    
+                    <View style={{ marginBottom: 12 }}>
+                        <Text style={[styles.descriptionText, { fontWeight: 'bold', color: '#9B59B6' }]}>
+                            🌙 저녁
+                        </Text>
+                        <Text style={styles.descriptionText}>
+                            {dayData.evening}
+                        </Text>
+                    </View>
+                    
+                    <View style={{ borderTopWidth: 1, borderTopColor: '#E0E0E0', paddingTop: 8 }}>
+                        <Text style={[styles.descriptionText, { fontWeight: 'bold', color: '#27AE60' }]}>
+                            ✨ 하루 요약
+                        </Text>
+                        <Text style={styles.descriptionText}>
+                            {dayData.summary}
+                        </Text>
+                    </View>
+                </View>
+            );
+        });
+    };
+
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
             <ScrollView
@@ -134,21 +196,12 @@ const MatchingResultScreen = ({ route, navigation }) => {
                         </Text>
                     </View>
 
+                    {/* 추천 여행 일정 */}
                     <View style={{ alignItems: 'flex-start', marginBottom: 30, width: frameWidth, paddingHorizontal: textPadding }}>
                         <Text style={styles.sectionTitle}>
-                            🏝️ 추천 여행지
+                            🗓️ 추천 여행 일정
                         </Text>
-                        {Array.isArray(apiResult.recommendations) && apiResult.recommendations.length > 0 ? (
-                            apiResult.recommendations.map((recommendation, index) => (
-                                <Text key={index} style={styles.descriptionText}>
-                                    • {recommendation}
-                                </Text>
-                            ))
-                        ) : (
-                            <Text style={styles.descriptionText}>
-                                추천 여행지를 찾고 있습니다...
-                            </Text>
-                        )}
+                        {renderRecommendationSchedule()}
                     </View>
 
                     {/* 버튼들 */}
@@ -163,7 +216,8 @@ const MatchingResultScreen = ({ route, navigation }) => {
                             title="궁합네컷 찍으러가기"
                             onPress={() => navigation.navigate('궁합네컷', {
                                 myType,
-                                partnerType
+                                partnerType,
+                                sharedData: apiResponse
                             })}
                             type="primary"
                         />

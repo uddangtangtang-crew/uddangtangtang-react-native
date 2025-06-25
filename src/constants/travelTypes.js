@@ -44,6 +44,6 @@ export const TYPE_CODES = {
     '자낳괴 탐험가 코끼리': 'elephant',
     '패키지 러버 토끼': 'rabbit',
     '계획충 쉴러 곰': 'bear',
-    '온도차 낭만파 강아지': 'dog'
+    '온도차 낭만파 강아지': 'puppy'
 };
   

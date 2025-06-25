@@ -54,6 +54,17 @@ const SharedResultScreen = () => {
         }
     };
 
+    // 나도 테스트하고 궁합 보기 핸들러
+    const handleTakeTestAndCheckCompatibility = () => {
+        if (resultData?.result?.typeName) {
+            // A의 유형을 저장하고 테스트 화면으로 이동
+            navigation.navigate('여행 성향 테스트 알아보기', {
+                partnerType: resultData.result.typeName, // A의 유형을 partnerType으로 전달
+                isFromSharedResult: true // 공유 결과에서 온 것임을 표시
+            });
+        }
+    };
+
     if (loading) {
         return (
             <View style={[styles.container, { width: frameWidth, minHeight: frameHeight, paddingHorizontal: textPadding }]}> 
@@ -71,8 +82,14 @@ const SharedResultScreen = () => {
         );
     }
 
-    // 실제 결과 화면 렌더링 (CategoryScreen 재사용)
-    return <CategoryScreen route={{ params: { resultData } }} navigation={navigation} />;
+    // 실제 결과 화면 렌더링 (CategoryScreen 재사용하되 추가 버튼 전달)
+    return (
+        <CategoryScreen 
+            route={{ params: { resultData } }} 
+            navigation={navigation}
+            onTakeTestAndCheckCompatibility={handleTakeTestAndCheckCompatibility}
+        />
+    );
 };
 
 const styles = StyleSheet.create({

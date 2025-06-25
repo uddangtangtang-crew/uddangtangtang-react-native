@@ -9,14 +9,12 @@ import BackLayer from '../components/common/BackLayer';
 import { TEXTS } from '../constants/texts';
 import { useCategoryScreen } from '../hooks/useCategoryScreen';
 
-const CategoryScreen = ({ route, navigation }) => {
+const CategoryScreen = ({ route, navigation, onTakeTestAndCheckCompatibility }) => {
     const { resultData } = route.params || {};
     
     const {
         result,
         typeNameImages,
-        mainText,
-        lastSentence,
         defaultImage,
         handleCheckCompatibility,
         handleShare,
@@ -33,6 +31,71 @@ const CategoryScreen = ({ route, navigation }) => {
     const typeNameImgWidth = imageSize;
     const typeNameImgHeight = 30;
     const textPadding = 16;
+
+    // 공유 결과에서 온 경우인지 확인 (onTakeTestAndCheckCompatibility prop이 있으면 공유 결과에서 온 것)
+    const isFromSharedResult = !!onTakeTestAndCheckCompatibility;
+
+    // 추천 일정 렌더링 함수
+    const renderRecommendationSchedule = () => {
+        if (!result.recommendation) {
+            return (
+                <Text style={styles.descriptionText}>
+                    추천 일정을 준비 중입니다...
+                </Text>
+            );
+        }
+
+        const days = ['day1', 'day2', 'day3'];
+        
+        return days.map((day, dayIndex) => {
+            const dayData = result.recommendation[day];
+            if (!dayData) return null;
+
+            return (
+                <View key={day} style={{ marginBottom: 20, backgroundColor: 'rgba(255, 255, 255, 0.7)', borderRadius: 12, padding: 16 }}>
+                    <Text style={[styles.sectionTitle, { fontSize: 16, marginBottom: 12 }]}>
+                        📅 {dayIndex + 1}일차
+                    </Text>
+                    
+                    <View style={{ marginBottom: 8 }}>
+                        <Text style={[styles.descriptionText, { fontWeight: 'bold', color: '#FF6B35' }]}>
+                            🌅 아침
+                        </Text>
+                        <Text style={styles.descriptionText}>
+                            {dayData.morning}
+                        </Text>
+                    </View>
+                    
+                    <View style={{ marginBottom: 8 }}>
+                        <Text style={[styles.descriptionText, { fontWeight: 'bold', color: '#4A90E2' }]}>
+                            ☀️ 오후
+                        </Text>
+                        <Text style={styles.descriptionText}>
+                            {dayData.afternoon}
+                        </Text>
+                    </View>
+                    
+                    <View style={{ marginBottom: 12 }}>
+                        <Text style={[styles.descriptionText, { fontWeight: 'bold', color: '#9B59B6' }]}>
+                            🌙 저녁
+                        </Text>
+                        <Text style={styles.descriptionText}>
+                            {dayData.evening}
+                        </Text>
+                    </View>
+                    
+                    <View style={{ borderTopWidth: 1, borderTopColor: '#E0E0E0', paddingTop: 8 }}>
+                        <Text style={[styles.descriptionText, { fontWeight: 'bold', color: '#27AE60' }]}>
+                            ✨ 하루 요약
+                        </Text>
+                        <Text style={styles.descriptionText}>
+                            {dayData.summary}
+                        </Text>
+                    </View>
+                </View>
+            );
+        });
+    };
 
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}>
@@ -109,28 +172,26 @@ const CategoryScreen = ({ route, navigation }) => {
                         </Text>
                     </View>
 
-                    {/* 추천 여행지 */}
+                    {/* 추천 여행 일정 */}
                     <View style={{ alignItems: 'flex-start', marginBottom: 30, width: frameWidth, paddingHorizontal: textPadding }}>
                         <Text style={styles.sectionTitle}>
-                            🍁 추천 여행지
+                            🗓️ 추천 여행 일정
                         </Text>
-
-                        {/* 여행지 추천 리스트 */}
-                        {Array.isArray(result.recommendations) && result.recommendations.length > 0 ? (
-                            result.recommendations.map((recommendation, idx) => (
-                                <Text key={idx} style={styles.descriptionText}>
-                                    • {recommendation}
-                                </Text>
-                            ))
-                        ) : (
-                            <Text style={styles.descriptionText}>
-                                추천 여행지를 찾고 있습니다...
-                            </Text>
-                        )}
+                        {renderRecommendationSchedule()}
                     </View>
 
                     {/* 버튼들 */}
                     <View style={styles.buttonContainer}>
+                        {/* 공유 결과에서 온 경우에만 "나도 테스트하고 궁합 보기" 버튼 표시 */}
+                        {isFromSharedResult && (
+                            <Button
+                                title="나도 테스트하기 👍"
+                                onPress={onTakeTestAndCheckCompatibility}
+                                type="primary"
+                                style={{ width: 320 }}
+                            />
+                        )}
+                        
                         <Button
                             title={TEXTS.HOME.CHECK_COMPATIBILITY}
                             onPress={() => handleCheckCompatibility(navigation)}
