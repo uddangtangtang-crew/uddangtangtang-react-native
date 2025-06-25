@@ -216,7 +216,8 @@ const MatchingResultScreen = ({ route, navigation }) => {
                             title="궁합네컷 찍으러가기"
                             onPress={() => navigation.navigate('궁합네컷', {
                                 myType,
-                                partnerType
+                                partnerType,
+                                sharedData: apiResponse
                             })}
                             type="primary"
                         />

@@ -11,6 +11,7 @@ import MatchingResultScreen from '../screens/MatchingResultScreen';
 import SharedResultScreen from '../screens/SharedResultScreen';
 import SharedCompatibilityResultScreen from '../screens/SharedCompatibilityResultScreen';
 import PhotoStoryScreen from '../screens/PhotoStoryScreen';
+import SharedPhotoStoryScreen from '../screens/SharedPhotoStoryScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,10 +26,16 @@ const AppNavigator = () => {
         config: {
             screens: {
                 '우당탕탕 여행 성향': '',
-                '우당탕탕 여행 성향': 'home',
+                '여행 성향 테스트 알아보기': 'onboarding',
+                '결과 확인하기': 'result',
+                '당신의 여행 유형은?': 'category',
+                '여행 궁합 알아보기': 'matching',
+                '궁합 분석하는 중..': 'loading',
+                '여행 궁합 결과는?': 'matching-result',
                 '여행 성향 결과': 'result/:shareId',
                 '여행 궁합 결과': 'compatibility-result/:shareId',
-                '궁합네컷': 'photo-story'
+                '궁합네컷': 'photo-story/create',
+                '궁합네컷 결과': 'photo-story/:id'
             }
         }
     };
@@ -90,6 +97,10 @@ const AppNavigator = () => {
                 <Stack.Screen
                     name="궁합네컷"
                     component={PhotoStoryScreen}
+                />
+                <Stack.Screen
+                    name="궁합네컷 결과"
+                    component={SharedPhotoStoryScreen}
                 />
             </Stack.Navigator>
         </NavigationContainer>

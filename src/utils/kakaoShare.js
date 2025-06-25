@@ -147,6 +147,8 @@ const getShareLink = (shareId, shareType = 'personal') => {
     
     if (shareType === 'compatibility') {
         shareUrl = `${domain}/compatibility-result/${shareId}`;
+    } else if (shareType === 'photo-story') {
+        shareUrl = `${domain}/photo-story/${shareId}`;
     } else {
         shareUrl = `${domain}/result/${shareId}`;
     }
@@ -250,6 +252,38 @@ export const copyCompatibilityResultUrl = async ({ apiResult }) => {
         return shareUrl;
     } catch (error) {
         console.error('궁합 결과 URL 복사 실패:', error);
+        alert('URL 복사에 실패했습니다.');
+        return null;
+    }
+};
+
+/**
+ * 궁합네컷 URL 복사하기
+ */
+export const copyPhotoStoryUrl = async (shareId) => {
+    try {
+        const domain = getAppDomain();
+        const shareUrl = `${domain}/photo-story/${shareId}`;
+        
+        console.log('🔗 궁합네컷 URL 복사:', shareUrl);
+        
+        const success = await copyToClipboard(shareUrl);
+        
+        if (success) {
+            if (Platform.OS === 'web') {
+                alert('링크가 클립보드에 복사되었습니다!');
+            }
+        } else {
+            if (Platform.OS === 'web') {
+                alert('클립보드 복사에 실패했습니다.');
+            } else {
+                alert(`링크: ${shareUrl}\n\n링크가 표시되었습니다. 수동으로 복사해주세요.`);
+            }
+        }
+        
+        return shareUrl;
+    } catch (error) {
+        console.error('궁합네컷 URL 복사 실패:', error);
         alert('URL 복사에 실패했습니다.');
         return null;
     }
@@ -366,6 +400,58 @@ export const shareCompatibilityResult = async ({ myType, partnerType, apiResult 
         }
     } catch (error) {
         console.error('궁합 결과 공유 실패:', error);
+        throw error;
+    }
+};
+
+/**
+ * 카카오톡 궁합네컷 공유하기
+ */
+export const sharePhotoStory = async (shareId, myType, otherType, webUrl) => {
+    try {
+        console.log('🎯 sharePhotoStory 함수 시작');
+        console.log('📥 받은 데이터:', { shareId, myType, otherType });
+        
+        const domain = webUrl || getAppDomain();
+        
+        console.log('✅ 최종 사용할 shareId:', shareId);
+        console.log('🌐 도메인:', domain);
+        
+        // 공유 링크 생성하기 (궁합네컷)
+        const shareLink = getShareLink(shareId, 'photo-story');
+        console.log('🔗 생성된 shareLink:', shareLink);
+        
+        // 커스텀 템플릿 사용
+        const templateArgs = {
+            shareId: shareId,
+            myType: myType,
+            otherType: otherType,
+            domain: domain,
+            path: `/photo-story/${shareId}`,
+            fullUrl: shareLink,
+            testLink: domain,
+            // 웹훅 관련 데이터
+            shareType: 'photo-story',
+            userId: 'user_' + Date.now(),
+            timestamp: new Date().toISOString()
+        };
+        
+        console.log('📋 템플릿에 전달할 데이터:');
+        console.log('  🆔 shareId:', shareId);
+        console.log('  👤 myType:', myType);
+        console.log('  👥 otherType:', otherType);
+        console.log('  🌐 domain:', domain);
+        console.log('  🔗 shareLink:', shareLink);
+        console.log('  📄 전체 templateArgs:', templateArgs);
+
+        // 플랫폼별 공유 실행
+        if (Platform.OS === 'web') {
+            return await shareOnWebWithCustomTemplate(KAKAO_CUSTOM_TEMPLATE.PHOTO_STORY.id, templateArgs);
+        } else {
+            return await shareOnMobileWithCustomTemplate(KAKAO_CUSTOM_TEMPLATE.PHOTO_STORY.id, templateArgs);
+        }
+    } catch (error) {
+        console.error('궁합네컷 공유 실패:', error);
         throw error;
     }
 };
