@@ -1,10 +1,10 @@
 # 우당탕탕 여행 궁합 테스트 ✈️
 
-> 여행 성향 기반 심리 테스트로 나만의 여행 스타일을 발견하고, 완벽한 여행 동행자와의 궁합을 확인해보세요!
+> 여행 성향 기반 심리 테스트로 나만의 여행 스타일을 발견하고, 여행 동행자와의 궁합을 확인해보세요!
 
 ## 📱 앱 소개
 
-**우당탕탕 여행 궁합 테스트**는 사용자의 여행 성향을 분석하여 8가지 유형 중 하나로 분류하고, 다른 사람과의 여행 궁합을 알아볼 수 있는 모바일 앱입니다. 
+**우당탕탕 여행 궁합 테스트**는 사용자의 여행 성향을 분석하여 8가지 유형 중 하나로 분류하고, 다른 사람과의 여행 궁합을 알아볼 수 있는 크로스 플랫폼 앱입니다. 
 
 ### 🎯 주요 기능
 - **여행 성향 테스트**: 12개의 질문을 통해 개인의 여행 스타일 분석
@@ -16,16 +16,18 @@
   - 💸 가성비 장인 원숭이
   - 🧃 감성 도파민러 돼지
   - 🐚 무념무상 힐링러 병아리
-  - 🧃 온도차 낭만파 **강아지**
+  - 🧃 온도차 낭만파 강아지
 - **여행 궁합 테스트**: 두 사람의 여행 스타일 호환성 분석
-- **맞춤 여행지 추천**: 개인 성향에 맞는 여행지 및 여행 팁 제공
-- **결과 공유**: 테스트 결과를 친구들과 쉽게 공유
+- **궁합네컷 생성**: AI 생성 이미지로 궁합 결과를 시각화
+- **결과 공유**: 카카오톡, URL 복사 등 다양한 공유 기능
+- **실시간 통계**: 테스트 참여자 수 실시간 표시
 
 ### 🌟 특징
 - **직관적인 UI/UX**: 귀여운 동물 캐릭터와 감성적인 디자인
 - **크로스 플랫폼**: iOS, Android, Web에서 모두 사용 가능
-- **실시간 API**: 백엔드 서버와 연동하여 정확한 분석 결과 제공
+- **AI 기반 분석**: 백엔드 AI 서버와 연동하여 정확한 분석 결과 제공
 - **반응형 디자인**: 다양한 화면 크기에 최적화
+- **실시간 분석**: Google Tag Manager와 Firebase Analytics 연동
 
 ## 🛠 기술 스택
 
@@ -41,11 +43,22 @@
 - **React Native SVG**: 벡터 그래픽 지원
 - **Lottie React Native**: 고품질 애니메이션
 - **React Native Vector Icons**: 아이콘 라이브러리
+- **@lottiefiles/dotlottie-react**: 추가 애니메이션 지원
+
+### 분석 & 추적
+- **Firebase Analytics**: 사용자 행동 분석
+- **Google Tag Manager**: 이벤트 추적 및 마케팅 분석
+- **Vercel Analytics**: 웹 성능 모니터링
+
+### 공유 기능
+- **React Native Kakao Share Link**: 카카오톡 공유
+- **Deep Linking**: 결과 페이지 직접 링크 공유
 
 ### 개발 도구
 - **Metro**: React Native 번들러
 - **Babel**: JavaScript 컴파일러
 - **Jest**: 단위 테스트 프레임워크
+- **React Native Dotenv**: 환경변수 관리
 
 ### 배포
 - **Vercel**: 웹 버전 배포
@@ -56,53 +69,76 @@
 ### 프로젝트 구조
 
 ```
-uddangtangtang-app/
+UddangtangtangApp/
 ├── src/                    # 소스 코드
 │   ├── components/         # 재사용 가능한 컴포넌트
-│   │   ├── common/         # 공통 컴포넌트 (Button, Card, LoadingSpinner 등)
+│   │   ├── common/         # 공통 컴포넌트 (Button, LoadingIndicator, ShareButtons 등)
 │   │   ├── matching/       # 궁합 테스트 관련 컴포넌트
-│   │   └── specific/       # 특정 기능 컴포넌트
+│   │   └── web/            # 웹 전용 컴포넌트 (KakaoSDK)
 │   ├── screens/            # 화면 컴포넌트
-│   │   ├── HomeScreen.js   # 홈 화면
-│   │   ├── OnboardingScreen.js # 온보딩 화면
-│   │   ├── ResultScreen.js # 테스트 진행 화면
-│   │   ├── CategoryScreen.js # 결과 화면 (개인 유형)
-│   │   ├── MatchingScreen.js # 궁합 테스트 화면
-│   │   ├── LoadingScreen.js # 로딩 화면
-│   │   └── MatchingResultScreen.js # 궁합 결과 화면
+│   │   ├── HomeScreen.js           # 홈 화면
+│   │   ├── OnboardingScreen.js     # 온보딩 화면
+│   │   ├── ResultScreen.js         # 테스트 진행 화면
+│   │   ├── CategoryScreen.js       # 개인 유형 결과 화면
+│   │   ├── MatchingScreen.js       # 궁합 테스트 화면
+│   │   ├── LoadingScreen.js        # 로딩 화면
+│   │   ├── MatchingResultScreen.js # 궁합 결과 화면
+│   │   ├── PhotoStoryScreen.js     # 궁합네컷 생성 화면
+│   │   ├── SharedResultScreen.js   # 공유된 개인 결과 화면
+│   │   ├── SharedCompatibilityResultScreen.js # 공유된 궁합 결과 화면
+│   │   └── SharedPhotoStoryScreen.js # 공유된 궁합네컷 화면
 │   ├── navigation/         # 네비게이션 설정
 │   │   └── AppNavigator.js # React Navigation 설정
 │   ├── hooks/              # 커스텀 훅
 │   │   ├── useMatching.js  # 궁합 테스트 로직
 │   │   ├── useResultScreen.js # 결과 화면 로직
-│   │   └── useResponsive.js # 반응형 디자인
+│   │   ├── useCategoryScreen.js # 카테고리 화면 로직
+│   │   ├── useHomeScreen.js # 홈 화면 로직
+│   │   ├── useLoadingScreen.js # 로딩 화면 로직
+│   │   ├── useMatchingResultScreen.js # 궁합 결과 화면 로직
+│   │   └── useOnboardingScreen.js # 온보딩 화면 로직
 │   ├── constants/          # 상수 정의
-│   │   ├── questions.js    # 테스트 질문 데이터
+│   │   ├── questions.js    # 테스트 질문 데이터 (12개)
 │   │   ├── personalities.js # 8가지 여행 유형 정의
 │   │   ├── travelTypes.js  # 여행 유형 목록
 │   │   ├── images.js       # 이미지 경로 상수
 │   │   ├── theme.js        # 테마 및 스타일 상수
+│   │   ├── categories.js   # 카테고리 상수
+│   │   ├── kakao.js        # 카카오 관련 상수
+│   │   ├── texts.js        # 텍스트 상수
 │   │   └── mockData.js     # 개발용 Mock 데이터
 │   ├── services/           # API 및 외부 서비스
 │   │   └── api.js          # 백엔드 API 통신
+│   ├── config/             # 설정 파일
+│   │   ├── env.js          # 환경변수 설정
+│   │   └── firebase.js     # Firebase 설정
 │   ├── utils/              # 유틸리티 함수
-│   │   ├── typeCalculator.js # 유형 계산 로직
+│   │   ├── calculateResult.js # 유형 계산 로직
 │   │   ├── compatibilityUtils.js # 궁합 계산 유틸
-│   │   └── textUtils.js    # 텍스트 처리 유틸
+│   │   ├── getPersonalityInfo.js # 성격 정보 조회
+│   │   ├── imageUtils.js   # 이미지 처리 유틸
+│   │   ├── kakaoShare.js   # 카카오 공유 유틸
+│   │   ├── textUtils.js    # 텍스트 처리 유틸
+│   │   └── answerFormatter.js # 답변 포맷팅
+│   ├── store/              # 상태 관리
+│   │   └── useQuizStore.js # 퀴즈 상태 관리
 │   ├── styles/             # 스타일 정의
 │   │   ├── common.js       # 공통 스타일
-│   │   └── matchingStyles.js # 궁합 화면 스타일
+│   │   ├── matchingStyles.js # 궁합 화면 스타일
+│   │   ├── onboard.js      # 온보딩 스타일
+│   │   └── progressBar.js  # 진행바 스타일
 │   └── App.js              # 앱 루트 컴포넌트
 ├── assets/                 # 정적 자산
-│   ├── images/             # 이미지 파일
-│   ├── icons/              # 아이콘 파일
-│   └── fonts/              # 폰트 파일
-├── public/                 # 웹용 정적 파일
-├── app.config.js           # Expo 앱 설정
-├── package.json            # 프로젝트 의존성
-├── babel.config.js         # Babel 설정
-├── metro.config.js         # Metro 번들러 설정
-└── vercel.json             # Vercel 배포 설정
+│   ├── 4cut/              # 궁합네컷 이미지 (8x8 조합)
+│   ├── fonts/             # 나눔스퀘어라운드 폰트
+│   ├── images/            # 이미지 파일
+│   └── icons/             # 아이콘 파일
+├── public/                # 웹용 정적 파일
+├── app.config.js          # Expo 앱 설정
+├── package.json           # 프로젝트 의존성
+├── babel.config.js        # Babel 설정
+├── metro.config.js        # Metro 번들러 설정
+└── vercel.json            # Vercel 배포 설정
 ```
 
 ### 주요 아키텍처 패턴
@@ -124,26 +160,59 @@ uddangtangtang-app/
 
 #### 4. **Service Layer Pattern**
 - API 통신 로직을 서비스 레이어로 분리
-- Mock 데이터를 통한 개발 단계별 지원
 - 에러 핸들링 및 재시도 로직 포함
+- 환경별 API 엔드포인트 관리
 
+#### 5. **Analytics Integration**
+- Firebase Analytics와 GTM 연동
+- 사용자 행동 추적 및 이벤트 로깅
+- 성능 모니터링
 
 ## 🔄 개발 플로우
 
 ### 1. 테스트 플로우
 ```
-홈 화면 → 온보딩 → 질문 응답 → 로딩 → 개인 결과 → 궁합 테스트 → 궁합 결과
+홈 화면 → 온보딩 → 질문 응답 (12개) → 로딩 → 개인 결과 → 궁합 테스트 → 궁합 결과 → 궁합네컷 생성
 ```
 
-### 2. 상태 관리
+### 2. 공유 플로우
+```
+결과 화면 → 공유 버튼 → 카카오톡/URL 복사 → Deep Link로 결과 페이지 접근
+```
+
+### 3. 상태 관리
 - **Zustand**를 사용한 가벼운 전역 상태 관리
 - 각 화면별 로컬 상태와 커스텀 훅 활용
 - API 응답 데이터의 효율적인 캐싱
 
-### 3. API 통신
+### 4. API 통신
 - RESTful API 기반 백엔드 통신
-- 개발 중에는 Mock 데이터 지원
+- 환경변수를 통한 API 엔드포인트 관리
 - 에러 발생 시 Fallback 로직
 
+## 🎨 UI/UX 특징
+
+### 디자인 시스템
+- **컬러 팔레트**: 따뜻한 노란색 계열 그라데이션
+- **타이포그래피**: 나눔스퀘어라운드 폰트 사용
+- **아이콘**: 귀여운 동물 캐릭터 기반 일러스트
+- **애니메이션**: Lottie를 활용한 부드러운 전환 효과
+
+### 반응형 디자인
+- 모바일 우선 설계
+- 태블릿 및 웹 환경 지원
+- 다양한 화면 크기에 최적화
+
+## 🚀 배포 및 운영
+
+### 웹 배포
+- **Vercel**: 자동 배포 및 CDN
+- **HTTPS**: 보안 연결 보장
+- **성능 최적화**: 이미지 최적화 및 번들 크기 최소화
+
+### 모바일 배포
+- **Expo Build**: iOS/Android 앱 빌드
+
+---
 
 *"여행은 떠나기 전부터 시작된다" - 우당탕탕 여행 궁합 테스트와 함께 완벽한 여행 동행자를 찾아보세요! ✈️*
