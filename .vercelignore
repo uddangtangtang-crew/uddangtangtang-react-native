@@ -1,0 +1,69 @@
+# Development files
+node_modules/
+.expo/
+dist/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+.next/
+out/
+.nuxt/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.metro-health-check*
+
+# Native files
+ios/
+android/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Test files
+__tests__/
+*.test.js
+*.test.jsx
+*.test.ts
+*.test.tsx
+coverage/
+*.lcov
+
+# Development tools
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Large asset directories (if not needed for web)
+static/
+
+# Other build artifacts
+.vercel/ 
