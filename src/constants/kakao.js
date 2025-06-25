@@ -12,6 +12,10 @@ export const KAKAO_CUSTOM_TEMPLATE = {
     COMPATIBILITY_RESULT: {
         id: 121241,
         title: '우당탕탕 여행 궁합'
+    },
+    PHOTO_STORY: {
+        id: 121815,
+        title: '우당탕탕 궁합네컷'
     }
 };
 

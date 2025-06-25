@@ -1,14 +1,18 @@
-import React from 'react';
-import { SafeAreaView, ScrollView, Text, View, Image, StyleSheet, useWindowDimensions } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, Text, View, Image, StyleSheet, useWindowDimensions, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/common';
 import { COLORS } from '../constants/theme';
 import Button from '../components/common/Button';
+import ShareButtons from '../components/common/ShareButtons';
 import BackLayer from '../components/common/BackLayer';
 import { TYPE_CODES } from '../constants/travelTypes';
+import { sharePhotoStory as sharePhotoStoryKakao, copyPhotoStoryUrl } from '../utils/kakaoShare';
 
 const PhotoStoryScreen = ({ route, navigation }) => {
-    const { myType, partnerType } = route.params || {};
+    const { myType, partnerType, sharedData } = route.params || {};
+    const [isSharing, setIsSharing] = useState(false);
+    const [currentShareId, setCurrentShareId] = useState(null);
     const { width } = useWindowDimensions();
     const frameWidth = Math.min(width - 40, 280); // 여백 고려
     const frameBorder = 12;
@@ -38,6 +42,79 @@ const PhotoStoryScreen = ({ route, navigation }) => {
         }
     });
 
+    // shareId를 가져오는 함수
+    const getShareIdFromAPI = async () => {
+        if (currentShareId) {
+            console.log('📋 이미 저장된 shareId 사용:', currentShareId);
+            return currentShareId;
+        }
+
+        try {
+            console.log('🔗 shareId를 가져오는 중...');
+            console.log('📋 sharedData 전체:', sharedData);
+            console.log('📋 sharedData.result:', sharedData?.result);
+            
+            // sharedData에서 shareId 가져오기
+            const shareId = sharedData?.result?.shareId;
+            console.log('📋 추출된 shareId:', shareId);
+            
+            if (!shareId) {
+                console.error('❌ shareId를 찾을 수 없음. sharedData 구조:', sharedData);
+                throw new Error('궁합 테스트 결과의 shareId를 찾을 수 없습니다.');
+            }
+            
+            console.log('✅ 최종 사용할 shareId:', shareId);
+            setCurrentShareId(shareId);
+            return shareId;
+        } catch (error) {
+            console.error('❌ shareId 가져오기 실패:', error);
+            throw error;
+        }
+    };
+
+    // 공유하기 핸들러
+    const handleShare = async () => {
+        if (isSharing) return;
+        
+        setIsSharing(true);
+        try {
+            console.log('🔗 궁합네컷 공유하기 시작...');
+            
+            // API에서 shareId 가져오기
+            const shareId = await getShareIdFromAPI();
+            console.log('📋 사용할 shareId:', shareId);
+            
+            // 카카오톡 공유하기
+            await sharePhotoStoryKakao(shareId, myType, partnerType);
+            console.log('✅ 카카오톡 공유 완료!');
+        } catch (error) {
+            console.error('❌ 궁합네컷 공유하기 에러:', error);
+            Alert.alert('공유 실패', '궁합네컷 공유에 실패했습니다.');
+        } finally {
+            setIsSharing(false);
+        }
+    };
+
+    // URL 복사 핸들러
+    const handleCopyLink = async () => {
+        try {
+            console.log('🔗 궁합네컷 URL 복사하기 시작...');
+            
+            // API에서 shareId 가져오기
+            const shareId = await getShareIdFromAPI();
+            console.log('📋 사용할 shareId:', shareId);
+            
+            // URL 복사하기
+            console.log('🔗 copyPhotoStoryUrl 함수 호출 시작...');
+            const result = await copyPhotoStoryUrl(shareId);
+            console.log('✅ copyPhotoStoryUrl 결과:', result);
+            console.log('✅ URL 복사 완료!');
+        } catch (error) {
+            console.error('❌ 궁합네컷 URL 복사 에러:', error);
+            Alert.alert('복사 실패', '링크 복사에 실패했습니다.');
+        }
+    };
+
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: COLORS.background }]}> 
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
@@ -60,7 +137,19 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                         }]}> 
                             <Image
                                 source={require('../../assets/heart-story.png')}
-                                style={{ width: 30, height: 30 }}
+                                style={{ width: 20, height: 20, marginRight: 8 }}
+                                resizeMode="contain"
+                            />
+                            <Text style={{ 
+                                fontSize: 12, 
+                                fontFamily: 'NanumGothic',
+                                textAlign: 'center'
+                            }}>
+                                우당탕탕 여행 궁합
+                            </Text>
+                            <Image
+                                source={require('../../assets/heart-story.png')}
+                                style={{ width: 20, height: 20, marginLeft: 8 }}
                                 resizeMode="contain"
                             />
                         </View>
@@ -123,6 +212,12 @@ const PhotoStoryScreen = ({ route, navigation }) => {
                     </View>
 
                     <View style={[styles.buttonContainer, { zIndex: 10 }]}> 
+                        {/* 공유 버튼들 */}
+                        <ShareButtons 
+                            onShare={handleShare}
+                            onCopyLink={handleCopyLink}
+                        />
+                        
                         <Button
                             title="궁합 테스트 하러가기"
                             onPress={() => navigation.navigate('우당탕탕 여행 성향')}

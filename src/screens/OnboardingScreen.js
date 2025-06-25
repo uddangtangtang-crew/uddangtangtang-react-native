@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -9,6 +9,7 @@ import {
     useWindowDimensions,
     Platform,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { COLORS} from '../constants/theme';
 import { styles as commonStyles } from '../styles/common';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -33,14 +34,25 @@ function isMobileWeb() {
 }
 
 const OnboardingScreen = () => {
+    const route = useRoute();
+    const { partnerType, isFromSharedResult } = route.params || {};
+    
     const {
         currentIndex,
         currentQuestion,
         questionImages,
         questionSvgs,
         handleAnswer,
-        prevQuestion
+        prevQuestion,
+        setPartnerTypeAndSharedFlag
     } = useOnboardingScreen();
+
+    // route params에서 partnerType과 isFromSharedResult를 받아서 저장
+    useEffect(() => {
+        if (partnerType || isFromSharedResult) {
+            setPartnerTypeAndSharedFlag(partnerType, isFromSharedResult);
+        }
+    }, [partnerType, isFromSharedResult, setPartnerTypeAndSharedFlag]);
 
     const { width, height } = useWindowDimensions();
     const frameWidth = Math.min(width, 500);
